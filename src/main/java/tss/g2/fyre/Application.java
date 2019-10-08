@@ -18,10 +18,9 @@ public class Application {
     databaseProperties.setProperty("port", "5432");
     databaseProperties.setProperty("database", "postgres");
     databaseProperties.setProperty("user", "postgres");
-    databaseProperties.setProperty("password", "postgress");
+    databaseProperties.setProperty("password", "191195");
     Javalin app = Javalin.create().start(7000);
     DataStorage dataStorage = new PostgresDataStorage(databaseProperties);
-    System.out.println(new CheckAuthorization(dataStorage, "a", "a").getAnswer().toJson());
     CreateController controller = new JavalinController(app, dataStorage);
     controller.create();
   }
