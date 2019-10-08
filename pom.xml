@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>g2.tss</groupId>
+    <groupId>tss.g2</groupId>
     <artifactId>fyre</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
@@ -21,6 +21,14 @@
     </build>
 
     <dependencies>
+
+        <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.slf4j</groupId>
