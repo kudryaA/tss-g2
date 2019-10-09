@@ -26,7 +26,7 @@ public class PostgresDataStorage implements DataStorage {
     String port = properties.getProperty("port");
     String database = properties.getProperty("database");
     String user = properties.getProperty("user");
-    String password = properties.getProperty("password");
+    String password = properties.getProperty("191195");
     connection =
         DriverManager.getConnection(
             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password);
