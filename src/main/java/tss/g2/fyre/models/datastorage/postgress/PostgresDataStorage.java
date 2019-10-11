@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.entity.Authorization;
+import tss.g2.fyre.models.entity.Person;
 
 /**
  * Postgres data storage.
@@ -33,7 +33,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public Authorization getAuthorization(String login) {
+  public Person getAuthorization(String login) {
     return new PostgresGetAuthorization(connection, login).getAuthorization();
   }
 }
