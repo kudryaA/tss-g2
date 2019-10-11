@@ -3,6 +3,7 @@ package tss.g2.fyre.controllers.javalin;
 import io.javalin.Javalin;
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.actions.CheckRegistration;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 public class RegistrationController implements CreateController {
@@ -23,7 +24,8 @@ public class RegistrationController implements CreateController {
             String surname = ctx.queryParam("surname");
             String email = ctx.queryParam("email");
 
-            Answer answer = new CheckRegistration().getAnswer();
+            Answer answer = new CheckRegistration(dataStorage, login, password, name, surname, email).getAnswer();
+            ctx.result(answer.toJson());
         });
     }
 }

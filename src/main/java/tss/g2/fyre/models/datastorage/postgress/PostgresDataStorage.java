@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.entity.Authorization;
+import tss.g2.fyre.models.entity.Person;
 
 /**
  * Postgres data storage.
@@ -26,14 +26,19 @@ public class PostgresDataStorage implements DataStorage {
     String port = properties.getProperty("port");
     String database = properties.getProperty("database");
     String user = properties.getProperty("user");
-    String password = properties.getProperty("191195");
+    String password = properties.getProperty("password");
     connection =
         DriverManager.getConnection(
             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password);
   }
 
   @Override
-  public Authorization getAuthorization(String login) {
+  public Person getAuthorization(String login) {
     return new PostgresGetAuthorization(connection, login).getAuthorization();
+  }
+
+  @Override
+  public boolean createNewPerson(String login, String password, String name, String surname, String email) {
+    return new PostgresRegistration(connection, login, password, name, surname, email).createNewPerson();
   }
 }

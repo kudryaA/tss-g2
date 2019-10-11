@@ -2,7 +2,7 @@ package tss.g2.fyre.models.actions;
 
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.entity.Authorization;
+import tss.g2.fyre.models.entity.Person;
 
 public class CheckAuthorization implements Action {
   private DataStorage dataStorage;
@@ -18,8 +18,13 @@ public class CheckAuthorization implements Action {
 
   @Override
   public Answer getAnswer() {
-    Authorization authorization = dataStorage.getAuthorization(login);
+    Person authorization = dataStorage.getAuthorization(login);
     boolean res = false;
+
+    if (authorization == null) {
+      return new Answer<>(false, res);
+    }
+
     if (authorization.getLogin().equals(login) && authorization.getPassword().equals(password)) {
       res = true;
     }

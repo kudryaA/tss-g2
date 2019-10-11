@@ -1,6 +1,6 @@
 package tss.g2.fyre.models.datastorage;
 
-import tss.g2.fyre.models.entity.Authorization;
+import tss.g2.fyre.models.entity.Person;
 
 /**
  * This interface describe data storage worker.
@@ -15,5 +15,12 @@ public interface DataStorage {
    * @param login login
    * @return authorization info
    */
-  Authorization getAuthorization(String login);
+  Person getAuthorization(String login);
+
+  /**
+   * Get result insert into table person.
+   *
+   *
+   */
+  boolean createNewPerson(String login, String password, String name, String surname, String email);
 }
