@@ -23,11 +23,11 @@ public class PostgresDataStorage implements DataStorage {
    * @throws SQLException sqlexception
    */
   public PostgresDataStorage(Properties properties) throws SQLException {
-    String host = properties.getProperty("host");
-    String port = properties.getProperty("port");
-    String database = properties.getProperty("database");
-    String user = properties.getProperty("user");
-    String password = properties.getProperty("password");
+    String host = properties.getProperty("database_host");
+    String port = properties.getProperty("database_port");
+    String database = properties.getProperty("database_database");
+    String user = properties.getProperty("database_user");
+    String password = properties.getProperty("database_password");
     connection =
         DriverManager.getConnection(
             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password);
