@@ -8,7 +8,7 @@ import tss.g2.fyre.models.actions.CheckModerator;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 /**
- * Authorization controller for javalin.
+ * Person controller for javalin.
  * @author Anton Kudryavtsev
  */
 public class AuthorizationController implements CreateController {
