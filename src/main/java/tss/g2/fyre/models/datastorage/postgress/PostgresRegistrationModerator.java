@@ -5,56 +5,48 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PostgresRegistration {
+public class PostgresRegistrationModerator {
   private Connection connection;
   private String login;
   private String password;
   private String name;
-  private String surname;
-  private String email;
 
   /**
    * Constructor.
    *
    * @param connection connection to database
-   * @param login user login
-   * @param password user password
-   * @param name user name
-   * @param surname user surname
-   * @param email user email
+   * @param login moderator login
+   * @param password moderator password
+   * @param name moderator name
    */
-  public PostgresRegistration(Connection connection, String login, String password,
-                              String name, String surname, String email) {
+  public PostgresRegistrationModerator(Connection connection, String login,
+                                       String password, String name) {
     this.connection = connection;
     this.login = login;
     this.password = password;
     this.name = name;
-    this.surname = surname;
-    this.email = email;
   }
 
   /**
-    * Method for registration person.
-    *
-    * @return result of adding person
-    */
-  boolean createNewPerson() {
+   * Method for registration moderator.
+   *
+   * @return result of adding moderator
+   */
+  boolean createNewModerator() {
     boolean answer = false;
     PreparedStatement statement = null;
     try {
-      statement = connection.prepareStatement("SELECT * FROM person WHERE login = ?");
+      statement = connection.prepareStatement("SELECT * FROM moderator WHERE login = ?");
       statement.setString(1, login);
 
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next()) {
         return answer;
       } else {
-        statement = connection.prepareStatement("insert into person values(?, ?, ?, ?, false, ?)");
-        statement.setString(1, login);
-        statement.setString(2, password);
-        statement.setString(3, name);
-        statement.setString(4, surname);
-        statement.setString(5, email);
+        statement = connection.prepareStatement("insert into moderator values(?, ?, ?)");
+        statement.setString(1, name);
+        statement.setString(2, login);
+        statement.setString(3, password);
         answer = statement.executeUpdate() == 1;
       }
     } catch (SQLException e) {

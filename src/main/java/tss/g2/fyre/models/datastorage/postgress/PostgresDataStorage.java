@@ -49,4 +49,10 @@ public class PostgresDataStorage implements DataStorage {
   public Moderator getModerator(String login) {
     return new PostgresGetModerator(connection, login).getModerator();
   }
+
+  @Override
+  public boolean createNewModerator(String login, String password, String name) {
+    return new PostgresRegistrationModerator(connection, login, password, name)
+            .createNewModerator();
+  }
 }

@@ -4,8 +4,9 @@ import io.javalin.Javalin;
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.CheckAuthorization;
-import tss.g2.fyre.models.actions.RegisterUser;
 import tss.g2.fyre.models.actions.CheckModerator;
+import tss.g2.fyre.models.actions.RegisterModerator;
+import tss.g2.fyre.models.actions.RegisterUser;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 /**
@@ -52,6 +53,16 @@ public class AuthorizationController implements CreateController {
       String login = ctx.queryParam("login");
       String password = ctx.queryParam("password");
       Answer answer = new CheckModerator(dataStorage, login, password).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/registration/moderator", ctx -> {
+      String name = ctx.queryParam("name");
+      String login = ctx.queryParam("login");
+      String password = ctx.queryParam("password");
+
+      Answer answer = new RegisterModerator(dataStorage, login, password, name)
+              .getAnswer();
       ctx.result(answer.toJson());
     });
   }
