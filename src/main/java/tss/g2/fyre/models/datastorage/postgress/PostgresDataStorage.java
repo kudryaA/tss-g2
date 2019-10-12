@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
 
 /**
@@ -42,5 +43,10 @@ public class PostgresDataStorage implements DataStorage {
                                  String surname, String email) {
     return new PostgresRegistration(connection, login, password, name, surname, email)
             .createNewPerson();
+  }
+  
+  @Override
+  public Moderator getModerator(String login) {
+    return new PostgresGetModerator(connection, login).getModerator();
   }
 }

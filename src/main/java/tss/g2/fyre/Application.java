@@ -21,7 +21,6 @@ public class Application {
     databaseProperties.setProperty("password", "191195");
     Javalin app = Javalin.create().start(7000);
     DataStorage dataStorage = new PostgresDataStorage(databaseProperties);
-    //System.out.println(new RegisterUser(dataStorage, "c", "a", "a", "a", "a").getAnswer().toJson());
     CreateController controller = new JavalinController(app, dataStorage);
     controller.create();
   }
