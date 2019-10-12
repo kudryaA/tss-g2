@@ -13,8 +13,8 @@ public class CheckAuthorization implements Action {
    * Constructor.
    *
    * @param dataStorage data storage object
-   * @param login login whose user writing
-   * @param password password whose user writing
+   * @param login user login
+   * @param password user password
    */
   public CheckAuthorization(DataStorage dataStorage, String login, String password) {
     this.dataStorage = dataStorage;

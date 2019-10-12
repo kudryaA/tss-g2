@@ -5,9 +5,9 @@ import tss.g2.fyre.models.entity.Person;
 import java.sql.*;
 
 /**
- * CLass for get authorization from postgres
+ * CLass for get authorization from postgres.
  *
- * @author ANton Kudryavtsev
+ * @author Anton Kudryavtsev
  */
 class PostgresGetAuthorization {
 
@@ -15,7 +15,7 @@ class PostgresGetAuthorization {
   private String login;
 
   /**
-   * Constructor
+   * Constructor.
    *
    * @param connection postgres jdbc connection
    * @param login for authorization
@@ -26,14 +26,14 @@ class PostgresGetAuthorization {
   }
 
   /**
-   * Method for get authorization info
+   * Method for get authorization info.
    *
    * @return authorization
    */
   Person getAuthorization() {
     Person result = null;
     try (PreparedStatement statement =
-        connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {
+                 connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {
       statement.setString(1, login);
       System.out.println(statement.toString());
       ResultSet resultSet = statement.executeQuery();

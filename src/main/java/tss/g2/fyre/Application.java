@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.controllers.javalin.JavalinController;
-import tss.g2.fyre.models.actions.CheckAuthorization;
+import tss.g2.fyre.models.actions.RegisterUser;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.datastorage.postgress.PostgresDataStorage;
 

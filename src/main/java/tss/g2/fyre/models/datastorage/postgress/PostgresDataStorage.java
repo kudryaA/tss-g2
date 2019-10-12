@@ -39,6 +39,13 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
+  public boolean createNewPerson(String login, String password, String name,
+                                 String surname, String email) {
+    return new PostgresRegistration(connection, login, password, name, surname, email)
+            .createNewPerson();
+  }
+  
+  @Override
   public Moderator getModerator(String login) {
     return new PostgresGetModerator(connection, login).getModerator();
   }
