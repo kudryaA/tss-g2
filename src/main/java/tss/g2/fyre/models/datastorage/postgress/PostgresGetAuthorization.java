@@ -5,7 +5,7 @@ import tss.g2.fyre.models.entity.Person;
 import java.sql.*;
 
 /**
- * CLass for get authorization from postgres
+ * CLass for get authorization from postgres.
  *
  * @author Anton Kudryavtsev
  */
@@ -15,7 +15,7 @@ class PostgresGetAuthorization {
   private String login;
 
   /**
-   * Constructor
+   * Constructor.
    *
    * @param connection postgres jdbc connection
    * @param login for authorization
@@ -26,7 +26,7 @@ class PostgresGetAuthorization {
   }
 
   /**
-   * Method for get authorization info
+   * Method for get authorization info.
    *
    * @return authorization
    */
