@@ -1,5 +1,7 @@
 package tss.g2.fyre.models.datastorage;
 
+import java.util.Date;
+
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
 
@@ -48,4 +50,15 @@ public interface DataStorage {
    * @return result of adding moderator
    */
   boolean createNewModerator(String login, String password, String name);
+
+  /**
+   * Method for adding new recipe.
+   *
+   * @param recipeName recipe name
+   * @param cookingSteps recipe cooking steps
+   * @param publicationDate recipe publication date
+   * @param rating recipe rating
+   * @return result of adding recipe
+   */
+  boolean addRecipe(String recipeName, String cookingSteps, Date publicationDate, int rating);
 }

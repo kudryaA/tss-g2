@@ -1,12 +1,10 @@
 package tss.g2.fyre.controllers.javalin;
 
 import io.javalin.Javalin;
+
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
-import tss.g2.fyre.models.actions.CheckAuthorization;
-import tss.g2.fyre.models.actions.CheckModerator;
-import tss.g2.fyre.models.actions.RegisterModerator;
-import tss.g2.fyre.models.actions.RegisterUser;
+import tss.g2.fyre.models.actions.*;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 /**

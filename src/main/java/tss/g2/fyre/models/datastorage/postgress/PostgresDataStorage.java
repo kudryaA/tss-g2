@@ -3,6 +3,8 @@ package tss.g2.fyre.models.datastorage.postgress;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import java.util.Date;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
@@ -54,5 +56,12 @@ public class PostgresDataStorage implements DataStorage {
   public boolean createNewModerator(String login, String password, String name) {
     return new PostgresRegistrationModerator(connection, login, password, name)
             .createNewModerator();
+  }
+
+  @Override
+  public boolean addRecipe(String recipeName, String cookingSteps,
+                           Date publicationDate, int rating) {
+    return new PostgresAddRecipe(connection, recipeName, cookingSteps, publicationDate, rating)
+            .addRecipe();
   }
 }
