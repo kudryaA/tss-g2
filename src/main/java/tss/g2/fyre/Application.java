@@ -26,6 +26,7 @@ public class Application {
     Properties properties = new Configuration("config/configuration.yml").getProperties();
     int port = Integer.parseInt(properties.getProperty("port"));
     Javalin app = Javalin.create().start(port);
+    app.config.addStaticFiles("pages");
     DataStorage dataStorage = new PostgresDataStorage(properties);
     CreateController controller = new JavalinController(app, dataStorage);
     controller.create();
