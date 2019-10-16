@@ -10,7 +10,6 @@ public class AddRecipe implements Action {
   private String recipeName;
   private String cookingSteps;
   private Date publicationDate;
-  private int rating;
 
   /**
    * Constructor.
@@ -19,20 +18,18 @@ public class AddRecipe implements Action {
    * @param recipeName recipe name
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
-   * @param rating recipe rating
    */
   public AddRecipe(DataStorage dataStorage, String recipeName, String cookingSteps,
-                   Date publicationDate, int rating) {
+                   Date publicationDate) {
     this.dataStorage = dataStorage;
     this.recipeName = recipeName;
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
-    this.rating = rating;
   }
 
   @Override
   public Answer getAnswer() {
     return new Answer<>(true,
-            dataStorage.addRecipe(recipeName, cookingSteps, publicationDate, rating));
+            dataStorage.addRecipe(recipeName, cookingSteps, publicationDate));
   }
 }

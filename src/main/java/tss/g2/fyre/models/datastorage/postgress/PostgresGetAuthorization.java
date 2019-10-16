@@ -1,8 +1,11 @@
 package tss.g2.fyre.models.datastorage.postgress;
 
-import tss.g2.fyre.models.entity.Person;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import java.sql.*;
+import tss.g2.fyre.models.entity.Person;
 
 /**
  * CLass for get authorization from postgres.

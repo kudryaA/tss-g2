@@ -35,12 +35,11 @@ public class RecipeController implements CreateController {
     app.post("/add/recipe", ctx -> {
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-      String recipeName = ctx.queryParam("recipeName");
-      String cookingSteps = ctx.queryParam("cookingSteps");
-      Date publicationDate = dateFormat.parse(ctx.queryParam("publicationDate"));
-      int rating = Integer.parseInt(Objects.requireNonNull(ctx.queryParam("rating")));
+      String recipeName = ctx.formParam("recipeName");
+      String cookingSteps = ctx.formParam("cookingSteps");
+      Date publicationDate = dateFormat.parse(ctx.formParam("publicationDate"));
 
-      Answer answer = new AddRecipe(dataStorage, recipeName, cookingSteps, publicationDate, rating)
+      Answer answer = new AddRecipe(dataStorage, recipeName, cookingSteps, publicationDate)
                 .getAnswer();
       ctx.result(answer.toJson());
     });

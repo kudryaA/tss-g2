@@ -34,32 +34,26 @@ public class PostgresRegistrationModerator {
    */
   boolean createNewModerator() {
     boolean answer = false;
-    PreparedStatement statement = null;
-    try {
-      statement = connection.prepareStatement("SELECT * FROM moderator WHERE login = ?");
+    try (PreparedStatement statement
+                 = connection.prepareStatement("SELECT * FROM moderator WHERE login = ?")) {
       statement.setString(1, login);
 
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next()) {
         return answer;
       } else {
-        statement = connection.prepareStatement("insert into moderator values(?, ?, ?)");
-        statement.setString(1, name);
-        statement.setString(2, login);
-        statement.setString(3, password);
-        answer = statement.executeUpdate() == 1;
+        try (PreparedStatement registrationModeratorStatement
+                     = connection.prepareStatement("insert into moderator values(?, ?, ?)")) {
+          registrationModeratorStatement.setString(1, name);
+          registrationModeratorStatement.setString(2, login);
+          registrationModeratorStatement.setString(3, password);
+          answer = registrationModeratorStatement.executeUpdate() == 1;
+        }
       }
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally {
-      try {
-        if (statement != null) {
-          statement.close();
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
     }
+
     return answer;
   }
 }
