@@ -10,6 +10,7 @@ import tss.g2.fyre.controllers.javalin.JavalinController;
 import tss.g2.fyre.models.Configuration;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.datastorage.postgress.PostgresDataStorage;
+import tss.g2.fyre.utils.ToHash;
 
 /**
  * Main class.
