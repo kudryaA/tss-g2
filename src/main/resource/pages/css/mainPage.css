@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+body {
+	font-family: Roboto;
+}
+.input-group input {
+	border-radius: 2rem;
+}
+.input-group button {
+	border-radius: 2rem;
+}
+.navbar {
+	background: #007bff;
+	background: linear-gradient(to right, #00818a, #283149);
+}
+a {
+	color: white;
+}
+.btn:focus, .btn:active, .input:focus, .input:active, .form-control:focus, .form-control:active {
+   	outline: none !important;
+  	box-shadow: none !important;
+  	border-color: #404b69;
+  	-webkit-appearance:none;
+}
+
+#searchButton {
+	background: #00818a;
+	border: #00818a;
+}
+
+#searchButton:active {
+   	background: #404b69 !important;
+   	border-color: #404b69;
+}

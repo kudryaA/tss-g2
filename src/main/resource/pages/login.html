@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/authentication.css" rel="stylesheet">
+    <style>
+    </style>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script>
+    function login(url) {
+        var check = true;
+        $('input').each(function() {
+            $(this).next("span").hide();
+            if ($(this).val() == "") {
+                $(this).after("<span>This field is required</span>");
+                $(this).css("border-color","red");
+                check = false;
+            } else {
+                $(this).css("border-color","");
+            }
+        });
+        if (check) {
+            var data = {
+                login: document.getElementById("inputLogin").value,
+                password: document.getElementById("inputPassword").value
+            };
+        } else {
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: url,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data,
+            complete: [
+                function (response) {
+                    var answer = $.parseJSON(response.responseText);
+                    if (answer.obj == true) {
+                        window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"mainPage.html");
+                    } else {
+                        alert("Incorrect login or/and password!");
+                    }
+                }
+            ]
+        });
+    }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Enter your credentials:</h5>
+                    <div class="form-label-group">
+                        <input type="text" id="inputLogin" class="form-control" placeholder="Login" autofocus>
+                        <label for="inputLogin">Login</label>
+                    </div>
+                    <div class="form-label-group">
+                        <input type="password" id="inputPassword" class="form-control" placeholder="Password">
+                        <label for="inputPassword">Password</label>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button class="btn btn-lg" type="submit" onclick="login('login')">Log In as user</button>
+                        <button class="btn btn-lg" type="submit" onclick="login('login/moderator')">Log In as
+                            moderator
+                        </button>
+                    </div>
+                    <a href="registration.html">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
