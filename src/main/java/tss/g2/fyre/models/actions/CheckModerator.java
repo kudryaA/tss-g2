@@ -3,6 +3,7 @@ package tss.g2.fyre.models.actions;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Moderator;
+import tss.g2.fyre.utils.ToHash;
 
 /**
  * Class for check moderator authorization.
@@ -24,7 +25,7 @@ public class CheckModerator implements Action {
   public CheckModerator(DataStorage dataStorage, String login, String password) {
     this.dataStorage = dataStorage;
     this.login = login;
-    this.password = password;
+    this.password = new ToHash(password).getHash();
   }
 
   @Override

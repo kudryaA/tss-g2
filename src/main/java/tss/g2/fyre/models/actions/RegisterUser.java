@@ -2,6 +2,7 @@ package tss.g2.fyre.models.actions;
 
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.utils.ToHash;
 
 public class RegisterUser implements Action {
   private DataStorage dataStorage;
@@ -25,7 +26,7 @@ public class RegisterUser implements Action {
                       String name, String surname, String email) {
     this.dataStorage = dataStorage;
     this.login = login;
-    this.password = password;
+    this.password = new ToHash(password).getHash();
     this.name = name;
     this.surname = surname;
     this.email = email;
