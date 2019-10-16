@@ -29,6 +29,7 @@ public class JavalinController implements CreateController {
   @Override
   public void create() {
     app.get("/test", ctx -> ctx.result(new Answer<>(true).toJson()));
+    app.get("/", ctx -> ctx.render("pages/mainPage.html"));
     new AuthorizationController(app, dataStorage).create();
     new RecipeController(app, dataStorage).create();
   }
