@@ -1,6 +1,7 @@
 package tss.g2.fyre.controllers.javalin;
 
 import io.javalin.Javalin;
+
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.CheckAuthorization;
@@ -31,38 +32,38 @@ public class AuthorizationController implements CreateController {
   @Override
   public void create() {
     app.post("/login", ctx -> {
-      String login = ctx.queryParam("login");
-      String password = ctx.queryParam("password");
+      String login = ctx.formParam("login");
+      String password = ctx.formParam("password");
       Answer answer = new CheckAuthorization(dataStorage, login, password).getAnswer();
       ctx.result(answer.toJson());
     });
 
     app.post("/registration", ctx -> {
-      String login = ctx.queryParam("login");
-      String password = ctx.queryParam("password");
-      String name = ctx.queryParam("name");
-      String surname = ctx.queryParam("surname");
-      String email = ctx.queryParam("email");
+      String login = ctx.formParam("login");
+      String password = ctx.formParam("password");
+      String name = ctx.formParam("name");
+      String surname = ctx.formParam("surname");
+      String email = ctx.formParam("email");
 
       Answer answer = new RegisterUser(dataStorage, login, password, name, surname, email)
-              .getAnswer();
+          .getAnswer();
       ctx.result(answer.toJson());
     });
     
     app.post("/login/moderator", ctx -> {
-      String login = ctx.queryParam("login");
-      String password = ctx.queryParam("password");
+      String login = ctx.formParam("login");
+      String password = ctx.formParam("password");
       Answer answer = new CheckModerator(dataStorage, login, password).getAnswer();
       ctx.result(answer.toJson());
     });
 
     app.post("/registration/moderator", ctx -> {
-      String name = ctx.queryParam("name");
-      String login = ctx.queryParam("login");
-      String password = ctx.queryParam("password");
+      String name = ctx.formParam("name");
+      String login = ctx.formParam("login");
+      String password = ctx.formParam("password");
 
       Answer answer = new RegisterModerator(dataStorage, login, password, name)
-              .getAnswer();
+          .getAnswer();
       ctx.result(answer.toJson());
     });
   }

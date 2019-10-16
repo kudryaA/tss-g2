@@ -40,34 +40,28 @@ public class PostgresRegistration {
     */
   boolean createNewPerson() {
     boolean answer = false;
-    PreparedStatement statement = null;
-    try {
-      statement = connection.prepareStatement("SELECT * FROM person WHERE login = ?");
+    try (PreparedStatement statement
+                 = connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {
       statement.setString(1, login);
 
       ResultSet resultSet = statement.executeQuery();
       if (resultSet.next()) {
         return answer;
       } else {
-        statement = connection.prepareStatement("insert into person values(?, ?, ?, ?, false, ?)");
-        statement.setString(1, login);
-        statement.setString(2, password);
-        statement.setString(3, name);
-        statement.setString(4, surname);
-        statement.setString(5, email);
-        answer = statement.executeUpdate() == 1;
+        try (PreparedStatement registrationStatement = connection
+                .prepareStatement("insert into person values(?, ?, ?, ?, false, ?)")) {
+          registrationStatement.setString(1, login);
+          registrationStatement.setString(2, password);
+          registrationStatement.setString(3, name);
+          registrationStatement.setString(4, surname);
+          registrationStatement.setString(5, email);
+          answer = registrationStatement.executeUpdate() == 1;
+        }
       }
     } catch (SQLException e) {
       e.printStackTrace();
-    } finally {
-      try {
-        if (statement != null) {
-          statement.close();
-        }
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
     }
+
     return answer;
   }
 }

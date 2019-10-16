@@ -26,8 +26,10 @@ public class JavalinController implements CreateController {
     this.dataStorage = dataStorage;
   }
 
+  @Override
   public void create() {
     app.get("/test", ctx -> ctx.result(new Answer<>(true).toJson()));
     new AuthorizationController(app, dataStorage).create();
+    new RecipeController(app, dataStorage).create();
   }
 }
