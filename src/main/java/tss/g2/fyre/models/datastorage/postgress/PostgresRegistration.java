@@ -5,6 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class for registration users.
+ *
+ * @author Andrey Sherstyuk
+ */
 public class PostgresRegistration {
   private Connection connection;
   private String login;

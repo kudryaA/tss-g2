@@ -27,6 +27,6 @@ public class RegisterModerator implements Action {
 
   @Override
   public Answer getAnswer() {
-    return new Answer<>(true, dataStorage.createNewModerator(login, password, name));
+    return new Answer<>(true, dataStorage.createModerator(login, password, name));
   }
 }

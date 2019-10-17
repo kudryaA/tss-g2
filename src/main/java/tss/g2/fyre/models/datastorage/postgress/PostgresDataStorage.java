@@ -41,7 +41,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean createNewPerson(String login, String password, String name,
+  public boolean createUser(String login, String password, String name,
                                  String surname, String email) {
     return new PostgresRegistration(connection, login, password, name, surname, email)
             .createUser();
@@ -53,7 +53,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean createNewModerator(String login, String password, String name) {
+  public boolean createModerator(String login, String password, String name) {
     return new PostgresRegistrationModerator(connection, login, password, name)
             .createModerator();
   }
@@ -63,5 +63,10 @@ public class PostgresDataStorage implements DataStorage {
                            String cookingSteps, Date publicationDate) {
     return new PostgresAddRecipe(connection, recipeName, recipeCompostion,
             cookingSteps, publicationDate).addRecipe();
+  }
+
+  @Override
+  public boolean addType(String typeName, String description) {
+    return new PostgresAddType(connection, typeName, description).addType();
   }
 }

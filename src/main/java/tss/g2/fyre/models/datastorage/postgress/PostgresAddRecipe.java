@@ -6,6 +6,11 @@ import java.sql.SQLException;
 
 import java.util.Date;
 
+/**
+ * Class for adding recipe.
+ *
+ * @author Andrey Sherstyuk
+ */
 public class PostgresAddRecipe {
   private Connection connection;
   private String name;

@@ -16,11 +16,12 @@ public class Recipe {
    * @param composition composition of the recipe
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
-   * @param rating recipe reting
+   * @param rating recipe rating
    */
   public Recipe(String name, String composition, String cookingSteps,
                 Date publicationDate, int rating) {
     this.name = name;
+    this.composition = composition;
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
     this.rating = rating;

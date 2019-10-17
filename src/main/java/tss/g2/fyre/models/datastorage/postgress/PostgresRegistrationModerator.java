@@ -5,6 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class for registration moderators.
+ *
+ * @author Andrey Sherstyuk
+ */
 public class PostgresRegistrationModerator {
   private Connection connection;
   private String login;

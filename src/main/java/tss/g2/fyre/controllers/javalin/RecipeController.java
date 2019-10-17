@@ -4,11 +4,11 @@ import io.javalin.Javalin;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Objects;
 
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.AddRecipe;
+import tss.g2.fyre.models.actions.AddType;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 /**
@@ -43,6 +43,14 @@ public class RecipeController implements CreateController {
       Answer answer = new AddRecipe(dataStorage, recipeName,
               recipeComposition, cookingSteps, publicationDate).getAnswer();
 
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/add/type", ctx -> {
+      String typeName = ctx.formParam("typeName");
+      String description = ctx.formParam("description");
+
+      Answer answer = new AddType(dataStorage, typeName, description).getAnswer();
       ctx.result(answer.toJson());
     });
   }

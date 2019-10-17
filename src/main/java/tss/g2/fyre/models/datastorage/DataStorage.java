@@ -39,7 +39,7 @@ public interface DataStorage {
    * @param email user email
    * @return result of adding user
    */
-  boolean createNewPerson(String login, String password, String name, String surname, String email);
+  boolean createUser(String login, String password, String name, String surname, String email);
 
   /**
    * Method for adding new moderator.
@@ -49,7 +49,7 @@ public interface DataStorage {
    * @param name moderator name
    * @return result of adding moderator
    */
-  boolean createNewModerator(String login, String password, String name);
+  boolean createModerator(String login, String password, String name);
 
   /**
    * Method for adding new recipe.
@@ -62,4 +62,13 @@ public interface DataStorage {
    */
   boolean addRecipe(String recipeName, String recipeComposition,
                     String cookingSteps, Date publicationDate);
+
+  /**
+   * Method for adding new type.
+   *
+   * @param typeName name of type
+   * @param description type description
+   * @return result of adding type
+   */
+  boolean addType(String typeName, String description);
 }
