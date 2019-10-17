@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Recipe {
   private String name;
+  private String composition;
   private String cookingSteps;
   private Date publicationDate;
   private int rating;
@@ -12,11 +13,13 @@ public class Recipe {
    * Constructor.
    *
    * @param name recipe name
+   * @param composition composition of the recipe
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
    * @param rating recipe reting
    */
-  public Recipe(String name, String cookingSteps, Date publicationDate, int rating) {
+  public Recipe(String name, String composition, String cookingSteps,
+                Date publicationDate, int rating) {
     this.name = name;
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
@@ -29,6 +32,14 @@ public class Recipe {
    */
   public String getName() {
     return name;
+  }
+
+  /**
+   * Method for get composition of the recipe.
+   * @return composition of the recipe
+   */
+  public String getComposition() {
+    return composition;
   }
 
   /**

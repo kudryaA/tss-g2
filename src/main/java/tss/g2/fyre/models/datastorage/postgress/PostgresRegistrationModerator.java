@@ -32,7 +32,7 @@ public class PostgresRegistrationModerator {
    *
    * @return result of adding moderator
    */
-  boolean createNewModerator() {
+  boolean createModerator() {
     boolean answer = false;
     try (PreparedStatement statement
                  = connection.prepareStatement("SELECT * FROM moderator WHERE login = ?")) {

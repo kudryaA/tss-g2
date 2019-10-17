@@ -36,11 +36,13 @@ public class RecipeController implements CreateController {
       SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
       String recipeName = ctx.formParam("recipeName");
+      String recipeComposition = ctx.formParam("recipeComposition");
       String cookingSteps = ctx.formParam("cookingSteps");
       Date publicationDate = dateFormat.parse(ctx.formParam("publicationDate"));
 
-      Answer answer = new AddRecipe(dataStorage, recipeName, cookingSteps, publicationDate)
-                .getAnswer();
+      Answer answer = new AddRecipe(dataStorage, recipeName,
+              recipeComposition, cookingSteps, publicationDate).getAnswer();
+
       ctx.result(answer.toJson());
     });
   }

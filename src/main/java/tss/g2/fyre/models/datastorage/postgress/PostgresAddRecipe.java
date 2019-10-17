@@ -9,6 +9,7 @@ import java.util.Date;
 public class PostgresAddRecipe {
   private Connection connection;
   private String name;
+  private String recipeComposition;
   private String cookingSteps;
   private Date publicationDate;
 
@@ -17,13 +18,15 @@ public class PostgresAddRecipe {
    *
    * @param connection connection to database
    * @param name recipe name
+   * @param recipeComposition composition of the recipe
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
    */
-  public PostgresAddRecipe(Connection connection, String name, String cookingSteps,
-                           Date publicationDate) {
+  public PostgresAddRecipe(Connection connection, String name, String recipeComposition,
+                           String cookingSteps, Date publicationDate) {
     this.connection = connection;
     this.name = name;
+    this.recipeComposition = recipeComposition;
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
   }
@@ -37,10 +40,11 @@ public class PostgresAddRecipe {
     boolean result = false;
 
     try (PreparedStatement statement = connection
-            .prepareStatement("insert into recipe values (nextval('recipeSeq'), ?, ?, ?, 0)")) {
+            .prepareStatement("insert into recipe values (nextval('recipeSeq'), ?, ?, ?, ?, 0)")) {
       statement.setString(1, name);
-      statement.setString(2, cookingSteps);
-      statement.setDate(3, new java.sql.Date(publicationDate.getTime()));
+      statement.setString(2, recipeComposition);
+      statement.setString(3, cookingSteps);
+      statement.setDate(4, new java.sql.Date(publicationDate.getTime()));
       result = statement.executeUpdate() == 1;
     } catch (SQLException e) {
       e.printStackTrace();

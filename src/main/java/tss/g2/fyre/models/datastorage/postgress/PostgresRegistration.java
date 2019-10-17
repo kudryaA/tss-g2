@@ -38,7 +38,7 @@ public class PostgresRegistration {
     *
     * @return result of adding person
     */
-  boolean createNewPerson() {
+  boolean createUser() {
     boolean answer = false;
     try (PreparedStatement statement
                  = connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {

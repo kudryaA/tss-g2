@@ -55,9 +55,11 @@ public interface DataStorage {
    * Method for adding new recipe.
    *
    * @param recipeName recipe name
+   * @param recipeComposition composition of the recipe
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
    * @return result of adding recipe
    */
-  boolean addRecipe(String recipeName, String cookingSteps, Date publicationDate);
+  boolean addRecipe(String recipeName, String recipeComposition,
+                    String cookingSteps, Date publicationDate);
 }
