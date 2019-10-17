@@ -35,7 +35,7 @@ public class PostgresAddType {
   public boolean addType() {
     boolean result = false;
     try (PreparedStatement addTypeStatement = connection
-            .prepareStatement("insert into type values (nextval('typeseq'), ?, ?)")) {
+            .prepareStatement("insert into type values (?, ?)")) {
       addTypeStatement.setString(1, typeName);
       addTypeStatement.setString(2, description);
 

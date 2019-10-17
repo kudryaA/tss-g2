@@ -2,9 +2,12 @@ package tss.g2.fyre.models.datastorage.postgress;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Class for adding recipe.
@@ -17,6 +20,7 @@ public class PostgresAddRecipe {
   private String recipeComposition;
   private String cookingSteps;
   private Date publicationDate;
+  List<String> selectedTypes;
 
   /**
    * Constructor.
@@ -26,14 +30,16 @@ public class PostgresAddRecipe {
    * @param recipeComposition composition of the recipe
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
+   * @param selectedTypes list with types that the moderator selects
    */
   public PostgresAddRecipe(Connection connection, String name, String recipeComposition,
-                           String cookingSteps, Date publicationDate) {
+                           String cookingSteps, Date publicationDate, List<String> selectedTypes) {
     this.connection = connection;
     this.name = name;
     this.recipeComposition = recipeComposition;
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
+    this.selectedTypes = selectedTypes;
   }
 
   /**
@@ -45,12 +51,31 @@ public class PostgresAddRecipe {
     boolean result = false;
 
     try (PreparedStatement statement = connection
-            .prepareStatement("insert into recipe values (nextval('recipeSeq'), ?, ?, ?, ?, 0)")) {
+            .prepareStatement("insert into recipe values (?, ?, ?, ?, 0)")) {
       statement.setString(1, name);
       statement.setString(2, recipeComposition);
       statement.setString(3, cookingSteps);
       statement.setDate(4, new java.sql.Date(publicationDate.getTime()));
-      result = statement.executeUpdate() == 1;
+
+      if (statement.executeUpdate() == 1) {
+        int i = 0;
+
+        for (String type : selectedTypes) {
+          try (PreparedStatement addRelationStatement =
+                       connection.prepareStatement("insert into recipetype values (?, ?)")) {
+            addRelationStatement.setString(1, name);
+            addRelationStatement.setString(2, type);
+
+            if (addRelationStatement.executeUpdate() == 1) {
+              i++;
+            }
+          }
+        }
+
+        if (i == selectedTypes.size()) {
+          result = true;
+        }
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     }

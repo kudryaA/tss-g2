@@ -39,9 +39,10 @@ public class RecipeController implements CreateController {
       String recipeComposition = ctx.formParam("recipeComposition");
       String cookingSteps = ctx.formParam("cookingSteps");
       Date publicationDate = dateFormat.parse(ctx.formParam("publicationDate"));
+      String selectedTypes = ctx.formParam("selectedTypes");
 
       Answer answer = new AddRecipe(dataStorage, recipeName,
-              recipeComposition, cookingSteps, publicationDate).getAnswer();
+              recipeComposition, cookingSteps, publicationDate, selectedTypes).getAnswer();
 
       ctx.result(answer.toJson());
     });

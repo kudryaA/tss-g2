@@ -1,6 +1,7 @@
 package tss.g2.fyre.models.datastorage;
 
 import java.util.Date;
+import java.util.List;
 
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
@@ -58,10 +59,11 @@ public interface DataStorage {
    * @param recipeComposition composition of the recipe
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
+   * @param selectedTypes list with types that the moderator selects
    * @return result of adding recipe
    */
-  boolean addRecipe(String recipeName, String recipeComposition,
-                    String cookingSteps, Date publicationDate);
+  boolean addRecipe(String recipeName, String recipeComposition, String cookingSteps,
+                    Date publicationDate, List<String> selectedTypes);
 
   /**
    * Method for adding new type.

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
@@ -60,9 +61,9 @@ public class PostgresDataStorage implements DataStorage {
 
   @Override
   public boolean addRecipe(String recipeName, String recipeCompostion,
-                           String cookingSteps, Date publicationDate) {
+                           String cookingSteps, Date publicationDate, List<String> selectedTypes) {
     return new PostgresAddRecipe(connection, recipeName, recipeCompostion,
-            cookingSteps, publicationDate).addRecipe();
+            cookingSteps, publicationDate, selectedTypes).addRecipe();
   }
 
   @Override
