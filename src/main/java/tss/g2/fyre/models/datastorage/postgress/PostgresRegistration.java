@@ -5,6 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class for registration users.
+ *
+ * @author Andrey Sherstyuk
+ */
 public class PostgresRegistration {
   private Connection connection;
   private String login;
@@ -38,7 +43,7 @@ public class PostgresRegistration {
     *
     * @return result of adding person
     */
-  boolean createNewPerson() {
+  boolean createUser() {
     boolean answer = false;
     try (PreparedStatement statement
                  = connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {

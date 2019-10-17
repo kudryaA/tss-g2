@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
@@ -41,10 +42,10 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean createNewPerson(String login, String password, String name,
+  public boolean createUser(String login, String password, String name,
                                  String surname, String email) {
     return new PostgresRegistration(connection, login, password, name, surname, email)
-            .createNewPerson();
+            .createUser();
   }
   
   @Override
@@ -53,15 +54,20 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean createNewModerator(String login, String password, String name) {
+  public boolean createModerator(String login, String password, String name) {
     return new PostgresRegistrationModerator(connection, login, password, name)
-            .createNewModerator();
+            .createModerator();
   }
 
   @Override
-  public boolean addRecipe(String recipeName, String cookingSteps,
-                           Date publicationDate) {
-    return new PostgresAddRecipe(connection, recipeName, cookingSteps, publicationDate)
-            .addRecipe();
+  public boolean addRecipe(String recipeName, String recipeCompostion,
+                           String cookingSteps, Date publicationDate, List<String> selectedTypes) {
+    return new PostgresAddRecipe(connection, recipeName, recipeCompostion,
+            cookingSteps, publicationDate, selectedTypes).addRecipe();
+  }
+
+  @Override
+  public boolean addType(String typeName, String description) {
+    return new PostgresAddType(connection, typeName, description).addType();
   }
 }

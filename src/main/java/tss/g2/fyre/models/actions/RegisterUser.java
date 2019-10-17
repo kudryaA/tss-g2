@@ -35,6 +35,6 @@ public class RegisterUser implements Action {
   @Override
   public Answer getAnswer() {
     return new Answer<>(true,
-            dataStorage.createNewPerson(login, password, name, surname, email));
+            dataStorage.createUser(login, password, name, surname, email));
   }
 }
