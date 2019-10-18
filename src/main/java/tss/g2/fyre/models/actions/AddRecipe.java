@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import io.javalin.core.util.FileUtil;
+import io.javalin.http.UploadedFile;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.utils.RandomString;
 
 public class AddRecipe implements Action {
   private DataStorage dataStorage;
@@ -15,6 +18,7 @@ public class AddRecipe implements Action {
   private String cookingSteps;
   private Date publicationDate;
   private String selectedTypes;
+  private String image;
 
   /**
    * Constructor.
@@ -25,15 +29,18 @@ public class AddRecipe implements Action {
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
    * @param selectedTypes types that the moderator selects
+   * @param image image of recipe
    */
   public AddRecipe(DataStorage dataStorage, String recipeName, String recipeComposition,
-                   String cookingSteps, Date publicationDate, String selectedTypes) {
+                   String cookingSteps, Date publicationDate, String selectedTypes, UploadedFile image) {
     this.dataStorage = dataStorage;
     this.recipeName = recipeName;
     this.recipeComposition = recipeComposition;
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
     this.selectedTypes = selectedTypes;
+    this.image = generatePath();
+    FileUtil.streamToFile(image.getContent(), this.image);
   }
 
   @Override
@@ -41,6 +48,10 @@ public class AddRecipe implements Action {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
 
     return new Answer<>(true, dataStorage
-            .addRecipe(recipeName, recipeComposition, cookingSteps, publicationDate, typesList));
+            .addRecipe(recipeName, recipeComposition, cookingSteps, publicationDate, typesList, image));
+  }
+
+  private String generatePath() {
+    return new RandomString(20).generate();
   }
 }
