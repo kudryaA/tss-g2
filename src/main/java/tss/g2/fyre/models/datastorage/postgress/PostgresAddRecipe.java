@@ -19,8 +19,9 @@ public class PostgresAddRecipe {
   private String name;
   private String recipeComposition;
   private String cookingSteps;
+  private String image;
   private Date publicationDate;
-  List<String> selectedTypes;
+  private List<String> selectedTypes;
 
   /**
    * Constructor.
@@ -31,15 +32,18 @@ public class PostgresAddRecipe {
    * @param cookingSteps recipe cooking steps
    * @param publicationDate recipe publication date
    * @param selectedTypes list with types that the moderator selects
+   * @param image image of recipe
    */
   public PostgresAddRecipe(Connection connection, String name, String recipeComposition,
-                           String cookingSteps, Date publicationDate, List<String> selectedTypes) {
+                           String cookingSteps, Date publicationDate,
+                           List<String> selectedTypes, String image) {
     this.connection = connection;
     this.name = name;
     this.recipeComposition = recipeComposition;
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
     this.selectedTypes = selectedTypes;
+    this.image = image;
   }
 
   /**
@@ -51,11 +55,12 @@ public class PostgresAddRecipe {
     boolean result = false;
 
     try (PreparedStatement statement = connection
-            .prepareStatement("insert into recipe values (?, ?, ?, ?, 0)")) {
+            .prepareStatement("insert into recipe values (?, ?, ?, ?, ?, 0)")) {
       statement.setString(1, name);
       statement.setString(2, recipeComposition);
       statement.setString(3, cookingSteps);
       statement.setDate(4, new java.sql.Date(publicationDate.getTime()));
+      statement.setString(5, image);
 
       if (statement.executeUpdate() == 1) {
         int i = 0;

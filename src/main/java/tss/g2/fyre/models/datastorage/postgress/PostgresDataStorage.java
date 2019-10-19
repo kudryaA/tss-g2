@@ -60,10 +60,10 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean addRecipe(String recipeName, String recipeCompostion,
-                           String cookingSteps, Date publicationDate, List<String> selectedTypes) {
+  public boolean addRecipe(String recipeName, String recipeCompostion, String cookingSteps,
+                           Date publicationDate, List<String> selectedTypes, String image) {
     return new PostgresAddRecipe(connection, recipeName, recipeCompostion,
-            cookingSteps, publicationDate, selectedTypes).addRecipe();
+            cookingSteps, publicationDate, selectedTypes, image).addRecipe();
   }
 
   @Override
