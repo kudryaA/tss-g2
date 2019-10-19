@@ -1,15 +1,16 @@
 package tss.g2.fyre.controllers.javalin;
 
 import io.javalin.Javalin;
+import io.javalin.http.UploadedFile;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.javalin.http.UploadedFile;
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.AddRecipe;
 import tss.g2.fyre.models.actions.AddType;
+import tss.g2.fyre.models.actions.GetTypes;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 /**
@@ -56,5 +57,7 @@ public class RecipeController implements CreateController {
       Answer answer = new AddType(dataStorage, typeName, description).getAnswer();
       ctx.result(answer.toJson());
     });
+
+    app.post("/select/types", ctx -> ctx.result(new GetTypes(dataStorage).getAnswer().toJson()));
   }
 }
