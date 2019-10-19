@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+body {
+	font-family: Roboto;
+}
+label {
+	font-size: 1.2rem;
+	padding-top: 0.5rem;
+}
+#content-container {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+#submitRecipe:focus, #submitRecipe:active, .input:focus, .input:active, .form-control:focus, .form-control:active {
+   	outline: none !important;
+  	box-shadow: none !important;
+  	border-color: #404b69;
+  	-webkit-appearance:none;
+}
+#submitRecipe {
+	background: #00818a;
+	border: #00818a;
+	border-radius: 2rem;
+	height: 3rem;
+	width: 10rem;
+}
+#submitRecipe:hover {
+	background: #00818a;
+	border: #00818a;
+}
+#submitRecipe:active {
+   	background: #404b69 !important;
+   	border-color: #404b69;
+}
+.form-control {
+	-webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    border-radius: 2rem;
+}
+.form-group span {
+  padding-left: 20px;
+  font-size: 0.7em;
+  color: red;
+}
