@@ -70,4 +70,9 @@ public class PostgresDataStorage implements DataStorage {
   public boolean addType(String typeName, String description) {
     return new PostgresAddType(connection, typeName, description).addType();
   }
+
+  @Override
+  public boolean changeBannedStatus(String userLogin) {
+    return new PostgresAdminAction(connection, userLogin).changeBannedStatus();
+  }
 }

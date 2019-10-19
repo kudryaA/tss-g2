@@ -73,4 +73,11 @@ public interface DataStorage {
    * @return result of adding type
    */
   boolean addType(String typeName, String description);
+
+  /**
+   * Method for change user banned status.
+   * @param userLogin user login
+   * @return result of changing status
+   */
+  boolean changeBannedStatus(String userLogin);
 }
