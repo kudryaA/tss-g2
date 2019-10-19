@@ -1,12 +1,15 @@
 package tss.g2.fyre.models.actions;
 
+import com.google.common.io.Files;
+import io.javalin.http.UploadedFile;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import io.javalin.core.util.FileUtil;
-import io.javalin.http.UploadedFile;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.utils.RandomString;
@@ -32,7 +35,8 @@ public class AddRecipe implements Action {
    * @param image image of recipe
    */
   public AddRecipe(DataStorage dataStorage, String recipeName, String recipeComposition,
-                   String cookingSteps, Date publicationDate, String selectedTypes, UploadedFile image) {
+                   String cookingSteps, Date publicationDate,
+                   String selectedTypes, UploadedFile image) {
     this.dataStorage = dataStorage;
     this.recipeName = recipeName;
     this.recipeComposition = recipeComposition;
@@ -40,7 +44,16 @@ public class AddRecipe implements Action {
     this.publicationDate = publicationDate;
     this.selectedTypes = selectedTypes;
     this.image = generatePath();
-    FileUtil.streamToFile(image.getContent(), this.image);
+
+    try {
+      InputStream initialStream = image.getContent();
+      byte[] buffer = new byte[initialStream.available()];
+      initialStream.read(buffer);
+      File targetFile = new File(this.image);
+      Files.write(buffer, targetFile);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
@@ -48,7 +61,8 @@ public class AddRecipe implements Action {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
 
     return new Answer<>(true, dataStorage
-            .addRecipe(recipeName, recipeComposition, cookingSteps, publicationDate, typesList, image));
+            .addRecipe(recipeName, recipeComposition,
+                cookingSteps, publicationDate, typesList, image));
   }
 
   private String generatePath() {
