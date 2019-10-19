@@ -2,11 +2,9 @@ package tss.g2.fyre.models.datastorage.postgress;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -14,16 +12,27 @@ import java.util.List;
  *
  * @author Andrey Sherstyuk
  */
-public class PostgresAddRecipe {
+public class PostgresActionWithRecipe {
   private Connection connection;
   private String name;
   private String recipeComposition;
   private String cookingSteps;
   private Date publicationDate;
-  List<String> selectedTypes;
+  private List<String> selectedTypes;
 
   /**
-   * Constructor.
+   * Constructor for delete recipe.
+   *
+   * @param connection connection to database
+   * @param name recipe name
+   */
+  public PostgresActionWithRecipe(Connection connection, String name) {
+    this.connection = connection;
+    this.name = name;
+  }
+
+  /**
+   * Constructor for add recipe.
    *
    * @param connection connection to database
    * @param name recipe name
@@ -32,8 +41,9 @@ public class PostgresAddRecipe {
    * @param publicationDate recipe publication date
    * @param selectedTypes list with types that the moderator selects
    */
-  public PostgresAddRecipe(Connection connection, String name, String recipeComposition,
-                           String cookingSteps, Date publicationDate, List<String> selectedTypes) {
+  public PostgresActionWithRecipe(Connection connection, String name,
+                                  String recipeComposition, String cookingSteps,
+                                  Date publicationDate, List<String> selectedTypes) {
     this.connection = connection;
     this.name = name;
     this.recipeComposition = recipeComposition;
@@ -75,6 +85,31 @@ public class PostgresAddRecipe {
         if (i == selectedTypes.size()) {
           result = true;
         }
+      }
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    return result;
+  }
+
+  /**
+   * Method for removing the recipe.
+   *
+   * @return result of deleting
+   */
+  public boolean deleteRecipe() {
+    boolean result = false;
+
+    try (PreparedStatement deleteRelationStatement =
+                 connection.prepareStatement("delete from recipetype where recipe_name = ?")) {
+      deleteRelationStatement.setString(1, name);
+      deleteRelationStatement.executeUpdate();
+
+      try (PreparedStatement deleteRecipeStatement =
+                   connection.prepareStatement("delete from recipe where name = ?")) {
+        deleteRecipeStatement.setString(1, name);
+        result = deleteRecipeStatement.executeUpdate() == 1;
       }
     } catch (SQLException e) {
       e.printStackTrace();

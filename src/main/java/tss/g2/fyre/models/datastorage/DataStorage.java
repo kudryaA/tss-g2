@@ -80,4 +80,11 @@ public interface DataStorage {
    * @return result of changing status
    */
   boolean changeBannedStatus(String userLogin);
+
+  /**
+   * Method for removing the recipe.
+   * @param recipeName recipe name
+   * @return result of deleting
+   */
+  boolean deleteRecipe(String recipeName);
 }

@@ -62,7 +62,7 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean addRecipe(String recipeName, String recipeCompostion,
                            String cookingSteps, Date publicationDate, List<String> selectedTypes) {
-    return new PostgresAddRecipe(connection, recipeName, recipeCompostion,
+    return new PostgresActionWithRecipe(connection, recipeName, recipeCompostion,
             cookingSteps, publicationDate, selectedTypes).addRecipe();
   }
 
@@ -74,5 +74,10 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean changeBannedStatus(String userLogin) {
     return new PostgresAdminAction(connection, userLogin).changeBannedStatus();
+  }
+
+  @Override
+  public boolean deleteRecipe(String recipeName) {
+    return new PostgresActionWithRecipe(connection, recipeName).deleteRecipe();
   }
 }
