@@ -5,6 +5,7 @@ import io.javalin.Javalin;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import io.javalin.http.UploadedFile;
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.AddRecipe;
@@ -40,9 +41,10 @@ public class RecipeController implements CreateController {
       String cookingSteps = ctx.formParam("cookingSteps");
       Date publicationDate = dateFormat.parse(ctx.formParam("publicationDate"));
       String selectedTypes = ctx.formParam("selectedTypes");
+      UploadedFile image = ctx.uploadedFile("image");
 
       Answer answer = new AddRecipe(dataStorage, recipeName,
-              recipeComposition, cookingSteps, publicationDate, selectedTypes).getAnswer();
+              recipeComposition, cookingSteps, publicationDate, selectedTypes, image).getAnswer();
 
       ctx.result(answer.toJson());
     });
