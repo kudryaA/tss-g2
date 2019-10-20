@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Empty page</title>
+
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/moderatorPage.css" rel="stylesheet">
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(function() {
+            //TODO check is user logged in
+            /*$.ajax({
+                type: "POST",
+                url: "",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {*/
+                        //var answer = $.parseJSON(response.responseText);
+                        //if (answer.obj == true) {
+                        //    window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"login.html");
+                        //} else {
+                            //alert("Something went wrong!");
+                        //}
+                    /*}
+                ]
+            });*/
+            var user1 = {login: 'a', name: 'a', surname: 'a', email: 'a', isBanned: 'true'};
+            var user2 = {login: 'b', name: 'a', surname: 'b', email: 'a', isBanned: 'false'};
+            var user3 = {login: 'a', name: 'b', surname: 'a', email: 'b', isBanned: 'false'};
+            $("#users-table tbody tr").remove();
+            var row = "<tr><td>" + user1.login + "</td><td>" + user1.name + "</td><td>" + user1.surname + "</td><td>" 
+                + user1.email + "</td><td>" + user1.isBanned + "</td><td><button class='ban-btn'>" + banUnbanBtnName(user1.isBanned) 
+                + "</button></td></tr>"
+            $("#users-table tbody").append(row);
+            row = "<tr><td>" + user2.login + "</td><td>" + user2.name + "</td><td>" + user2.surname + "</td><td>" + user2.email 
+                + "</td><td>" + user2.isBanned + "</td><td><button class='ban-btn'>" + banUnbanBtnName(user2.isBanned) 
+                + "</button></td></tr>"
+            $("#users-table tbody").append(row);
+            row = "<tr><td>" + user3.login + "</td><td>" + user3.name + "</td><td>" + user3.surname + "</td><td>" + user3.email 
+                + "</td><td>" + user3.isBanned + "</td><td><button class='ban-btn'>" + banUnbanBtnName(user3.isBanned) 
+                + "</button></td></tr>"
+            $("#users-table tbody").append(row);
+
+            $(".ban-btn").on('click', function(event){
+                alert($(this).html());
+            });
+        });
+
+        function banUnbanBtnName(status) {
+            if (status == "true") {
+                return 'Unban';
+            } else {
+                return 'Ban';
+            }
+        }
+
+    </script>
+</head>
+<body>
+<!-- Page Content -->
+<div class="container" id="main-container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <!-- Page Content -->
+            <div class="container" id="content-container">
+                <table class="table" id="users-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Login</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Surname</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Is banned</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
