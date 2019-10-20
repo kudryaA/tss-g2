@@ -44,7 +44,7 @@ class PostgresGetAuthorization {
         String password = resultSet.getString("password");
         String name = resultSet.getString("name");
         String surname = resultSet.getString("surname");
-        String bannedStatus = resultSet.getString("bannedStatus");
+        boolean bannedStatus = resultSet.getBoolean("bannedStatus");
         String email = resultSet.getString("email");
         result = new Person(login, password, name, surname, bannedStatus, email);
       }

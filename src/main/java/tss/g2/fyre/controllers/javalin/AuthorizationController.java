@@ -6,6 +6,7 @@ import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.CheckAuthorization;
 import tss.g2.fyre.models.actions.CheckModerator;
+import tss.g2.fyre.models.actions.GetUsers;
 import tss.g2.fyre.models.actions.RegisterModerator;
 import tss.g2.fyre.models.actions.RegisterUser;
 import tss.g2.fyre.models.datastorage.DataStorage;
@@ -66,5 +67,7 @@ public class AuthorizationController implements CreateController {
           .getAnswer();
       ctx.result(answer.toJson());
     });
+
+    app.post("/select/users", ctx -> ctx.result(new GetUsers(dataStorage).getAnswer().toJson()));
   }
 }

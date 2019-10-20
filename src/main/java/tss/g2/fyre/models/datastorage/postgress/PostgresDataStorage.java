@@ -11,6 +11,7 @@ import java.util.Properties;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
+import tss.g2.fyre.models.entity.Type;
 
 /**
  * Postgres data storage.
@@ -69,5 +70,15 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean addType(String typeName, String description) {
     return new PostgresAddType(connection, typeName, description).addType();
+  }
+
+  @Override
+  public List<Person> getPersonsInformation() {
+    return new PostgresGetUserInformation(connection).getUsersInformation();
+  }
+
+  @Override
+  public List<Type> getTypesInformation() {
+    return new PostgresGetTypeInformation(connection).getTypesInformation();
   }
 }

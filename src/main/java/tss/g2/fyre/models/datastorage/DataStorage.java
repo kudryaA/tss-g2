@@ -5,6 +5,7 @@ import java.util.List;
 
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
+import tss.g2.fyre.models.entity.Type;
 
 /**
  * This interface describe data storage worker.
@@ -74,4 +75,18 @@ public interface DataStorage {
    * @return result of adding type
    */
   boolean addType(String typeName, String description);
+
+  /**
+   * Method for select persons information.
+   *
+   * @return list with persons info
+   */
+  List<Person> getPersonsInformation();
+
+  /**
+   * Method for select types information.
+   *
+   * @return list with types info
+   */
+  List<Type> getTypesInformation();
 }
