@@ -10,6 +10,7 @@ import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.AddRecipe;
 import tss.g2.fyre.models.actions.AddType;
+import tss.g2.fyre.models.actions.DeleteRecipe;
 import tss.g2.fyre.models.actions.GetTypes;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
@@ -55,6 +56,13 @@ public class RecipeController implements CreateController {
       String description = ctx.formParam("description");
 
       Answer answer = new AddType(dataStorage, typeName, description).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/delete/recipe", ctx -> {
+      String recipeName = ctx.formParam("recipeName");
+
+      Answer answer = new DeleteRecipe(dataStorage, recipeName).getAnswer();
       ctx.result(answer.toJson());
     });
 

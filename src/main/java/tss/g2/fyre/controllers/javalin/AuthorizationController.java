@@ -4,6 +4,7 @@ import io.javalin.Javalin;
 
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.actions.ChangeBannedStatus;
 import tss.g2.fyre.models.actions.CheckAuthorization;
 import tss.g2.fyre.models.actions.CheckModerator;
 import tss.g2.fyre.models.actions.GetUsers;
@@ -65,6 +66,13 @@ public class AuthorizationController implements CreateController {
 
       Answer answer = new RegisterModerator(dataStorage, login, password, name)
           .getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/change/status", ctx -> {
+      String userLogin = ctx.formParam("userLogin");
+
+      Answer answer = new ChangeBannedStatus(dataStorage, userLogin).getAnswer();
       ctx.result(answer.toJson());
     });
 

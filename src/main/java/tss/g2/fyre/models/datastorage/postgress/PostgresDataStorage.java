@@ -81,4 +81,14 @@ public class PostgresDataStorage implements DataStorage {
   public List<Type> getTypesInformation() {
     return new PostgresGetTypeInformation(connection).getTypesInformation();
   }
+
+  @Override
+  public boolean changeBannedStatus(String userLogin) {
+    return new PostgresAdminAction(connection, userLogin).changeBannedStatus();
+  }
+
+  @Override
+  public boolean deleteRecipe(String recipeName) {
+    return new PostgresDeleteRecipe(connection, recipeName).deleteRecipe();
+  }
 }
