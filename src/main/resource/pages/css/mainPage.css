@@ -31,3 +31,20 @@ a {
    	background: #404b69 !important;
    	border-color: #404b69;
 }
+
+#content-container .btn:active {
+  background-color: #404b69 !important;
+  border-color: #404b69 !important;
+}
+#content-container .btn {
+	font-size: 100%;
+	border: 0;
+	height: auto;
+	border-radius: 5rem;
+	transition: all 0.2s;
+	color: white;
+	background: #00818a;
+	width: 100%;
+	text-align: center;
+	padding: 10px 0;
+}
