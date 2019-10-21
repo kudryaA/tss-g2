@@ -8,7 +8,7 @@ import java.sql.SQLException;
  * Class for handling administrator actions.
  * @author Andrey Sherstyuk
  */
-public class PostgresAdminAction {
+public class AdminAction {
   private Connection connection;
   private String userLogin;
 
@@ -18,7 +18,7 @@ public class PostgresAdminAction {
    * @param connection connection to database
    * @param userLogin user login
    */
-  public PostgresAdminAction(Connection connection, String userLogin) {
+  public AdminAction(Connection connection, String userLogin) {
     this.connection = connection;
     this.userLogin = userLogin;
   }

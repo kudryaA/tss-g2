@@ -1,8 +1,12 @@
-package tss.g2.fyre.models.actions;
+package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.actions.auth.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
+/**
+ * Action for add type.
+ */
 public class AddType implements Action {
   private DataStorage dataStorage;
   private String typeName;
@@ -22,7 +26,7 @@ public class AddType implements Action {
   }
 
   @Override
-  public Answer getAnswer() {
+  public Answer getAnswer(String user) {
     return new Answer<>(true, dataStorage.addType(typeName, description));
   }
 }

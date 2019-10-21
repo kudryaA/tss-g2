@@ -62,10 +62,12 @@ public interface DataStorage {
    * @param publicationDate recipe publication date
    * @param selectedTypes list with types that the moderator selects
    * @param image image of recipe
+   * @param user owner of recipe
    * @return result of adding recipe*
    */
   boolean addRecipe(String recipeName, String recipeComposition, String cookingSteps,
-                    Date publicationDate, List<String> selectedTypes, String image);
+                    Date publicationDate, List<String> selectedTypes, String image,
+                    String user);
 
   /**
    * Method for adding new type.

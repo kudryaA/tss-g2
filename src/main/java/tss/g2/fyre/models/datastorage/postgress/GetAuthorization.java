@@ -12,7 +12,7 @@ import tss.g2.fyre.models.entity.Person;
  *
  * @author Anton Kudryavtsev
  */
-class PostgresGetAuthorization {
+class GetAuthorization {
 
   private Connection connection;
   private String login;
@@ -23,7 +23,7 @@ class PostgresGetAuthorization {
    * @param connection postgres jdbc connection
    * @param login for authorization
    */
-  PostgresGetAuthorization(Connection connection, String login) {
+  GetAuthorization(Connection connection, String login) {
     this.connection = connection;
     this.login = login;
   }

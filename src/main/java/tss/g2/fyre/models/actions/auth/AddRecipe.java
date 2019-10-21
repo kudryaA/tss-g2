@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.actions;
+package tss.g2.fyre.models.actions.auth;
 
 import com.google.common.io.Files;
 import io.javalin.http.UploadedFile;
@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.actions.auth.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.utils.RandomString;
 
@@ -57,12 +58,12 @@ public class AddRecipe implements Action {
   }
 
   @Override
-  public Answer getAnswer() {
+  public Answer getAnswer(String user) {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
 
     return new Answer<>(true, dataStorage
             .addRecipe(recipeName, recipeComposition,
-                cookingSteps, publicationDate, typesList, image));
+                cookingSteps, publicationDate, typesList, image, user));
   }
 
   private String generatePath() {

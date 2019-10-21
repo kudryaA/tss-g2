@@ -9,7 +9,7 @@ import java.util.List;
 
 import tss.g2.fyre.models.entity.Person;
 
-public class PostgresGetUserInformation {
+public class GetUserInformation {
 
   private Connection connection;
 
@@ -18,7 +18,7 @@ public class PostgresGetUserInformation {
    *
    * @param connection connection to database
    */
-  public PostgresGetUserInformation(Connection connection) {
+  public GetUserInformation(Connection connection) {
     this.connection = connection;
   }
 

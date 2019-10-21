@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Andrey Sherstyuk
  */
-public class PostgresAddRecipe {
+public class AddRecipe {
   private Connection connection;
   private String name;
   private String recipeComposition;
@@ -22,6 +22,7 @@ public class PostgresAddRecipe {
   private String image;
   private Date publicationDate;
   private List<String> selectedTypes;
+  private String user;
 
   /**
    * Constructor.
@@ -33,10 +34,11 @@ public class PostgresAddRecipe {
    * @param publicationDate recipe publication date
    * @param selectedTypes list with types that the moderator selects
    * @param image image of recipe
+   * @param user owner of recipe
    */
-  public PostgresAddRecipe(Connection connection, String name, String recipeComposition,
-                           String cookingSteps, Date publicationDate,
-                           List<String> selectedTypes, String image) {
+  public AddRecipe(Connection connection, String name, String recipeComposition,
+                   String cookingSteps, Date publicationDate,
+                   List<String> selectedTypes, String image, String user) {
     this.connection = connection;
     this.name = name;
     this.recipeComposition = recipeComposition;
@@ -44,6 +46,7 @@ public class PostgresAddRecipe {
     this.publicationDate = publicationDate;
     this.selectedTypes = selectedTypes;
     this.image = image;
+    this.user = user;
   }
 
   /**
@@ -55,12 +58,13 @@ public class PostgresAddRecipe {
     boolean result = false;
 
     try (PreparedStatement statement = connection
-            .prepareStatement("insert into recipe values (?, ?, ?, ?, ?, 0)")) {
+            .prepareStatement("insert into recipe values (?, ?, ?, ?, ?, ?, 0)")) {
       statement.setString(1, name);
       statement.setString(2, recipeComposition);
       statement.setString(3, cookingSteps);
       statement.setDate(4, new java.sql.Date(publicationDate.getTime()));
       statement.setString(5, image);
+      statement.setString(6, user);
 
       if (statement.executeUpdate() == 1) {
         int i = 0;
