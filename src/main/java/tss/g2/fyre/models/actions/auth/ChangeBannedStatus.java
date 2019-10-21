@@ -1,6 +1,7 @@
-package tss.g2.fyre.models.actions;
+package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.actions.auth.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 public class ChangeBannedStatus implements Action {
@@ -19,7 +20,7 @@ public class ChangeBannedStatus implements Action {
   }
 
   @Override
-  public Answer getAnswer() {
+  public Answer getAnswer(String user) {
     return new Answer<>(true, dataStorage.changeBannedStatus(userLogin));
   }
 }

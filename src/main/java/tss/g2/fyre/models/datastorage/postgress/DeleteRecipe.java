@@ -9,7 +9,7 @@ import java.sql.SQLException;
  *
  * @author Andrey Sherstyuk
  */
-public class PostgresDeleteRecipe {
+public class DeleteRecipe {
   private Connection connection;
   private String name;
 
@@ -19,7 +19,7 @@ public class PostgresDeleteRecipe {
    * @param connection connection to database
    * @param name recipe name
    */
-  public PostgresDeleteRecipe(Connection connection, String name) {
+  public DeleteRecipe(Connection connection, String name) {
     this.connection = connection;
     this.name = name;
   }

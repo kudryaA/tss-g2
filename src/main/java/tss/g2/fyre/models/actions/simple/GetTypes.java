@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.actions;
+package tss.g2.fyre.models.actions.simple;
 
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
