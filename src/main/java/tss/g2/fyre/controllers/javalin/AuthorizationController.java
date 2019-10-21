@@ -34,7 +34,8 @@ public class AuthorizationController implements CreateController {
    * @param dataStorage storage of data
    * @param tokenStorage storage with authorization info
    */
-  public AuthorizationController(Javalin app, DataStorage dataStorage, Map<String, Authorization> tokenStorage) {
+  public AuthorizationController(Javalin app, DataStorage dataStorage, Map<String,
+      Authorization> tokenStorage) {
     this.app = app;
     this.dataStorage = dataStorage;
     this.tokenStorage = tokenStorage;
@@ -48,7 +49,7 @@ public class AuthorizationController implements CreateController {
       Answer answer = new CheckAuthorization(dataStorage, login, password).getAnswer();
       boolean status = (boolean) answer.getObj();
       if (status) {
-        String token = new RandomString(40).generate();
+        String token = new RandomString(tokenSize).generate();
         ctx.sessionAttribute("token", token);
         tokenStorage.put(token, new Authorization(login, false));
       }
@@ -65,7 +66,7 @@ public class AuthorizationController implements CreateController {
           .getAnswer();
       boolean status = (boolean) answer.getObj();
       if (status) {
-        String token = new RandomString(40).generate();
+        String token = new RandomString(tokenSize).generate();
         ctx.sessionAttribute("token", token);
         tokenStorage.put(token, new Authorization(login, false));
       }
@@ -78,7 +79,7 @@ public class AuthorizationController implements CreateController {
       Answer answer = new CheckModerator(dataStorage, login, password).getAnswer();
       boolean status = (boolean) answer.getObj();
       if (status) {
-        String token = new RandomString(40).generate();
+        String token = new RandomString(tokenSize).generate();
         ctx.sessionAttribute("token", token);
         tokenStorage.put(token, new Authorization(login, true));
       }
@@ -96,7 +97,7 @@ public class AuthorizationController implements CreateController {
       ).getAnswer();
       boolean status = (boolean) answer.getObj();
       if (status) {
-        String token = new RandomString(40).generate();
+        String token = new RandomString(tokenSize).generate();
         ctx.sessionAttribute("token", token);
         tokenStorage.put(token, new Authorization(login, true));
       }
@@ -106,30 +107,21 @@ public class AuthorizationController implements CreateController {
     app.post("/session", ctx -> {
       String token = ctx.sessionAttribute("token");
       Authorization authorization = tokenStorage.get(token);
-      Answer<Authorization> answer = new Answer<>(false);
+      Answer answer = new Answer<>(false);
       if (authorization != null) {
         answer = new Answer<>(true, authorization);
       }
       ctx.result(answer.toJson());
     });
 
-    app.post("/change/status", ctx -> {
-      String userLogin = ctx.formParam("userLogin");
-      Answer answer = new ModeratorAuthUser(
-          new ChangeBannedStatus(dataStorage, userLogin),
-          ctx.sessionAttribute("token"),
-          tokenStorage
-      ).getAnswer();
+    app.post("/logout", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      ctx.sessionAttribute("token", null);
+      tokenStorage.remove(token);
+      Authorization authorization = tokenStorage.get(token);
+      Answer answer = new Answer<>(true);
       ctx.result(answer.toJson());
     });
 
-    app.post("/select/users", ctx -> {
-      Answer answer = new ModeratorAuthUser(
-          new GetUsers(dataStorage),
-          ctx.sessionAttribute("token"),
-          tokenStorage
-      ).getAnswer();
-      ctx.result(answer.toJson());
-    });
   }
 }

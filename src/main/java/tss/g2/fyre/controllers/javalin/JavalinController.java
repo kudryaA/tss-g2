@@ -39,5 +39,6 @@ public class JavalinController implements CreateController {
     app.get("/", ctx -> ctx.render("pages/mainPage.html"));
     new AuthorizationController(app, dataStorage, tokenStorage).create();
     new RecipeController(app, dataStorage, tokenStorage).create();
+    new UserController(app, dataStorage, tokenStorage).create();
   }
 }
