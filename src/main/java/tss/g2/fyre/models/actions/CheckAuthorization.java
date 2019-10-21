@@ -20,7 +20,11 @@ public class CheckAuthorization implements Action {
   public CheckAuthorization(DataStorage dataStorage, String login, String password) {
     this.dataStorage = dataStorage;
     this.login = login;
-    this.password = new ToHash(password).getHash();
+    if (password == null) {
+      this.password = null;
+    } else {
+      this.password = new ToHash(password).getHash();
+    }
   }
 
 
