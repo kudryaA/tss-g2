@@ -21,7 +21,21 @@
                 format: "DD/MM/YYYY HH:mm:ss"
            });
            $("#selectedTypes").find("option").remove();
-            $('#selectedTypes').append($("<option></option>").attr("value","key").text("value"));
+           $.ajax({
+                url:"/select/types",
+                type:"post",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.obj != "false") {
+                            $.each(answer.obj, function(key, value) {
+                                //alert(value.typeName);
+                                $('#selectedTypes').append($("<option></option>").attr("value",value.typeName).text(value.typeName));
+                            });
+                        }
+                    }
+                ]
+            });
            $("#recipeForm").submit(function(e){
                 e.preventDefault();
                 $("#recipeForm input").each(function() {
@@ -77,8 +91,6 @@
                     contentType: false,
                     complete: [
                         function (response) {
-                            //var answer = $.parseJSON(response.responseText);
-                            //alert(response.responseText);
                             $("#recipeForm input").each(function() {
                                 $(this).val("");
                             });
