@@ -18,9 +18,22 @@
     <script>
         $(function() {
             //TODO check is user logged in
+            $("#content-container").empty();
+            $("#content-container").load("recipe.html");
         });
         function addRecipe() {
             $("#main-container").load("addRecipe.html");
+        }
+        function editRecipe() {
+            var name = $("#recipe-name").html();
+            //alert(name);
+            /*var url = "mainPage.html?action=editRecipe&name=" + encodeURIComponent(name);
+            window.location.href = url;*/
+            $("#content-container").empty();
+            $("#content-container").load("addRecipe.html");
+            setTimeout(function (){
+                $("#recipeName").val(name);
+            }, 5);
         }
     </script>
 </head>
