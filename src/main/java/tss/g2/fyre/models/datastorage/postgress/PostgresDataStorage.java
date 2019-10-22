@@ -11,6 +11,7 @@ import java.util.Properties;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
+import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.Type;
 
 /**
@@ -91,5 +92,10 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean deleteRecipe(int recipeId, String user) {
     return new DeleteRecipe(connection, recipeId, user).deleteRecipe();
+  }
+
+  @Override
+  public Recipe getRecipe(int recipeId) {
+    return new GetRecipe(connection, recipeId).get();
   }
 }
