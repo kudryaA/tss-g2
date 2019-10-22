@@ -70,9 +70,9 @@ public class RecipeController implements CreateController {
     });
 
     app.post("/delete/recipe", ctx -> {
-      String recipeName = ctx.formParam("recipeName");
+      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
       Answer answer = new AuthUser(
-          new DeleteRecipe(dataStorage, recipeName),
+          new DeleteRecipe(dataStorage, recipeId),
           ctx.sessionAttribute("token"),
           tokenStorage
       ).getAnswer();
