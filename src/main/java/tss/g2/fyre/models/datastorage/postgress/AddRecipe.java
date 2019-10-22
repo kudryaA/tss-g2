@@ -1,9 +1,6 @@
 package tss.g2.fyre.models.datastorage.postgress;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -57,32 +54,41 @@ public class AddRecipe {
   public boolean addRecipe() {
     boolean result = false;
 
-    try (PreparedStatement statement = connection
-            .prepareStatement("insert into recipe values (?, ?, ?, ?, ?, ?, 0)")) {
-      statement.setString(1, name);
-      statement.setString(2, recipeComposition);
-      statement.setString(3, cookingSteps);
-      statement.setDate(4, new java.sql.Date(publicationDate.getTime()));
-      statement.setString(5, image);
-      statement.setString(6, user);
+    try (Statement createIdStatement = connection.createStatement()) {
+      try (ResultSet resultSet = createIdStatement.executeQuery("select nextval('recipeseq')")) {
+        if (resultSet.next()) {
+          int seqValue = resultSet.getInt(1);
 
-      if (statement.executeUpdate() == 1) {
-        int i = 0;
+          try (PreparedStatement statement = connection
+                  .prepareStatement("insert into recipe values (?, ?, ?, ?, ?, ?, ?, 0)")) {
+            statement.setInt(1, seqValue);
+            statement.setString(2, name);
+            statement.setString(3, recipeComposition);
+            statement.setString(4, cookingSteps);
+            statement.setDate(5, new java.sql.Date(publicationDate.getTime()));
+            statement.setString(6, image);
+            statement.setString(7, user);
 
-        for (String type : selectedTypes) {
-          try (PreparedStatement addRelationStatement =
-                       connection.prepareStatement("insert into recipetype values (?, ?)")) {
-            addRelationStatement.setString(1, name);
-            addRelationStatement.setString(2, type);
+            if (statement.executeUpdate() == 1) {
+              int i = 0;
 
-            if (addRelationStatement.executeUpdate() == 1) {
-              i++;
+              for (String type : selectedTypes) {
+                try (PreparedStatement addRelationStatement =
+                             connection.prepareStatement("insert into recipetype values (?, ?)")) {
+                  addRelationStatement.setInt(1, seqValue);
+                  addRelationStatement.setString(2, type);
+
+                  if (addRelationStatement.executeUpdate() == 1) {
+                    i++;
+                  }
+                }
+              }
+
+              if (i == selectedTypes.size()) {
+                result = true;
+              }
             }
           }
-        }
-
-        if (i == selectedTypes.size()) {
-          result = true;
         }
       }
     } catch (SQLException e) {

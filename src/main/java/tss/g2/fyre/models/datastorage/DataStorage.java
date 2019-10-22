@@ -101,8 +101,9 @@ public interface DataStorage {
 
   /**
    * Method for removing the recipe.
-   * @param recipeName recipe name
+   * @param recipeId recipe id
+   * @param user authorization user
    * @return result of deleting
    */
-  boolean deleteRecipe(String recipeName);
+  boolean deleteRecipe(int recipeId, String user);
 }

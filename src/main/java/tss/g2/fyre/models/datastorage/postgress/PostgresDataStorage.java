@@ -89,7 +89,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean deleteRecipe(String recipeName) {
-    return new DeleteRecipe(connection, recipeName).deleteRecipe();
+  public boolean deleteRecipe(int recipeId, String user) {
+    return new DeleteRecipe(connection, recipeId, user).deleteRecipe();
   }
 }
