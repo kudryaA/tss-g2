@@ -13,6 +13,7 @@ import tss.g2.fyre.models.actions.auth.AddRecipe;
 import tss.g2.fyre.models.actions.auth.AddType;
 import tss.g2.fyre.models.actions.auth.DeleteRecipe;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
+import tss.g2.fyre.models.actions.simple.GetRecipe;
 import tss.g2.fyre.models.actions.simple.GetTypes;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
@@ -76,6 +77,12 @@ public class RecipeController implements CreateController {
           ctx.sessionAttribute("token"),
           tokenStorage
       ).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/recipe", ctx -> {
+      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      Answer answer = new GetRecipe(dataStorage, recipeId).getAnswer();
       ctx.result(answer.toJson());
     });
 

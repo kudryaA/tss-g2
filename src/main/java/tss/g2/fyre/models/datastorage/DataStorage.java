@@ -5,6 +5,7 @@ import java.util.List;
 
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
+import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.Type;
 
 /**
@@ -106,4 +107,11 @@ public interface DataStorage {
    * @return result of deleting
    */
   boolean deleteRecipe(int recipeId, String user);
+
+  /**
+   * Get recipe by id.
+   * @param recipeId id of recipe
+   * @return
+   */
+  Recipe getRecipe(int recipeId);
 }
