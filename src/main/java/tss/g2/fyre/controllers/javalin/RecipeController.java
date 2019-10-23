@@ -15,6 +15,7 @@ import tss.g2.fyre.models.actions.auth.DeleteRecipe;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.GetRecipe;
 import tss.g2.fyre.models.actions.simple.GetTypes;
+import tss.g2.fyre.models.actions.simple.SelectRecipes;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
 
@@ -87,5 +88,15 @@ public class RecipeController implements CreateController {
     });
 
     app.post("/select/types", ctx -> ctx.result(new GetTypes(dataStorage).getAnswer().toJson()));
+
+    app.post("/select/recipes", ctx -> {
+      int pageNumber = Integer.parseInt(ctx.formParam("pageNumber"));
+      int pageSize = Integer.parseInt(ctx.formParam("pageSize"));
+      String recipeType = ctx.formParam("recipeType");
+      String sortType = ctx.formParam("sortType");
+
+      ctx.result(new SelectRecipes(dataStorage, pageNumber, pageSize, recipeType, sortType)
+                  .getAnswer().toJson());
+    });
   }
 }

@@ -6,13 +6,14 @@ import java.sql.SQLException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
-import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.Type;
+import tss.g2.fyre.models.entity.recipe.Recipe;
 
 /**
  * Postgres data storage.
@@ -97,5 +98,12 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public Recipe getRecipe(int recipeId) {
     return new GetRecipe(connection, recipeId).get();
+  }
+
+  @Override
+  public Map<String, Object> selectRecipes(int pageNumber, int pageSize,
+                                           String recipeType, String sortType) {
+    return new SelectRecipes(connection, pageNumber, pageSize, recipeType, sortType)
+            .selectRecipes();
   }
 }

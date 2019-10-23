@@ -2,11 +2,12 @@ package tss.g2.fyre.models.datastorage;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
-import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.Type;
+import tss.g2.fyre.models.entity.recipe.Recipe;
 
 /**
  * This interface describe data storage worker.
@@ -111,7 +112,19 @@ public interface DataStorage {
   /**
    * Get recipe by id.
    * @param recipeId id of recipe
-   * @return
+   * @return some recipe
    */
   Recipe getRecipe(int recipeId);
+
+  /**
+   * Method for get the requested information.
+   *
+   * @param pageNumber page number
+   * @param pageSize page size
+   * @param recipeType recipe type
+   * @param sortType sort type
+   * @return the requested information
+   */
+  Map<String, Object> selectRecipes(int pageNumber, int pageSize,
+                                    String recipeType, String sortType);
 }
