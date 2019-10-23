@@ -12,50 +12,55 @@
     <script>
         $(function() {
             //TODO check is user logged in
-            /*$.ajax({
-                type: "POST",
-                url: "",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                complete: [
-                    function (response) {*/
-                        //var answer = $.parseJSON(response.responseText);
-                        //if (answer.obj == true) {
-                        //    window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"login.html");
-                        //} else {
-                            //alert("Something went wrong!");
-                        //}
-                    /*}
-                ]
-            });*/
-            var user1 = {login: 'a', name: 'a', surname: 'a', email: 'a', isBanned: 'true'};
-            var user2 = {login: 'b', name: 'a', surname: 'b', email: 'a', isBanned: 'false'};
-            var user3 = {login: 'a', name: 'b', surname: 'a', email: 'b', isBanned: 'false'};
-            $("#users-table tbody tr").remove();
-            var row = "<tr><td>" + user1.login + "</td><td>" + user1.name + "</td><td>" + user1.surname + "</td><td>" 
-                + user1.email + "</td><td>" + user1.isBanned + "</td><td><button class='ban-btn'>" + banUnbanBtnName(user1.isBanned) 
-                + "</button></td></tr>"
-            $("#users-table tbody").append(row);
-            row = "<tr><td>" + user2.login + "</td><td>" + user2.name + "</td><td>" + user2.surname + "</td><td>" + user2.email 
-                + "</td><td>" + user2.isBanned + "</td><td><button class='ban-btn'>" + banUnbanBtnName(user2.isBanned) 
-                + "</button></td></tr>"
-            $("#users-table tbody").append(row);
-            row = "<tr><td>" + user3.login + "</td><td>" + user3.name + "</td><td>" + user3.surname + "</td><td>" + user3.email 
-                + "</td><td>" + user3.isBanned + "</td><td><button class='ban-btn'>" + banUnbanBtnName(user3.isBanned) 
-                + "</button></td></tr>"
-            $("#users-table tbody").append(row);
-
-            $(".ban-btn").on('click', function(event){
-                alert($(this).html());
-            });
+            refreshTable();
         });
 
+        function banUnban(name) {
+            alert(name);
+            var data = {userLogin: name};
+            $.ajax({
+                type: "post",
+                url: "/change/status",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        refreshTable();
+                    }
+                ]
+            });
+        }
+
         function banUnbanBtnName(status) {
-            if (status == "true") {
+            if (status == true) {
                 return 'Unban';
             } else {
                 return 'Ban';
             }
+        }
+
+        function refreshTable() {
+            $.ajax({
+                type: "post",
+                url: "/select/users",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        alert(response.responseText);
+                        $("#users-table tbody tr").remove();
+                        $.each(answer.obj, function(key, value) {
+                            var row = "<tr><td>" + value.login + "</td><td>" + value.name + "</td><td>" + value.surname + "</td><td>" 
+                            + value.email + "</td><td>" + value.bannedStatus + "</td><td><button class='ban-btn' onclick='banUnban(\"" + value.login + "\")'>" + banUnbanBtnName(value.bannedStatus)
+                            + "</button></td></tr>"
+                            $("#users-table tbody").append(row);
+                        });
+                        
+                    }
+                ]
+            });
         }
 
     </script>

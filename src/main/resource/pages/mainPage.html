@@ -20,7 +20,12 @@
             //TODO check is user logged in
         });
         function addRecipe() {
+            $("#content-container").empty();
             $("#content-container").load("addRecipe.html");
+        }
+        function moderatorPage() {
+            $("#content-container").empty();
+            $("#content-container").load("moderatorPage.html");
         }
     </script>
 </head>
@@ -55,7 +60,7 @@
                     <a class="nav-link text-nowrap" href="#">Button 3</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-nowrap" href="#">Button 4</a>
+                    <a class="nav-link text-nowrap" href="#" onclick="moderatorPage()">Moderator page</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-nowrap" href="#" onclick="addRecipe()">Add recipe</a>
