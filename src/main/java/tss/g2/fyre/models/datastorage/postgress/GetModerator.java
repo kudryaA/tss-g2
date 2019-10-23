@@ -22,7 +22,7 @@ public class GetModerator {
    * @param connection postgres jdbc connection
    * @param login for authorization
    */
-  public GetModerator(Connection connection, String login) {
+  GetModerator(Connection connection, String login) {
     this.connection = connection;
     this.login = login;
   }

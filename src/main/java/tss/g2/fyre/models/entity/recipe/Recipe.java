@@ -10,7 +10,7 @@ public class Recipe {
   protected String image;
   protected String creator;
   protected int id;
-  protected int rating;
+  protected long rating;
 
   /**
    * Constructor.
@@ -25,7 +25,7 @@ public class Recipe {
    * @param rating recipe rating
    */
   public Recipe(int id, String name, String composition, String cookingSteps,
-                Date publicationDate, String image, String creator, int rating) {
+                Date publicationDate, String image, String creator, long rating) {
     this.name = name;
     this.composition = composition;
     this.cookingSteps = cookingSteps;
@@ -72,7 +72,7 @@ public class Recipe {
    * Method for get recipe rating.
    * @return recipe rating
    */
-  public int getRating() {
+  public long getRating() {
     return rating;
   }
 

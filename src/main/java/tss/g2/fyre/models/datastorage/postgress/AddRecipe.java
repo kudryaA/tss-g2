@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Andrey Sherstyuk
  */
-public class AddRecipe {
+class AddRecipe {
   private Connection connection;
   private String name;
   private String recipeComposition;
@@ -51,7 +51,7 @@ public class AddRecipe {
    *
    * @return result of adding new recipe
    */
-  public boolean addRecipe() {
+  boolean addRecipe() {
     boolean result = false;
 
     try (Statement createIdStatement = connection.createStatement()) {
@@ -60,7 +60,7 @@ public class AddRecipe {
           int seqValue = resultSet.getInt(1);
 
           try (PreparedStatement statement = connection
-                  .prepareStatement("insert into recipe values (?, ?, ?, ?, ?, ?, ?, 0)")) {
+                  .prepareStatement("insert into recipe values (?, ?, ?, ?, ?, ?, ?, " + 	-9223372036854775808L + ")")) {
             statement.setInt(1, seqValue);
             statement.setString(2, name);
             statement.setString(3, recipeComposition);

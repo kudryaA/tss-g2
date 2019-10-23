@@ -12,7 +12,7 @@ import java.util.Map;
 
 import tss.g2.fyre.models.entity.recipe.Recipe;
 
-public class SelectRecipes {
+class SelectRecipes {
   private Connection connection;
   private int pageNumber;
   private int pageSize;
@@ -28,8 +28,8 @@ public class SelectRecipes {
    * @param recipeType recipe type
    * @param sortType sort type
    */
-  public SelectRecipes(Connection connection, int pageNumber, int pageSize,
-                       String recipeType, String sortType) {
+  SelectRecipes(Connection connection, int pageNumber, int pageSize,
+                String recipeType, String sortType) {
     this.connection = connection;
     this.pageNumber = pageNumber;
     this.pageSize = pageSize;
@@ -42,7 +42,7 @@ public class SelectRecipes {
    *
    * @return the requested information
    */
-  public Map<String, Object> selectRecipes() {
+  Map<String, Object> selectRecipes() {
     Map<String, Object> map = new HashMap<>();
     List<Recipe> recipeList = new ArrayList<>();
 

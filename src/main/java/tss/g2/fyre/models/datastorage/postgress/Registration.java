@@ -10,7 +10,7 @@ import java.sql.SQLException;
  *
  * @author Andrey Sherstyuk
  */
-public class Registration {
+class Registration {
   private Connection connection;
   private String login;
   private String password;
@@ -28,8 +28,8 @@ public class Registration {
    * @param surname user surname
    * @param email user email
    */
-  public Registration(Connection connection, String login, String password,
-                      String name, String surname, String email) {
+  Registration(Connection connection, String login, String password,
+               String name, String surname, String email) {
     this.connection = connection;
     this.login = login;
     this.password = password;
