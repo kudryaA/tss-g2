@@ -10,7 +10,7 @@ import java.sql.SQLException;
  *
  * @author Andrey Sherstyuk
  */
-public class RegistrationModerator {
+class RegistrationModerator {
   private Connection connection;
   private String login;
   private String password;

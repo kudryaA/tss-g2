@@ -35,7 +35,7 @@ create table recipe (
   publicationDate Date ,
   image text,
   creator text,
-  rating INT
+  rating BIGINT
 );
 
 create table recipeType (

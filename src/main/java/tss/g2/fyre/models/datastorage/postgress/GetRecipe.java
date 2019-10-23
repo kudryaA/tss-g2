@@ -1,7 +1,5 @@
 package tss.g2.fyre.models.datastorage.postgress;
 
-
-import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
@@ -29,13 +27,21 @@ public class GetRecipe {
    * @param connection postgres jdbc connection
    * @param recipeId for authorization
    */
-  public GetRecipe(Connection connection, int recipeId) {
+  GetRecipe(Connection connection, int recipeId) {
     this.connection = connection;
     this.recipeId = recipeId;
   }
 
   public Recipe get() {
     RecipeWithType recipe = null;
+    try(PreparedStatement updateStatement =
+            connection.prepareStatement("UPDATE recipe SET rating=rating+1 WHERE recipe_id = ?")) {
+      updateStatement.setInt(1, recipeId);
+      updateStatement.executeUpdate();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
     try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
       preparedStatement.setInt(1, recipeId);
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -51,10 +57,10 @@ public class GetRecipe {
                 resultSet.getDate("publicationdate"),
                 resultSet.getString("image"),
                 resultSet.getString("creator"),
-                resultSet.getInt("rating")
+                resultSet.getLong("rating")
             );
             types.add(new Type(
-               resultSet.getString("type_name"),
+                resultSet.getString("type_name"),
                 resultSet.getString("description")
             ));
           }

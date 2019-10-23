@@ -10,7 +10,7 @@ import java.sql.SQLException;
  *
  * @author Andrey Sherstyuk
  */
-public class DeleteRecipe {
+class DeleteRecipe {
   private Connection connection;
   private int recipeId;
   private String user;
@@ -22,7 +22,7 @@ public class DeleteRecipe {
    * @param recipeId recipe id
    * @param user authorization user
    */
-  public DeleteRecipe(Connection connection, int recipeId, String user) {
+  DeleteRecipe(Connection connection, int recipeId, String user) {
     this.connection = connection;
     this.recipeId = recipeId;
     this.user = user;

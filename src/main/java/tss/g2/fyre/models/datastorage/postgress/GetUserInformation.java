@@ -9,7 +9,7 @@ import java.util.List;
 
 import tss.g2.fyre.models.entity.Person;
 
-public class GetUserInformation {
+class GetUserInformation {
 
   private Connection connection;
 
@@ -18,7 +18,7 @@ public class GetUserInformation {
    *
    * @param connection connection to database
    */
-  public GetUserInformation(Connection connection) {
+  GetUserInformation(Connection connection) {
     this.connection = connection;
   }
 
@@ -26,7 +26,7 @@ public class GetUserInformation {
    * Method for select users information.
    * @return list with users info
    */
-  public List<Person> getUsersInformation() {
+  List<Person> getUsersInformation() {
     List<Person> personsInfo = new ArrayList<>();
 
     try (Statement selectStatement = connection.createStatement()) {

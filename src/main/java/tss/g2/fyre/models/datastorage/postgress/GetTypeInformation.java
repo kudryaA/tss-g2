@@ -9,7 +9,7 @@ import java.util.List;
 
 import tss.g2.fyre.models.entity.Type;
 
-public class GetTypeInformation {
+class GetTypeInformation {
 
   private Connection connection;
 
@@ -18,7 +18,7 @@ public class GetTypeInformation {
    *
    * @param connection connection to database
    */
-  public GetTypeInformation(Connection connection) {
+  GetTypeInformation(Connection connection) {
     this.connection = connection;
   }
 
@@ -27,7 +27,7 @@ public class GetTypeInformation {
    *
    * @return list with types info
    */
-  public List<Type> getTypesInformation() {
+  List<Type> getTypesInformation() {
     List<Type> typesInfo = new ArrayList<>();
 
     try (Statement selectStatement = connection.createStatement()) {
