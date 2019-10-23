@@ -11,6 +11,8 @@ import java.util.Properties;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
+import tss.g2.fyre.models.entity.recipe.Recipe;
+import tss.g2.fyre.models.entity.Type;
 
 /**
  * Postgres data storage.
@@ -38,36 +40,62 @@ public class PostgresDataStorage implements DataStorage {
 
   @Override
   public Person getAuthorization(String login) {
-    return new PostgresGetAuthorization(connection, login).getAuthorization();
+    return new GetAuthorization(connection, login).getAuthorization();
   }
 
   @Override
   public boolean createUser(String login, String password, String name,
                                  String surname, String email) {
-    return new PostgresRegistration(connection, login, password, name, surname, email)
+    return new Registration(connection, login, password, name, surname, email)
             .createUser();
   }
   
   @Override
   public Moderator getModerator(String login) {
-    return new PostgresGetModerator(connection, login).getModerator();
+    return new GetModerator(connection, login).getModerator();
   }
 
   @Override
   public boolean createModerator(String login, String password, String name) {
-    return new PostgresRegistrationModerator(connection, login, password, name)
+    return new RegistrationModerator(connection, login, password, name)
             .createModerator();
   }
 
   @Override
-  public boolean addRecipe(String recipeName, String recipeCompostion,
-                           String cookingSteps, Date publicationDate, List<String> selectedTypes) {
-    return new PostgresAddRecipe(connection, recipeName, recipeCompostion,
-            cookingSteps, publicationDate, selectedTypes).addRecipe();
+  public boolean addRecipe(String recipeName, String recipeCompostion, String cookingSteps,
+                           Date publicationDate, List<String> selectedTypes, String image,
+                           String user) {
+    return new AddRecipe(connection, recipeName, recipeCompostion,
+            cookingSteps, publicationDate, selectedTypes, image, user).addRecipe();
   }
 
   @Override
   public boolean addType(String typeName, String description) {
-    return new PostgresAddType(connection, typeName, description).addType();
+    return new AddType(connection, typeName, description).addType();
+  }
+
+  @Override
+  public List<Person> getPersonsInformation() {
+    return new GetUserInformation(connection).getUsersInformation();
+  }
+
+  @Override
+  public List<Type> getTypesInformation() {
+    return new GetTypeInformation(connection).getTypesInformation();
+  }
+
+  @Override
+  public boolean changeBannedStatus(String userLogin) {
+    return new AdminAction(connection, userLogin).changeBannedStatus();
+  }
+
+  @Override
+  public boolean deleteRecipe(int recipeId, String user) {
+    return new DeleteRecipe(connection, recipeId, user).deleteRecipe();
+  }
+
+  @Override
+  public Recipe getRecipe(int recipeId) {
+    return new GetRecipe(connection, recipeId).get();
   }
 }

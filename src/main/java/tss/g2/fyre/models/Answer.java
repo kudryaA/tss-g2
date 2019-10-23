@@ -35,6 +35,22 @@ public class Answer<T> {
   }
 
   /**
+   * Get status.
+   * @return status
+   */
+  public boolean isStatus() {
+    return status;
+  }
+
+  /**
+   * Get object.
+   * @return object
+   */
+  public T getObj() {
+    return obj;
+  }
+
+  /**
    * Method convert objects to json.
    *
    * @return answer in gson

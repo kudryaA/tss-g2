@@ -12,8 +12,25 @@ public class Person {
   private String password;
   private String name;
   private String surname;
-  private String bannedStatus;
+  private boolean bannedStatus;
   private String email;
+
+  /**
+   * Constructor.
+   *
+   * @param login user login
+   * @param name user name
+   * @param surname user surname
+   * @param bannedStatus user banned status
+   * @param email user email
+   */
+  public Person(String login, String name, String surname, boolean bannedStatus, String email) {
+    this.login = login;
+    this.name = name;
+    this.surname = surname;
+    this.bannedStatus = bannedStatus;
+    this.email = email;
+  }
 
   /**
    * Constructor.
@@ -26,7 +43,7 @@ public class Person {
    * @param email user email
    */
   public Person(String login, String password, String name,
-                String surname, String bannedStatus, String email) {
+                String surname, boolean bannedStatus, String email) {
     this.login = login;
     this.password = password;
     this.name = name;
@@ -71,7 +88,7 @@ public class Person {
    * Method for get user banned status.
    * @return name of user
    */
-  public String getBannedStatus() {
+  public boolean getBannedStatus() {
     return bannedStatus;
   }
 
