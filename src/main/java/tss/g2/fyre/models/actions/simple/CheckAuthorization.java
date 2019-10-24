@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.actions;
+package tss.g2.fyre.models.actions.simple;
 
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
@@ -20,7 +20,11 @@ public class CheckAuthorization implements Action {
   public CheckAuthorization(DataStorage dataStorage, String login, String password) {
     this.dataStorage = dataStorage;
     this.login = login;
-    this.password = new ToHash(password).getHash();
+    if (password == null) {
+      this.password = null;
+    } else {
+      this.password = new ToHash(password).getHash();
+    }
   }
 
 

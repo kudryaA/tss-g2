@@ -2,9 +2,12 @@ package tss.g2.fyre.models.datastorage;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
+import tss.g2.fyre.models.entity.Type;
+import tss.g2.fyre.models.entity.recipe.Recipe;
 
 /**
  * This interface describe data storage worker.
@@ -61,10 +64,12 @@ public interface DataStorage {
    * @param publicationDate recipe publication date
    * @param selectedTypes list with types that the moderator selects
    * @param image image of recipe
+   * @param user owner of recipe
    * @return result of adding recipe*
    */
   boolean addRecipe(String recipeName, String recipeComposition, String cookingSteps,
-                    Date publicationDate, List<String> selectedTypes, String image);
+                    Date publicationDate, List<String> selectedTypes, String image,
+                    String user);
 
   /**
    * Method for adding new type.
@@ -74,4 +79,52 @@ public interface DataStorage {
    * @return result of adding type
    */
   boolean addType(String typeName, String description);
+
+  /**
+   * Method for select persons information.
+   *
+   * @return list with persons info
+   */
+  List<Person> getPersonsInformation();
+
+  /**
+   * Method for select types information.
+   *
+   * @return list with types info
+   */
+  List<Type> getTypesInformation();
+
+  /**
+   * Method for change user banned status.
+   * @param userLogin user login
+   * @return result of changing status
+   */
+  boolean changeBannedStatus(String userLogin);
+
+  /**
+   * Method for removing the recipe.
+   * @param recipeId recipe id
+   * @param user authorization user
+   * @return result of deleting
+   */
+  boolean deleteRecipe(int recipeId, String user);
+
+  /**
+   * Get recipe by id.
+   * @param recipeId id of recipe
+   * @return some recipe
+   */
+  Recipe getRecipe(int recipeId);
+
+  /**
+   * Method for get the requested information.
+   *
+   * @param pageNumber page number
+   * @param pageSize page size
+   * @param recipeType recipe type
+   * @param sortType sort type
+   * @return the requested information
+   */
+  Map<String, Object> selectRecipes(int pageNumber, int pageSize,
+                                    String recipeType, String sortType);
 }

@@ -9,7 +9,7 @@ import java.sql.SQLException;
  *
  * @author Andrey Sherstyuk
  */
-public class PostgresAddType {
+class AddType {
   private Connection connection;
   private String typeName;
   private String description;
@@ -21,7 +21,7 @@ public class PostgresAddType {
    * @param typeName name of type
    * @param description recipe description
    */
-  public PostgresAddType(Connection connection, String typeName, String description) {
+  AddType(Connection connection, String typeName, String description) {
     this.connection = connection;
     this.typeName = typeName;
     this.description = description;
@@ -32,7 +32,7 @@ public class PostgresAddType {
    *
    * @return result of adding type
    */
-  public boolean addType() {
+  boolean addType() {
     boolean result = false;
     try (PreparedStatement addTypeStatement = connection
             .prepareStatement("insert into type values (?, ?)")) {

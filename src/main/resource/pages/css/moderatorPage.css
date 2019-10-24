@@ -1,0 +1,30 @@
+#content-container {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+tr {
+	height: 3rem;
+}
+td {
+	text-align: center;
+}
+.ban-btn:focus, .ban-btn:active, .input:focus, .input:active, .form-control:focus, .form-control:active {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #404b69;
+    -webkit-appearance:none;
+}
+.ban-btn:active {
+  background-color: #404b69 !important;
+  border-color: #404b69 !important;
+}
+.ban-btn {
+	font-size: 100%;
+	border: 0;
+	height: 2rem;
+	border-radius: 5rem;
+	transition: all 0.2s;
+	color: white;
+	background: #00818a;
+	width: 100%;
+}

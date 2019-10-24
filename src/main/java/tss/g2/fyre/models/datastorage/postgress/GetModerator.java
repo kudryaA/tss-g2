@@ -12,7 +12,7 @@ import tss.g2.fyre.models.entity.Moderator;
  * Class for get moderator from postgres database.
  * @author Anton Kudryavtsev
  */
-public class PostgresGetModerator {
+public class GetModerator {
 
   private Connection connection;
   private String login;
@@ -22,7 +22,7 @@ public class PostgresGetModerator {
    * @param connection postgres jdbc connection
    * @param login for authorization
    */
-  public PostgresGetModerator(Connection connection, String login) {
+  GetModerator(Connection connection, String login) {
     this.connection = connection;
     this.login = login;
   }

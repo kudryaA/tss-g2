@@ -22,7 +22,12 @@
             $("#content-container").load("recipe.html");
         });
         function addRecipe() {
-            $("#main-container").load("addRecipe.html");
+            $("#content-container").empty();
+            $("#content-container").load("addRecipe.html");
+        }
+        function moderatorPage() {
+            $("#content-container").empty();
+            $("#content-container").load("moderatorPage.html");
         }
         function editRecipe() {
             var name = $("#recipe-name").html();
@@ -68,7 +73,7 @@
                     <a class="nav-link text-nowrap" href="#">Button 3</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-nowrap" href="#">Button 4</a>
+                    <a class="nav-link text-nowrap" href="#" onclick="moderatorPage()">Moderator page</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-nowrap" href="#" onclick="addRecipe()">Add recipe</a>

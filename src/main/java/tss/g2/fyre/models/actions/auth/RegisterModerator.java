@@ -1,9 +1,12 @@
-package tss.g2.fyre.models.actions;
+package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.utils.ToHash;
 
+/**
+ * Class for register moderator.
+ */
 public class RegisterModerator implements Action {
   private DataStorage dataStorage;
   private String login;
@@ -26,7 +29,7 @@ public class RegisterModerator implements Action {
   }
 
   @Override
-  public Answer getAnswer() {
+  public Answer getAnswer(String user) {
     return new Answer<>(true, dataStorage.createModerator(login, password, name));
   }
 }

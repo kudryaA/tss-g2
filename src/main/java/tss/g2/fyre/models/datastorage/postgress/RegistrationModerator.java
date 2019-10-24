@@ -10,7 +10,7 @@ import java.sql.SQLException;
  *
  * @author Andrey Sherstyuk
  */
-public class PostgresRegistrationModerator {
+class RegistrationModerator {
   private Connection connection;
   private String login;
   private String password;
@@ -24,8 +24,8 @@ public class PostgresRegistrationModerator {
    * @param password moderator password
    * @param name moderator name
    */
-  public PostgresRegistrationModerator(Connection connection, String login,
-                                       String password, String name) {
+  public RegistrationModerator(Connection connection, String login,
+                               String password, String name) {
     this.connection = connection;
     this.login = login;
     this.password = password;
