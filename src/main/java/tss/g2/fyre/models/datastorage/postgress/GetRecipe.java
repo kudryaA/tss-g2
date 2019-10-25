@@ -55,7 +55,7 @@ class GetRecipe {
                 resultSet.getString("name"),
                 resultSet.getString("recipecomposition"),
                 resultSet.getString("cookingsteps"),
-                resultSet.getDate("publicationdate"),
+                resultSet.getTimestamp("publicationdate"),
                 resultSet.getString("image"),
                 resultSet.getString("creator"),
                 resultSet.getLong("rating")
