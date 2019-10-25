@@ -1,12 +1,9 @@
-package tss.g2.fyre.models;
+package tss.g2.fyre.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Properties;
 
@@ -60,7 +57,6 @@ public class Configuration {
       setProperty("database_user", obj.get("database_user"));
       String passwordPath = obj.get("database_password").toString();
       String password = Files.readLines(new File(passwordPath), StandardCharsets.UTF_8).get(0);
-      System.out.println(password);
       setProperty("database_password", password);
       setProperty("port", obj.get("port"));
     } catch (IOException e) {

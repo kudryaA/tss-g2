@@ -50,7 +50,7 @@ public class AddRecipe implements Action {
       InputStream initialStream = image.getContent();
       byte[] buffer = new byte[initialStream.available()];
       initialStream.read(buffer);
-      File targetFile = new File(this.image);
+      File targetFile = new File("images/" + this.image);
       Files.write(buffer, targetFile);
     } catch (IOException e) {
       e.printStackTrace();
