@@ -32,7 +32,7 @@ create table recipe (
   name text ,
   recipeComposition text ,
   cookingSteps text ,
-  publicationDate Date ,
+  publicationDate TIMESTAMP ,
   image text,
   creator text,
   rating BIGINT

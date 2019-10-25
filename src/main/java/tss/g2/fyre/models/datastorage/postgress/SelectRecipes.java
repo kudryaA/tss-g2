@@ -138,7 +138,7 @@ class SelectRecipes {
         Date publicationDate = resultSet.getDate(5);
         String image = resultSet.getString(6);
         String creator = resultSet.getString(7);
-        int rating = resultSet.getInt(8);
+        long rating = resultSet.getLong(8);
 
         recipeList.add(new Recipe(id, recipeName, composition, cookingSteps,
                                   publicationDate, image, creator, rating));
