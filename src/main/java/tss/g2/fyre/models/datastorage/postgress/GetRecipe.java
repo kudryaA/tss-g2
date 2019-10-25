@@ -1,8 +1,5 @@
 package tss.g2.fyre.models.datastorage.postgress;
 
-import tss.g2.fyre.models.entity.Type;
-import tss.g2.fyre.models.entity.recipe.Recipe;
-import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,11 +8,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import tss.g2.fyre.models.entity.Type;
+import tss.g2.fyre.models.entity.recipe.Recipe;
+import tss.g2.fyre.models.entity.recipe.RecipeWithType;
+
 /**
  * Class for get recipe by id from postgres.
  * @author Anton Kudryavtsev
  */
-public class GetRecipe {
+class GetRecipe {
   private int recipeId;
   private Connection connection;
 
@@ -59,11 +60,11 @@ public class GetRecipe {
                 resultSet.getString("creator"),
                 resultSet.getLong("rating")
             );
-            types.add(new Type(
-                resultSet.getString("type_name"),
-                resultSet.getString("description")
-            ));
           }
+          types.add(new Type(
+                  resultSet.getString("type_name"),
+                  resultSet.getString("description")
+          ));
         }
         recipe = new RecipeWithType(recipeWithoutType, types);
       }

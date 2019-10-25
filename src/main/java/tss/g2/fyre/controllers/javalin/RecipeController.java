@@ -3,6 +3,8 @@ package tss.g2.fyre.controllers.javalin;
 import io.javalin.Javalin;
 import io.javalin.http.UploadedFile;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -98,5 +100,11 @@ public class RecipeController implements CreateController {
       ctx.result(new SelectRecipes(dataStorage, pageNumber, pageSize, recipeType, sortType)
                   .getAnswer().toJson());
     });
+
+    app.get("/image", ctx  -> {
+      String id = ctx.queryParam("id");
+      ctx.result(new FileInputStream(new File("images/" + id)));
+    });
+
   }
 }
