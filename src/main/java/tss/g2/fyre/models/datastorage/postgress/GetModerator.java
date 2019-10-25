@@ -7,7 +7,6 @@ import java.sql.SQLException;
 
 import tss.g2.fyre.models.entity.Moderator;
 
-
 /**
  * Class for get moderator from postgres database.
  * @author Anton Kudryavtsev

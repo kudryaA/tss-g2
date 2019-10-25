@@ -127,4 +127,24 @@ public interface DataStorage {
    */
   Map<String, Object> selectRecipes(int pageNumber, int pageSize,
                                     String recipeType, String sortType);
+
+  /**
+   * Method for update recipe.
+   * @param recipeId recipe id
+   * @param recipeName recipe name
+   * @param composition composition
+   * @param cookingSteps cooking steps
+   * @param creator user who create recipe
+   * @return the result of the update
+   */
+  boolean updateRecipe(int recipeId, String recipeName, String composition,
+                       String cookingSteps, String creator);
+
+  /**
+   * Method for search recipe by ingredient name.
+   *
+   * @param ingredientName ingredient name
+   * @return the recipe found
+   */
+  List<Recipe> searchRecipe(String ingredientName);
 }
