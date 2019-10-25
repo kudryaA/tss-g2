@@ -15,12 +15,22 @@ import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
+/**
+ * Class for select all recipes with sorting.
+ * @author Andrey Sherstyuk
+ */
 class SelectRecipes {
   private Connection connection;
   private int pageNumber;
   private int pageSize;
   private String recipeType;
   private String sortType;
+
+  /**
+   * Constructor.
+   */
+  public SelectRecipes() {
+  }
 
   /**
    * Constructor.
@@ -118,7 +128,7 @@ class SelectRecipes {
     return map;
   }
 
-  private void fillRecipeList(List<Recipe> recipeList, ResultSet resultSet) {
+  void fillRecipeList(List<Recipe> recipeList, ResultSet resultSet) {
     try {
       while (resultSet.next()) {
         int id = resultSet.getInt(1);

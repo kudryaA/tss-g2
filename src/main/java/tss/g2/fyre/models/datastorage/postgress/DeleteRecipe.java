@@ -36,8 +36,8 @@ class DeleteRecipe {
   public boolean deleteRecipe() {
     boolean result = false;
 
-    try (PreparedStatement checkStatement =
-            connection.prepareStatement("select 1 from recipe where recipe_id = ? and creator = ?")) {
+    try (PreparedStatement checkStatement = connection
+            .prepareStatement("select 1 from recipe where recipe_id = ? and creator = ?")) {
       checkStatement.setInt(1, recipeId);
       checkStatement.setString(2, user);
 

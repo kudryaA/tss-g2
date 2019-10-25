@@ -9,10 +9,10 @@ import java.util.Properties;
 
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.controllers.javalin.JavalinController;
-import tss.g2.fyre.utils.Configuration;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.datastorage.postgress.PostgresDataStorage;
 import tss.g2.fyre.models.entity.Authorization;
+import tss.g2.fyre.utils.Configuration;
 
 /**
  * Main class.

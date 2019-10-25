@@ -3,7 +3,6 @@ package tss.g2.fyre.models.datastorage.postgress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
 
 public class UpdateRecipe {
   private Connection connection;

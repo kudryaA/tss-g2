@@ -1,9 +1,12 @@
 package tss.g2.fyre.models.datastorage.postgress;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -60,7 +63,8 @@ class AddRecipe {
           int seqValue = resultSet.getInt(1);
 
           try (PreparedStatement statement = connection
-                  .prepareStatement("insert into recipe values (?, ?, ?, ?, ?, ?, ?, " + 	-9223372036854775808L + ")")) {
+                  .prepareStatement("insert into recipe values "
+                          + "(?, ?, ?, ?, ?, ?, ?, " + -9223372036854775808L + ")")) {
             statement.setInt(1, seqValue);
             statement.setString(2, name);
             statement.setString(3, recipeComposition);

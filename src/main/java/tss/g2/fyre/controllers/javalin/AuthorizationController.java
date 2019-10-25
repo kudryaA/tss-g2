@@ -6,12 +6,10 @@ import java.util.Map;
 
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
-import tss.g2.fyre.models.actions.auth.ChangeBannedStatus;
+import tss.g2.fyre.models.actions.auth.RegisterModerator;
 import tss.g2.fyre.models.actions.auth.check.ModeratorAuthUser;
 import tss.g2.fyre.models.actions.simple.CheckAuthorization;
 import tss.g2.fyre.models.actions.simple.CheckModerator;
-import tss.g2.fyre.models.actions.auth.GetUsers;
-import tss.g2.fyre.models.actions.auth.RegisterModerator;
 import tss.g2.fyre.models.actions.simple.RegisterUser;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;

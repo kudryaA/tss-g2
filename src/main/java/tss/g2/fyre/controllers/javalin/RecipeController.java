@@ -18,6 +18,7 @@ import tss.g2.fyre.models.actions.auth.UpdateRecipe;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.GetRecipe;
 import tss.g2.fyre.models.actions.simple.GetTypes;
+import tss.g2.fyre.models.actions.simple.SearchRecipe;
 import tss.g2.fyre.models.actions.simple.SelectRecipes;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
@@ -120,6 +121,12 @@ public class RecipeController implements CreateController {
       ).getAnswer();
 
       ctx.result(answer.toJson());
+    });
+
+    app.post("/search/recipe", ctx -> {
+      String ingredientName = ctx.formParam("ingredientName");
+
+      ctx.result(new SearchRecipe(dataStorage, ingredientName).getAnswer().toJson());
     });
   }
 }

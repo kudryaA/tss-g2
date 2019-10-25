@@ -139,4 +139,12 @@ public interface DataStorage {
    */
   boolean updateRecipe(int recipeId, String recipeName, String composition,
                        String cookingSteps, String creator);
+
+  /**
+   * Method for search recipe by ingredient name.
+   *
+   * @param ingredientName ingredient name
+   * @return the recipe found
+   */
+  List<Recipe> searchRecipe(String ingredientName);
 }

@@ -19,7 +19,7 @@ public class RandomString {
   }
 
   /**
-   * Generate random string
+   * Generate random string.
    * @return random string
    */
   public String generate() {
