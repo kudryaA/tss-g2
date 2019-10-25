@@ -1,10 +1,6 @@
 package tss.g2.fyre.models.datastorage.postgress;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import java.util.Date;
 import java.util.List;
@@ -69,7 +65,7 @@ class AddRecipe {
             statement.setString(2, name);
             statement.setString(3, recipeComposition);
             statement.setString(4, cookingSteps);
-            statement.setDate(5, new java.sql.Date(publicationDate.getTime()));
+            statement.setTimestamp(5, new Timestamp(publicationDate.getTime()));
             statement.setString(6, image);
             statement.setString(7, user);
 
