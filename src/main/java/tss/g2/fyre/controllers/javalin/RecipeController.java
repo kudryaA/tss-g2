@@ -14,6 +14,7 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.auth.AddRecipe;
 import tss.g2.fyre.models.actions.auth.AddType;
 import tss.g2.fyre.models.actions.auth.DeleteRecipe;
+import tss.g2.fyre.models.actions.auth.UpdateRecipe;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.GetRecipe;
 import tss.g2.fyre.models.actions.simple.GetTypes;
@@ -106,5 +107,19 @@ public class RecipeController implements CreateController {
       ctx.result(new FileInputStream(new File("images/" + id)));
     });
 
+    app.post("/update/recipe", ctx -> {
+      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      String recipeName = ctx.formParam("recipeName");
+      String composition = ctx.formParam("composition");
+      String cookingSteps = ctx.formParam("cookingSteps");
+
+      Answer answer = new AuthUser(
+              new UpdateRecipe(dataStorage, recipeId, recipeName, composition, cookingSteps),
+              ctx.sessionAttribute("token"),
+              tokenStorage
+      ).getAnswer();
+
+      ctx.result(answer.toJson());
+    });
   }
 }
