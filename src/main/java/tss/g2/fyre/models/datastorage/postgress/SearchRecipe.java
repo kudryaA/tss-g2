@@ -37,7 +37,7 @@ public class SearchRecipe {
 
     try (PreparedStatement searchStatement = connection
             .prepareStatement("select * from recipe "
-                    + "where recipecomposition like '%' || ? || '%'")) {
+                    + "where recipecomposition like '%' || ? || '%' AND publicationdate <= current_time")) {
       searchStatement.setString(1, ingredient);
 
       try (ResultSet resultSet = searchStatement.executeQuery()) {

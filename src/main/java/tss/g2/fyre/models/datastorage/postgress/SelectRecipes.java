@@ -111,7 +111,7 @@ class SelectRecipes {
     try (PreparedStatement getCountStatement = connection
             .prepareStatement("select count(distinct r.name) from recipe r\n"
             + "join recipetype r2 on r.recipe_id = r2.recipe_id\n"
-            + "where r2.type_name like '%' || ? || '%' and publicationdate < current_date")) {
+            + "where r2.type_name like '%' || ? || '%' and publicationdate <= current_time")) {
       getCountStatement.setString(1, recipeType);
 
       try (ResultSet resultSet = getCountStatement.executeQuery()) {
@@ -135,7 +135,7 @@ class SelectRecipes {
         String recipeName = resultSet.getString(2);
         String composition = resultSet.getString(3);
         String cookingSteps = resultSet.getString(4);
-        Date publicationDate = resultSet.getDate(5);
+        Date publicationDate = resultSet.getTimestamp(5);
         String image = resultSet.getString(6);
         String creator = resultSet.getString(7);
         long rating = resultSet.getLong(8);
