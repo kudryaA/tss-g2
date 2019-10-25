@@ -1,5 +1,7 @@
 package tss.g2.fyre.utils;
 
+import com.google.common.io.Files;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Properties;
 
-import com.google.common.io.Files;
 import org.yaml.snakeyaml.Yaml;
 
 

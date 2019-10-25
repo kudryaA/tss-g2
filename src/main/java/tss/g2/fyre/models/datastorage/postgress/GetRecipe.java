@@ -1,6 +1,5 @@
 package tss.g2.fyre.models.datastorage.postgress;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,8 +19,9 @@ class GetRecipe {
   private int recipeId;
   private Connection connection;
 
-  private static final String SQL = "SELECT * FROM recipe r JOIN recipeType rt ON(r.recipe_id = rt.recipe_id) \n" +
-      "JOIN type t ON(t.name = rt.type_name) WHERE r.recipe_id = ?;";
+  private static final String SQL = "SELECT * FROM recipe r "
+          + "JOIN recipeType rt ON(r.recipe_id = rt.recipe_id) \n"
+          + "JOIN type t ON(t.name = rt.type_name) WHERE r.recipe_id = ?;";
 
   /**
    * Constructor.
@@ -35,7 +35,7 @@ class GetRecipe {
 
   public Recipe get() {
     RecipeWithType recipe = null;
-    try(PreparedStatement updateStatement =
+    try (PreparedStatement updateStatement =
             connection.prepareStatement("UPDATE recipe SET rating=rating+1 WHERE recipe_id = ?")) {
       updateStatement.setInt(1, recipeId);
       updateStatement.executeUpdate();

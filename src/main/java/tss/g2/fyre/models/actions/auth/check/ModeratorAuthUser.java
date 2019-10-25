@@ -1,10 +1,10 @@
 package tss.g2.fyre.models.actions.auth.check;
 
+import java.util.Map;
+
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.auth.Action;
 import tss.g2.fyre.models.entity.Authorization;
-
-import java.util.Map;
 
 /**
  * Class for controlling auth moderator action.

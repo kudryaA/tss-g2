@@ -113,4 +113,9 @@ public class PostgresDataStorage implements DataStorage {
     return new UpdateRecipe(connection, recipeId, recipeName, composition, cookingSteps, creator)
             .updateRecipe();
   }
+
+  @Override
+  public List<Recipe> searchRecipe(String ingredientName) {
+    return new SearchRecipe(connection, ingredientName).searchRecipe();
+  }
 }

@@ -1,9 +1,9 @@
 package tss.g2.fyre.models.entity.recipe;
 
-import tss.g2.fyre.models.entity.Type;
-
 import java.util.List;
 import java.util.stream.Collectors;
+
+import tss.g2.fyre.models.entity.Type;
 
 /**
  * Class content information with name and type.
