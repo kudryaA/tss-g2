@@ -1,4 +1,4 @@
-.recipe-container  {
+#recipe-container  {
   padding-top: 15px;
   padding-bottom: 25px
 }
@@ -12,11 +12,11 @@
   background-color: #404b69 !important;
   border-color: #404b69 !important;
 }
-.recipe-container .btn:hover {
+#recipe-container .btn:hover {
   background-color: #00818a;
   border-color: #00818a;
 }
-.recipe-container .btn {
+#recipe-container .btn {
 	font-size: 100%;
 	border: 0;
 	height: auto;
@@ -27,4 +27,7 @@
 	width: 100%;
 	padding: 6px 0;
 	margin-bottom: 6px;
+}
+#ingredients, #steps {
+    padding-bottom: 15px;
 }
