@@ -15,6 +15,12 @@ body {
 a {
 	color: white;
 }
+.navbar-brand {
+    max-width: 80px;
+}
+#content-container {
+    margin-bottom: 15px;
+}
 .btn:focus, .btn:active, .input:focus, .input:active, .form-control:focus, .form-control:active {
    	outline: none !important;
   	box-shadow: none !important;
@@ -22,12 +28,28 @@ a {
   	-webkit-appearance:none;
 }
 
-#searchButton {
+.btn, #search-btn {
 	background: #00818a;
 	border: #00818a;
+	transition: all 0.2s;
 }
 
-#searchButton:active {
+.btn:active, #search-btn:active {
    	background: #404b69 !important;
    	border-color: #404b69;
+}
+
+.btn:hover, #search-btn {
+  background-color: #00818a;
+  border-color: #00818a;
+}
+.recipe .btn {
+	font-size: 100%;
+	border: 0;
+	height: auto;
+	border-radius: 5rem;
+	color: white;
+	background-color: #00818a;
+	padding: 6px 10px;
+	margin-bottom: 6px;
 }

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Empty page</title>
+    <link rel="icon" type="image/png" href="images/f.png">
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+    <link href="css/mainPage.css" rel="stylesheet">
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+    <script>
+        var count = 1;
+        $(window).scroll(function() {
+            if($(window).scrollTop() == $(document).height() - $(window).height() && count < window.localStorage.getItem("pages")
+                && $("#scroll").html() == 1) {
+                count++;
+                loadRecipes(window.localStorage.getItem("sortType"));
+            }
+        });
+        $(function() {
+            $.ajax({
+                url:"/session",
+                type:"post",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.status == true) {
+                            $("#login-page").text("Logout");
+                            $('#login-page').attr('onclick', 'logout()');
+                            if (answer.obj.moderator != true) {
+                                $("#moderator-page").remove();
+                            }
+                        } else {
+                            $("#login-page").text("Login");
+                            $("#login-page").attr("onclick", "");
+                            $("#moderator-page").remove();
+                            $("#add-recipe").remove();
+                        }
+                    }
+                ]
+            });
+            count = 1;
+            $("#content-container").empty();
+            if (window.localStorage.getItem("sortType") == null) {
+                window.localStorage.setItem("sortType", "publicationDate");
+            }
+            var sortType = window.localStorage.getItem("sortType");
+            if (sortType == "publicationDate") {
+                sortType = "publication date";
+            }
+            $("#content-container").append("<h1 class='my-4'>Recipes sorted by " + sortType + "</h1><hr>");
+            $("#content-container").append("<div hidden id='scroll'>1</div>");
+            loadRecipes(window.localStorage.getItem("sortType"));
+        });
+        function addRecipe() {
+            $("#content-container").empty();
+            $("#content-container").load("addRecipe.html");
+        }
+        function moderatorPage() {
+            $("#content-container").empty();
+            $("#content-container").load("moderatorPage.html");
+        }
+        function changeSortOfRecipes(sortType) {
+            window.localStorage.setItem('sortType', sortType);
+            window.location.href = location.pathname.replace(/(.*)\/[^/]*/, '$1/mainPage.html');
+        }
+        function loadRecipes(sortType) {
+            var data = { pageNumber: count,
+                         recipeType: "",
+                         pageSize: 3,
+                         sortType: sortType };
+            $.ajax({
+                url:"/select/recipes",
+                type:"post",
+                data,
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        $.each(answer.obj.recipes, function(key, value) {
+                            $("#content-container").append("<div class='row recipe'>"
+                                + "<div class='col-md-7'>"
+                                + "<a>"
+                                + "<img class='img-fluid rounded mb-3 mb-md-0' src='/image?id=" + value.image + "' alt=''>"
+                                + "</a>"
+                                + "</div>"
+                                + "<div class='col-md-5'>"
+                                + "<h3>" + value.name + "</h3>"
+                                + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
+                                + "<a class='btn btn-primary text-center' href='#' onclick='showRecipe(" + value.id + ")'>View recipe</a>"
+                        + "</div></div><hr>");
+                        });
+                        window.localStorage.setItem("pages", answer.obj.pages);
+                    }
+                ]
+            });
+        }
+        function showRecipe(recipeId) {
+            window.localStorage.setItem("recipeId", recipeId);
+            $("#content-container").empty();
+            $("#content-container").load("recipe.html");
+        }
+        function showRecipe() {
+            $("#content-container").empty();
+            $("#content-container").load("recipe.html");
+        }
+        function searchRecipes() {
+            var data = { ingredientName: $("#search-input").val() };
+            $.ajax({
+                url:"/search/recipe",
+                type:"post",
+                data,
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.status == true) {
+                            alert(response.responseText);
+                            $("#content-container").empty();
+                            $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient " + data.ingredientName
+                                + "</h1><hr>");
+                            $.each(answer.obj, function(key, value) {
+                            $("#content-container").append("<div class='row recipe'>"
+                                + "<div class='col-md-7'>"
+                                + "<a>"
+                                + "<img class='img-fluid rounded mb-3 mb-md-0' src='/image?id=" + value.image + "' alt=''>"
+                                + "</a>"
+                                + "</div>"
+                                + "<div class='col-md-5'>"
+                                + "<h3>" + value.name + "</h3>"
+                                + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
+                                + "<a class='btn btn-primary text-center' href='#' onclick='showRecipe(" + value.id + ")'>View recipe</a>"
+                                + "</div></div><hr>");
+                            });
+                        }
+                    }
+                ]
+            });
+        }
+        function logout() {
+            $.ajax({
+                url:"/logout",
+                type:"post",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        window.location.href = location.pathname.replace(/(.*)\/[^/]*/, '$1/login.html');
+                    }
+                ]
+            });
+        }
+
+    </script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary static-top">
+    <div class="container">
+        <img class="navbar-brand" src="images/fyre2.png"/><!--fyre</imghref="login.html">-->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <div class="input-group">
+                <input type="text" class="form-control shadow-none" placeholder="Search for..." aria-label="Search"
+                       aria-describedby="basic-addon2" id="search-input">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="search-btn" onclick="searchRecipes()">Search</button>
+                </div>
+            </div>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-nowrap" href="#" onclick="changeSortOfRecipes('publicationDate')">Show recipes by publication date</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-nowrap" href="#" onclick="changeSortOfRecipes('rating')">Show recipes by rating</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-nowrap" href="#" id="moderator-page" onclick="moderatorPage()">Moderator page</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-nowrap" href="#" id="add-recipe" onclick="addRecipe()">Add recipe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-nowrap" href="login.html" id="login-page">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- Page Content -->
+<div class="container" id="main-container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <!-- Page Content -->
+            <div class="container" id="content-container">
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

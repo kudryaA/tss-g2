@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Blog Post - Start Bootstrap Template</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/recipe.css" rel="stylesheet">
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function editRecipe() {
+            var id = $("#id").html();
+            var name = $("#name").html();
+            var categories = $("#categories").html().split(",");
+            var ingredients = $("#ingredients").html();
+            var steps = $("#steps").html();
+            var date = $("#date").html();
+            $("#recipe-container").load("addRecipe.html");
+            setTimeout(function (){
+                $("#recipeName").val(name);
+                $("#recipeComposition").val(ingredients);
+                $("#cookingSteps").val(steps);
+                setTimeout(function (){
+                    $("#publicationDate").val(date);
+                    $("#publicationDate").prop("disabled", true);
+                }, 5);
+                $("#img-form-group").remove();
+                $("#select-form-group").remove();
+                $("#submitRecipe").attr("onclick","submitChanges(" + id + ")");
+            }, 100);
+        }
+        function submitChanges(id) {
+            var check = true;
+            $("#recipeForm input").each(function() {
+                $(this).next("span").hide();
+                if ($(this).val() == "") {
+                    $(this).after("<span>This field is required</span>");
+                    $(this).css("border-color","red");
+                    check = false;
+                } else {
+                    $(this).css("border-color","");
+                }
+            });
+            $("#recipeForm textarea").each(function() {
+                $(this).next("span").hide();
+                if ($(this).val() == "") {
+                    $(this).after("<span>This field is required</span>");
+                    $(this).css("border-color","red");
+                    check = false;
+                } else {
+                    $(this).css("border-color","");
+                }
+            });
+            $("#recipeForm select").each(function() {
+                $(this).next("span").hide();
+                if ($(this).val() == "") {
+                    $(this).after("<span>This field is required</span>");
+                    $(this).css("border-color","red");
+                    check = false;
+                } else {
+                    $(this).css("border-color","");
+                }
+            });
+            if (!check) {
+                return;
+            }
+            var data = new FormData();
+            data.append("recipeId", id);
+            data.append("recipeName", $("#recipeName").val());
+            data.append("cookingSteps", $("#cookingSteps").val());
+            data.append("recipeComposition", $("#recipeComposition").val());
+            $.ajax({
+                url:"/update/recipe",
+                type:"post",
+                data,
+                processData: false,
+                contentType: false,
+                complete: [
+                    function (response) {
+                        showRecipe();
+                    }
+                ]
+            });
+        }
+        function deleteRecipe() {
+            var data = {recipeId: $("#id").html()};
+            $.ajax({
+                type: "post",
+                url: "/delete/recipe",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"mainPage.html");
+                    }
+                ]
+            });
+        }
+        $(function() {
+            var data = { recipeId: window.localStorage.getItem("recipeId") };
+            var user;
+            $.ajax({
+                url:"/session",
+                type:"post",
+                complete: [
+                    function (response) {
+                        user = $.parseJSON(response.responseText);
+                    }
+                ]
+            });
+            $.ajax({
+                type: "post",
+                url: "/recipe",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (typeof user.obj !== 'undefined') {
+                            if (user.obj.login != answer.obj.creator) {
+                                $("#recipe-container .btn").remove();
+                            }
+                        } else if (user.status == false) {
+                            $("#recipe-container .btn").remove();
+                        }
+                        $("#name").html(answer.obj.name);
+                        $("#author").html(answer.obj.creator);
+                        $("#date").html(answer.obj.publicationDate);
+                        $("#categories").html(answer.obj.types.join(","));
+                        $("#ingredients").html(answer.obj.composition.split("\n").join("<br>"));
+                        $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
+                        $("#image").attr("src", "/image?id=" + answer.obj.image);
+                        $("#id").html(answer.obj.id);
+                    }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+<!-- Page Content -->
+<div class="container" id="recipe-container">
+    <div class="row">
+        <div class="col-lg-12 text-left">
+            <!-- Title -->
+            <h1 class="mt-4" id="name"></h1>
+            <div hidden id="id"></div>
+            <!-- Author -->
+            <div class="lead" >Created by <a id="author"></a></div>
+            <hr>
+            <!-- Date/Time -->
+            <div>Published on <a id="date"></a></div>
+            <hr>
+            <div>Categories: </div><a id="categories"></a>
+            <hr>
+            <!-- Preview Image -->
+            <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="" id="image">
+            <hr>
+            <!-- Post Content -->
+            <div><h3>Ingredients:</h3></div>
+            <div id="ingredients"></div>
+            <div><h3>Cooking steps:</h3></div>
+            <div id="steps"></div>
+            <hr>
+            <button class="btn btn-primary" onclick="editRecipe()">Edit recipe</button>
+            <button class="btn btn-primary" onclick="deleteRecipe()">Delete recipe</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

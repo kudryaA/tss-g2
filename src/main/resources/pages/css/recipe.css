@@ -1,0 +1,33 @@
+#recipe-container  {
+  padding-top: 15px;
+  padding-bottom: 25px
+}
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #404b69;
+    -webkit-appearance:none;
+}
+.btn:active {
+  background-color: #404b69 !important;
+  border-color: #404b69 !important;
+}
+#recipe-container .btn:hover {
+  background-color: #00818a;
+  border-color: #00818a;
+}
+#recipe-container .btn {
+	font-size: 100%;
+	border: 0;
+	height: auto;
+	border-radius: 5rem;
+	transition: all 0.2s;
+	color: white;
+	background-color: #00818a;
+	width: 100%;
+	padding: 6px 0;
+	margin-bottom: 6px;
+}
+#ingredients, #steps {
+    padding-bottom: 15px;
+}
