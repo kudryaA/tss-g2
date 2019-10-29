@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
@@ -20,6 +23,8 @@ import tss.g2.fyre.models.entity.recipe.RecipeWithType;
  * @author Andrey Sherstyuk
  */
 class SelectRecipes {
+  private Logger selectRecipesLogger = LoggerFactory.getLogger(SelectRecipes.class);
+
   private Connection connection;
   private int pageNumber;
   private int pageSize;
@@ -65,18 +70,20 @@ class SelectRecipes {
               + "(select name from person where login = r.creator), rating "
               + "from recipe r\n"
               + "join recipetype r2 on r.recipe_id = r2.recipe_id\n"
-              + "where r2.type_name like '%' || ? || '%' and publicationdate <= current_date\n"
+              + "where r2.type_name like '%' || ? || '%' "
+                + "and publicationdate <= current_timestamp \n"
               + "order by " + sortType + " desc\n"
               + "offset ? fetch first ? row only ")) {
       selectStatement.setString(1, recipeType);
       selectStatement.setInt(2, (pageNumber - 1) * pageSize);
       selectStatement.setInt(3, pageSize);
 
+      selectRecipesLogger.info(selectStatement.toString());
       try (ResultSet resultSet = selectStatement.executeQuery()) {
         fillRecipeList(recipeList, resultSet);
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      selectRecipesLogger.error(e.getMessage());
     }
 
     Map<Integer, List<Type>> recipeTypeMap = new HashMap<>();
@@ -111,7 +118,8 @@ class SelectRecipes {
     try (PreparedStatement getCountStatement = connection
             .prepareStatement("select count(distinct r.name) from recipe r\n"
             + "join recipetype r2 on r.recipe_id = r2.recipe_id\n"
-            + "where r2.type_name like '%' || ? || '%' and publicationdate <= current_time")) {
+            + "where r2.type_name like '%' || ? || '%'"
+              + " and publicationdate <= current_timestamp ")) {
       getCountStatement.setString(1, recipeType);
 
       try (ResultSet resultSet = getCountStatement.executeQuery()) {

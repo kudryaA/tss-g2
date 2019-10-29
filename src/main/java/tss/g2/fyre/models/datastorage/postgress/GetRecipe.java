@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
@@ -16,6 +19,8 @@ import tss.g2.fyre.models.entity.recipe.RecipeWithType;
  * @author Anton Kudryavtsev
  */
 class GetRecipe {
+  private Logger getRecipeLogger = LoggerFactory.getLogger(GetRecipe.class);
+
   private int recipeId;
   private Connection connection;
 
@@ -38,12 +43,15 @@ class GetRecipe {
     try (PreparedStatement updateStatement =
             connection.prepareStatement("UPDATE recipe SET rating=rating+1 WHERE recipe_id = ?")) {
       updateStatement.setInt(1, recipeId);
+
+      getRecipeLogger.info(updateStatement.toString());
       updateStatement.executeUpdate();
     } catch (SQLException e) {
-      e.printStackTrace();
+      getRecipeLogger.error(e.getMessage());
     }
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+      getRecipeLogger.info(preparedStatement.toString());
       preparedStatement.setInt(1, recipeId);
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
         Recipe recipeWithoutType = null;
@@ -69,7 +77,7 @@ class GetRecipe {
         recipe = new RecipeWithType(recipeWithoutType, types);
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      getRecipeLogger.error(e.getMessage());
     }
     return recipe;
   }

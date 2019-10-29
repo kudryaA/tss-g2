@@ -1,7 +1,6 @@
 package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
-import tss.g2.fyre.models.actions.auth.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 public class DeleteRecipe implements Action {

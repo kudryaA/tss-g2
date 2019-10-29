@@ -1,9 +1,17 @@
 package tss.g2.fyre.models.datastorage.postgress;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 
 import java.util.Date;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class for adding recipe.
@@ -11,6 +19,8 @@ import java.util.List;
  * @author Andrey Sherstyuk
  */
 class AddRecipe {
+  private Logger addRecipeLogger = LoggerFactory.getLogger(AddRecipe.class);
+
   private Connection connection;
   private String name;
   private String recipeComposition;
@@ -69,6 +79,7 @@ class AddRecipe {
             statement.setString(6, image);
             statement.setString(7, user);
 
+            addRecipeLogger.info(statement.toString());
             if (statement.executeUpdate() == 1) {
               int i = 0;
 
@@ -78,6 +89,7 @@ class AddRecipe {
                   addRelationStatement.setInt(1, seqValue);
                   addRelationStatement.setString(2, type);
 
+                  addRecipeLogger.info(addRelationStatement.toString());
                   if (addRelationStatement.executeUpdate() == 1) {
                     i++;
                   }
@@ -92,7 +104,7 @@ class AddRecipe {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      addRecipeLogger.error(e.getMessage());
     }
 
     return result;

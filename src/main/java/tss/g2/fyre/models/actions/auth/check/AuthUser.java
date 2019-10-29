@@ -6,7 +6,6 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.auth.Action;
 import tss.g2.fyre.models.entity.Authorization;
 
-
 /**
  * Class for controlling auth action.
  * @author Anton Kudryavtsev

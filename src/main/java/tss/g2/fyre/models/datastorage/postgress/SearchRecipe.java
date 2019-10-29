@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import tss.g2.fyre.models.entity.recipe.Recipe;
 
 /**
@@ -14,6 +17,8 @@ import tss.g2.fyre.models.entity.recipe.Recipe;
  * @author Andrey Sherstyuk
  */
 public class SearchRecipe {
+  private Logger searchRecipeLogger = LoggerFactory.getLogger(SearchRecipe.class);
+
   private Connection connection;
   private String ingredient;
 
@@ -37,14 +42,16 @@ public class SearchRecipe {
 
     try (PreparedStatement searchStatement = connection
             .prepareStatement("select * from recipe "
-                    + "where recipecomposition like '%' || ? || '%' AND publicationdate <= current_time")) {
+                    + "where recipecomposition like '%' || ? || '%' "
+                    + "AND publicationdate <= current_timestamp ")) {
       searchStatement.setString(1, ingredient);
 
+      searchRecipeLogger.info(searchStatement.toString());
       try (ResultSet resultSet = searchStatement.executeQuery()) {
         new SelectRecipes().fillRecipeList(recipeList, resultSet);
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      searchRecipeLogger.error(e.getMessage());
     }
 
     return recipeList;

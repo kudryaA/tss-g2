@@ -4,11 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class for handling administrator actions.
  * @author Andrey Sherstyuk
  */
 class AdminAction {
+  private Logger adminActionLogger = LoggerFactory.getLogger(AdminAction.class);
+
   private Connection connection;
   private String userLogin;
 
@@ -38,9 +43,10 @@ class AdminAction {
       changeStatusStatement.setString(1, userLogin);
       changeStatusStatement.setString(2, userLogin);
 
+      adminActionLogger.info(changeStatusStatement.toString());
       result = changeStatusStatement.executeUpdate() == 1;
     } catch (SQLException e) {
-      e.printStackTrace();
+      adminActionLogger.error(e.getMessage());
     }
 
     return result;

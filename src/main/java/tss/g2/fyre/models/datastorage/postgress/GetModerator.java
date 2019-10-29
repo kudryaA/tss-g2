@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import tss.g2.fyre.models.entity.Moderator;
 
 /**
@@ -12,6 +15,7 @@ import tss.g2.fyre.models.entity.Moderator;
  * @author Anton Kudryavtsev
  */
 public class GetModerator {
+  private Logger getModeratorLogger = LoggerFactory.getLogger(GetModerator.class);
 
   private Connection connection;
   private String login;
@@ -35,15 +39,17 @@ public class GetModerator {
     try (PreparedStatement statement =
              connection.prepareStatement("SELECT * FROM moderator WHERE login = ?")) {
       statement.setString(1, login);
-      System.out.println(statement.toString());
-      ResultSet resultSet = statement.executeQuery();
-      if (resultSet.next()) {
-        String name = resultSet.getString("name");
-        String password = resultSet.getString("password");
-        moderator = new Moderator(name, login, password);
+
+      getModeratorLogger.info(statement.toString());
+      try (ResultSet resultSet = statement.executeQuery()) {
+        if (resultSet.next()) {
+          String name = resultSet.getString("name");
+          String password = resultSet.getString("password");
+          moderator = new Moderator(name, login, password);
+        }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      getModeratorLogger.error(e.getMessage());
     }
     return moderator;
   }

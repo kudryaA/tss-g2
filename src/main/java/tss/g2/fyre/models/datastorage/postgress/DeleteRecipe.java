@@ -5,12 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class for delete recipe.
  *
  * @author Andrey Sherstyuk
  */
 class DeleteRecipe {
+  private Logger deleteRecipeLogger = LoggerFactory.getLogger(DeleteRecipe.class);
+
   private Connection connection;
   private int recipeId;
   private String user;
@@ -41,6 +46,7 @@ class DeleteRecipe {
       checkStatement.setInt(1, recipeId);
       checkStatement.setString(2, user);
 
+      deleteRecipeLogger.info(checkStatement.toString());
       try (ResultSet resultSet = checkStatement.executeQuery()) {
         if (resultSet.next()) {
           try (PreparedStatement deleteRelationStatement =
@@ -51,13 +57,15 @@ class DeleteRecipe {
             try (PreparedStatement deleteRecipeStatement =
                          connection.prepareStatement("delete from recipe where recipe_id = ?")) {
               deleteRecipeStatement.setInt(1, recipeId);
+
+              deleteRecipeLogger.info(deleteRecipeStatement.toString());
               result = deleteRecipeStatement.executeUpdate() == 1;
             }
           }
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      deleteRecipeLogger.error(e.getMessage());
     }
 
     return result;

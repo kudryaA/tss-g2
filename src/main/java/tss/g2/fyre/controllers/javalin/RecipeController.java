@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+import java.util.TimeZone;
 
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
@@ -22,6 +23,7 @@ import tss.g2.fyre.models.actions.simple.SearchRecipe;
 import tss.g2.fyre.models.actions.simple.SelectRecipes;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
+import tss.g2.fyre.utils.DateConverter;
 
 /**
  * Recipe controller for javalin.
@@ -48,11 +50,11 @@ public class RecipeController implements CreateController {
   @Override
   public void create() {
     app.post("/add/recipe", ctx -> {
-      SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+
       String recipeName = ctx.formParam("recipeName");
       String recipeComposition = ctx.formParam("recipeComposition");
       String cookingSteps = ctx.formParam("cookingSteps");
-      Date publicationDate = dateFormat.parse(ctx.formParam("publicationDate"));
+      Date publicationDate = new DateConverter(ctx.formParam("publicationDate")).date();
       String selectedTypes = ctx.formParam("selectedTypes");
       UploadedFile image = ctx.uploadedFile("image");
       Answer answer = new AuthUser(

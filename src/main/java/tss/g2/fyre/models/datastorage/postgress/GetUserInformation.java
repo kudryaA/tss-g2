@@ -7,9 +7,13 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import tss.g2.fyre.models.entity.Person;
 
 class GetUserInformation {
+  private Logger getUserInformationLogger = LoggerFactory.getLogger(GetUserInformation.class);
 
   private Connection connection;
 
@@ -32,6 +36,7 @@ class GetUserInformation {
     try (Statement selectStatement = connection.createStatement()) {
       try (ResultSet resultSet = selectStatement
               .executeQuery("select login, name, surname, bannedstatus, email from person")) {
+        getUserInformationLogger.info(selectStatement.toString());
         while (resultSet.next()) {
           String login = resultSet.getString(1);
           String name = resultSet.getString(2);
@@ -44,7 +49,7 @@ class GetUserInformation {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      getUserInformationLogger.error(e.getMessage());
     }
 
     return personsInfo;
