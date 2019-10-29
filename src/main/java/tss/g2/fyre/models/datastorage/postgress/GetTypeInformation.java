@@ -7,9 +7,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tss.g2.fyre.models.entity.Type;
 
 class GetTypeInformation {
+  private Logger getTypeInformationLogger = LoggerFactory.getLogger(GetTypeInformation.class);
 
   private Connection connection;
 
@@ -32,6 +35,7 @@ class GetTypeInformation {
 
     try (Statement selectStatement = connection.createStatement()) {
       try (ResultSet resultSet = selectStatement.executeQuery("select * from type")) {
+        getTypeInformationLogger.info(selectStatement.toString());
         while (resultSet.next()) {
           String typeName = resultSet.getString(1);
           String description = resultSet.getString(2);
@@ -40,7 +44,7 @@ class GetTypeInformation {
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      getTypeInformationLogger.error(e.getMessage());
     }
 
     return typesInfo;

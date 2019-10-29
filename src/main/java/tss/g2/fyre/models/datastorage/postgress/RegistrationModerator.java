@@ -5,12 +5,17 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class for registration moderators.
  *
  * @author Andrey Sherstyuk
  */
 class RegistrationModerator {
+  private Logger registrationModeratorLogger = LoggerFactory.getLogger(RegistrationModerator.class);
+
   private Connection connection;
   private String login;
   private String password;
@@ -43,20 +48,24 @@ class RegistrationModerator {
                  = connection.prepareStatement("SELECT * FROM moderator WHERE login = ?")) {
       statement.setString(1, login);
 
-      ResultSet resultSet = statement.executeQuery();
-      if (resultSet.next()) {
-        return answer;
-      } else {
-        try (PreparedStatement registrationModeratorStatement
-                     = connection.prepareStatement("insert into moderator values(?, ?, ?)")) {
-          registrationModeratorStatement.setString(1, name);
-          registrationModeratorStatement.setString(2, login);
-          registrationModeratorStatement.setString(3, password);
-          answer = registrationModeratorStatement.executeUpdate() == 1;
+      registrationModeratorLogger.info(statement.toString());
+      try (ResultSet resultSet = statement.executeQuery()) {
+        if (resultSet.next()) {
+          return answer;
+        } else {
+          try (PreparedStatement registrationModeratorStatement
+                       = connection.prepareStatement("insert into moderator values(?, ?, ?)")) {
+            registrationModeratorStatement.setString(1, name);
+            registrationModeratorStatement.setString(2, login);
+            registrationModeratorStatement.setString(3, password);
+
+            registrationModeratorLogger.info(registrationModeratorStatement.toString());
+            answer = registrationModeratorStatement.executeUpdate() == 1;
+          }
         }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      registrationModeratorLogger.error(e.getMessage());
     }
 
     return answer;

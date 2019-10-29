@@ -7,7 +7,6 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
 
-
 /**
  * This interface initialize general javalin controller.
  *

@@ -2,10 +2,7 @@ package tss.g2.fyre.utils;
 
 import com.google.common.hash.Hashing;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * Class for hashing string.

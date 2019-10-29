@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import tss.g2.fyre.models.entity.Person;
 
 /**
@@ -13,6 +16,7 @@ import tss.g2.fyre.models.entity.Person;
  * @author Anton Kudryavtsev
  */
 class GetAuthorization {
+  private Logger getAuthorizationLogger = LoggerFactory.getLogger(GetAuthorization.class);
 
   private Connection connection;
   private String login;
@@ -38,18 +42,20 @@ class GetAuthorization {
     try (PreparedStatement statement =
                  connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {
       statement.setString(1, login);
-      System.out.println(statement.toString());
-      ResultSet resultSet = statement.executeQuery();
-      if (resultSet.next()) {
-        String password = resultSet.getString("password");
-        String name = resultSet.getString("name");
-        String surname = resultSet.getString("surname");
-        boolean bannedStatus = resultSet.getBoolean("bannedStatus");
-        String email = resultSet.getString("email");
-        result = new Person(login, password, name, surname, bannedStatus, email);
+
+      getAuthorizationLogger.info(statement.toString());
+      try (ResultSet resultSet = statement.executeQuery()) {
+        if (resultSet.next()) {
+          String password = resultSet.getString("password");
+          String name = resultSet.getString("name");
+          String surname = resultSet.getString("surname");
+          boolean bannedStatus = resultSet.getBoolean("bannedStatus");
+          String email = resultSet.getString("email");
+          result = new Person(login, password, name, surname, bannedStatus, email);
+        }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      getAuthorizationLogger.error(e.getMessage());
     }
     return result;
   }

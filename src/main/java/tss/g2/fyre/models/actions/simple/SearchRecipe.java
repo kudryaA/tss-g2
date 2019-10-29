@@ -1,10 +1,7 @@
 package tss.g2.fyre.models.actions.simple;
 
-import java.util.List;
-
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.entity.recipe.Recipe;
 
 public class SearchRecipe implements Action {
   private DataStorage dataStorage;

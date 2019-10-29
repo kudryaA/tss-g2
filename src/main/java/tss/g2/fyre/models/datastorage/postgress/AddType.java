@@ -4,12 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Class for adding type.
  *
  * @author Andrey Sherstyuk
  */
 class AddType {
+  private Logger addTypeLogger = LoggerFactory.getLogger(AddType.class);
+
   private Connection connection;
   private String typeName;
   private String description;
@@ -39,9 +44,10 @@ class AddType {
       addTypeStatement.setString(1, typeName);
       addTypeStatement.setString(2, description);
 
+      addTypeLogger.info(addTypeStatement.toString());
       result = addTypeStatement.executeUpdate() == 1;
     } catch (SQLException e) {
-      e.printStackTrace();
+      addTypeLogger.error(e.getMessage());
     }
 
     return result;

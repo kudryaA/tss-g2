@@ -11,7 +11,6 @@ import java.util.Properties;
 
 import org.yaml.snakeyaml.Yaml;
 
-
 /**
  * Class for read properties.
  *

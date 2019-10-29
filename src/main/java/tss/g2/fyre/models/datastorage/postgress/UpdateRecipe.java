@@ -4,7 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class UpdateRecipe {
+  private Logger updateRecipeLogger = LoggerFactory.getLogger(UpdateRecipe.class);
+
   private Connection connection;
   private int recipeId;
   private String recipeName;
@@ -48,9 +53,10 @@ public class UpdateRecipe {
       updateStatement.setInt(4, recipeId);
       updateStatement.setString(5, creator);
 
+      updateRecipeLogger.info(updateStatement.toString());
       result = updateStatement.executeUpdate() == 1;
     } catch (SQLException e) {
-      e.printStackTrace();
+      updateRecipeLogger.error(e.getMessage());
     }
 
     return result;

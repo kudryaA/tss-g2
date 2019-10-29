@@ -11,7 +11,6 @@ import tss.g2.fyre.models.actions.auth.check.ModeratorAuthUser;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
 
-
 /**
  * User controller.
  * @author Anton Kudryvtsev

@@ -1,6 +1,5 @@
 package tss.g2.fyre.utils;
 
-import java.nio.charset.Charset;
 import java.util.Random;
 
 /**
