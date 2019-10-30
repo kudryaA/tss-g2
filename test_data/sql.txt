@@ -1,0 +1,307 @@
+INSERT INTO person (login, password, name, surname, bannedstatus, email) VALUES ('john', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', 'doe', false, 'john@doe.com');
+INSERT INTO moderator VALUES ('a', 'a', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb');
+
+INSERT INTO type (name, description) VALUES ('dessert', 'dessert');
+INSERT INTO type (name, description) VALUES ('healthy food', 'healthy food');
+INSERT INTO type (name, description) VALUES ('fish', 'fish');
+INSERT INTO type (name, description) VALUES ('easy cooking', 'easy cooking');
+INSERT INTO type (name, description) VALUES ('vegans', 'vegans');
+
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (1, 'Almond, Pine Nut & Blackberry Cake', '11/2 cups self-raising flour
+1/3 cup plain flour
+1 cup almond meal
+3/4 cup Natvia Sweetener
+2/3 cup Greek-style yoghurt
+4 eggs, lightly beaten
+185g butter, melted
+1 tbs finely grated lemon rind and 1/4 cup lemon juice
+1 cup frozen blackberries
+1/4 cup pine nuts
+1/3 cup slivered almonds
+250g mascarpone', '1. Preheat oven to 170°c. Grease a 24cm round springform cake pan. Line base and side with baking paper.
+
+2. Sift flours into a large bowl. Stir in almond meal, 2/3 cup of the natvia, yoghurt, eggs, butter, rind and juice.
+
+3. Spread mixture into prepared pan and smooth top. Scatter with blackberries, pine nuts and almonds. Bake for 45 minutes or until skewer inserted into centre comes out clean. Stand cake in pan for 15 minutes before transferring onto a wire rack to cool.
+
+4. Place mascarpone and remaining natvia in a small bowl and stir to combine. Serve cake with mascarpone on the side.', '2019-10-30 18:17:19', 'ytkbehbpidnfcuxastpu', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (2, 'Almond, Pine Nut & Blackberry Cake', '11/2 cups self-raising flour
+1/3 cup plain flour
+1 cup almond meal
+3/4 cup Natvia Sweetener
+2/3 cup Greek-style yoghurt
+4 eggs, lightly beaten
+185g butter, melted
+1 tbs finely grated lemon rind and 1/4 cup lemon juice
+1 cup frozen blackberries
+1/4 cup pine nuts
+1/3 cup slivered almonds
+250g mascarpone', '1. Preheat oven to 170°c. Grease a 24cm round springform cake pan. Line base and side with baking paper.
+
+2. Sift flours into a large bowl. Stir in almond meal, 2/3 cup of the natvia, yoghurt, eggs, butter, rind and juice.
+
+3. Spread mixture into prepared pan and smooth top. Scatter with blackberries, pine nuts and almonds. Bake for 45 minutes or until skewer inserted into centre comes out clean. Stand cake in pan for 15 minutes before transferring onto a wire rack to cool.
+
+4. Place mascarpone and remaining natvia in a small bowl and stir to combine. Serve cake with mascarpone on the side.', '2019-10-30 18:18:30', 'puminidzdkoqodqcjlrn', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (3, 'White Chocolate & Rose Mousse', 'mckenzie’s baking aids gelatine, 100g
+woolworths select cooking chocolate white, 200g
+csr caster sugar , 500g
+jacobs creek sparkling moscato rose, 750ml
+strawberry fresh , 250g punnet
+raspberry fresh , 125g punnet', '1. To make berry coulis, blend raspberries and strawberries to form a puree. Pass through a fine sieve to remove seeds. Place 100ml of the puree into a saucepan. Stir in sugar and sprinkle over gelatine.
+
+2. Stir over a low heat until mixture is warm and sugar and gelatine are melted and smooth. Do not boil.
+
+3. Divide mixture among six holes of a 4cm-wide half-sphere silicone mould (15ml capacity). Freeze. Once frozen, unmould and return to freezer.
+
+4. To make chocolate shards, thinly spread chocolate thinly onto an acetate sheet or silicone mat. Sprinkle with strawberry pieces. Set aside to set. Break into shards.
+
+5. To make jelly, line a 30cm x 20cm cake pan with cling film.
+
+6. Place wine, strawberries and sugar in a small saucepan and bring to a simmer for 5 minutes to infuse. Strain into a bowl and discard strawberries.
+
+7. Sprinkle infused wine with gelatine. Stir until melted and smooth. Pour into prepared pan. Refrigerate until set.
+
+8. Once set, invert jelly onto a cutting board and peel away cling film. Then cut into a rectangle with a jaggered edge on one side of the rectangle.
+
+9. To make whipped ganache, place chocolate in a small bowl.
+
+10. Heat cream and vanilla paste in a small saucepan until hot and pour over chocolate. Stir until smooth and combined. Refrigerate, covered, until cold. Beat with an electric mixer until firm peaks form.
+
+11. To make mousse, place chocolate in a small bowl. Whisk cream until soft peaks form.
+
+12. Stir milk, rosewater and vanilla paste in a small saucepan over low heat until hot. Pour over chocolate. Stir until smooth and combined. Remove from heat and sprinkle over gelatine. Stir until melted and combined. Cool to room temperature and fold through the whipped cream.
+
+13. Divide mixture among six holes of a 7cm-wide silicone half-sphere mould (80ml-capacity). Insert frozen berry coulis half sphere. Freeze.
+
+14. To make streusel, preheat oven to 180c. Line a baking tray with baking paper.
+
+15. Place all ingredients, except icing sugar, in a stand mixer fitted with the paddle attachment. Mix on a low speed until crumbly. Spread onto prepared tray in a thin layer.
+
+16. Bake for about 20-25 minutes, tossing half way through, until golden and crisp. Cool completely. Dust with sifted icing sugar.
+
+17. To make brownie, preheat oven to 180c. Grease a 20cm square cake pan. Line base and sides with baking paper.
+
+18. Place butter, chocolate and vanilla paste in a small saucepan. Stir over low heat until melted and smooth. Transfer to a large bowl.
+
+19. Whisk eggs and sugar until pale and creamy. Stir into butter, chocolate and vanilla mixture. Fold in combined sifted flours and salt. Spoon mixture into prepared pan and level surface.
+
+20. Bake for about 25 minutes or until cooked, covering edges with foil if they brown too quickly.
+
+21. Cool in pan. Once cold, use a small round cutter (3-4cm) to cut into rounds. Dust with sifted icing sugar.
+
+22. To make glaze, place the cold water in a heatproof jug. Sprinkle over gelatine and set aside for 5 minutes. Stir mixture until combined.
+
+23. Place sugar, glucose and the extra water in a medium saucepan and stir over medium heat. Using a candy thermometer, bring mixture to 100c and pour it over gelatine mixture in jug. Add remaining ingredients. Stir until chocolate is melted. Blend with a stick blender until smooth. Use at 28c.
+
+24. Release mousse domes from moulds and place on a wire rack over a tray. Pour over glaze to coat evenly. Using a palette knife, transfer to a plate and refrigerate until set.
+
+25. To assemble, arrange mousse and brownie rounds on serving plates. Piped dots of whipped ganache in between and arrange a slice of the jelly. Decorate with chocolate shards, streusel pieces and micro herbs. Sprinkle over a little crushed freeze-dried strawberry.', '2019-10-30 18:21:45', 'tzogruzpcsoyjwwycbha', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (4, 'Teriyaki Salmon Poke Bowl', '2 x salmon fillets, skin off with Woolworths Bag & Bake with teriyaki & ginger sauce
+3 cups cooked brown rice
+1 packet Woolworths little gem lettuce combo, trimmed
+1 carrot, spiralised
+1 cucumber, spiralised
+1 avocado, finely sliced
+2 sheets nori, roughly sliced
+½ bunch radishes, finely sliced
+¼ cup pickled sushi ginger, to garnish
+soy sauce, to serve', '1. Preheat oven to 180°c. Place bag & bake salmon on a tray and bake for 10 minutes. Rest for 5 minutes, then place fish in a bowl, and flake using two forks.
+
+2. Divide rice between bowls and arrange lettuce, carrot, cucumber, avocado, nori, radish and flaked salmon around the bowls. Drizzle over any extra sauce from bag & bake bag and serve with pickled ginger and soy sauce.', '2019-10-30 18:41:42', 'kqwvllqspubtibyflkcz', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (5, '4-Step Meat Free Pizza', '2 x large Bazaar wholemeal Lebanese bread
+400g can Woolworths diced tomatoes with basil and oregano
+200g Swiss brown mushrooms, sliced
+1 cup grated mozzarella
+1 red capsicum, deseeded, sliced
+40g pkt baby rocket mixed green salad, to serve', '1. Preheat oven to 240°c. Place 2 baking trays into oven.
+
+2. place bread on 2 sheets of baking paper
+
+3. Mash tomatoes in a bowl with a fork. Spoon onto bread and spread evenly. Top bread with mushroom, cheese and capsicum.
+
+4. Slip baking paper with pizzas onto hot trays and return to oven. Bake for 10 minutes or until cheese is melted and bases are crisp. Top with rocket and serve with a mixed green salad.', '2019-10-30 18:44:32', 'tiszuhatlwrktmgtpoog', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (6, 'Baked Fish With Warm Leek, Beetroot & Herb Salad', '3 medium beetroot bulbs, washed, trimmed
+1/3 cup hazelnut kernels, toasted
+2 slices sourdough bread, roughly chopped
+1 lemon, zested, juiced
+2 tbs chopped flat-leaf parsley, plus extra 1/2 cup leaves for salad
+40g butter, melted
+4 firm white fish fillets (such as ling or barramundi), skin on
+1/4 cup extra virgin olive oil
+3 leeks, white part only, thinly sliced
+2 tsp Dijon mustard', '1. Preheat oven to 200°c. Wrap each beetroot bulb in foil and place on oven rack. Roast for 50 minutes or until soft.
+
+2. Meanwhile, process hazelnuts in a food processor until roughly chopped. Transfer to a bowl. Add bread to processor and pulse until roughly chopped. Transfer to bowl with nuts. Stir in zest, chopped parsley and butter.
+
+3. Line a baking tray with baking paper. Place fish on tray, skin side down. Press crumb mixture firmly over fish. Bake for 20 minutes or until cooked through and topping is golden.
+
+4. Heat 1 tbs oil in a frying pan over medium heat. Add leek and cook, stirring often, for 8 minutes or until tender. Transfer to a plate.
+
+5. Unwrap beets and peel and discard skin. Cut into wedges and combine with leek and extra parsley leaves. Whisk remaining oil, 1/4 cup lemon juice and mustard in a jug. Transfer fish to serving plates. Serve with salad and dressing.', '2019-10-30 18:46:48', 'ivfeviysrqlgvjyfhaka', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (7, 'Fish Cakes With Lemon & Lime Aioli', '3 egg yolks, plus 2 eggs, whisked
+3 tsp horseradish cream
+1 lemon, rind finely grated and 1/3 cup juice
+1 lime, juiced
+1 cup light olive oil or grapeseed oil
+450g medium white washed potatoes
+600g blue grenadier (hoki) fillets, skin removed, finely diced
+5 spring onions, thinly sliced
+1/4 cup finely chopped dill
+1/3 cup Essentials plain flour
+11/3 cups panko breadcrumbs
+oil, for shallow frying
+Lemon wedges to serve
+salad to serve', '1. Place yolks, horseradish, 2 tbs lemon juice and lime juice into a small food processor and pulse until combined. With processor motor running, slowly add oil in a steady stream until a smooth, thick consistency forms. Season with salt and white pepper. Set aside.
+
+2. Cook potatoes in a saucepan of cold water for 20 minutes or until tender. Drain and roughly mash. Transfer to a large bowl and cool. Add fish, onion, dill, lemon rind, remaining juice, salt and pepper. Stir to combine. Form mixture into 8 cakes and place on a large tray.
+
+3. Place the flour and breadcrumbs into separate bowls. Whisk eggs in a shallow dish. Lightly coat the cakes in flour, dip into egg and coat with breadcrumbs. Place onto tray.
+
+4. Pour enough oil into a frying pan until 2cm deep and place over medium heat. Cook cakes in batches, for 3 minutes each side or until golden and cooked through. Transfer to a tray and cover to keep warm. Serve with aioli, lemon wedges and green salad.', '2019-10-30 18:49:53', 'ttybkpddgfcadnqknlwb', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (15, 'Banana Bread Splits', '50g milk or dark chocolate
+2 slices Woolworths banana bread
+2 tbs unsalted butter
+4 scoops Woolworths vanilla ice cream
+2 bananas, cut in half lengthways
+Woolworths whipped cream
+2 strawberries, halved', '1. Place chocolate in a microwave-safe bowl and microwave in 30 second bursts or until melted, stirring in between.
+
+2. Using a small heart-shaped cookie cutter or a small sharp knife, carefully cut heart shapes from banana bread slices.
+
+3. Line a plate with paper towel. Heat a non-stick pan over low heat, and add butter. When butter is just melted, add banana bread hearts and cook for one minute on each side or until golden. Remove to prepared plate.
+
+4. To assemble, place two scoops of ice cream down the centre of two small bowls. Place banana halves on either side. Decorate with banana bread hearts, whipped cream and strawberries. Drizzle with melted chocolate to serve.', '2019-10-30 19:04:27', 'zqxibzdxdmckeuttwpca', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (8, 'Fish Cakes With Lemon & Lime Aioli', '3 egg yolks, plus 2 eggs, whisked
+3 tsp horseradish cream
+1 lemon, rind finely grated and 1/3 cup juice
+1 lime, juiced
+1 cup light olive oil or grapeseed oil
+450g medium white washed potatoes
+600g blue grenadier (hoki) fillets, skin removed, finely diced
+5 spring onions, thinly sliced
+1/4 cup finely chopped dill
+1/3 cup Essentials plain flour
+11/3 cups panko breadcrumbs
+oil, for shallow frying
+Lemon wedges to serve
+salad to serve', '1. Place yolks, horseradish, 2 tbs lemon juice and lime juice into a small food processor and pulse until combined. With processor motor running, slowly add oil in a steady stream until a smooth, thick consistency forms. Season with salt and white pepper. Set aside.
+
+2. Cook potatoes in a saucepan of cold water for 20 minutes or until tender. Drain and roughly mash. Transfer to a large bowl and cool. Add fish, onion, dill, lemon rind, remaining juice, salt and pepper. Stir to combine. Form mixture into 8 cakes and place on a large tray.
+
+3. Place the flour and breadcrumbs into separate bowls. Whisk eggs in a shallow dish. Lightly coat the cakes in flour, dip into egg and coat with breadcrumbs. Place onto tray.
+
+4. Pour enough oil into a frying pan until 2cm deep and place over medium heat. Cook cakes in batches, for 3 minutes each side or until golden and cooked through. Transfer to a tray and cover to keep warm. Serve with aioli, lemon wedges and green salad.', '2019-10-30 18:50:31', 'ibxdryyxwumdijzfejbp', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (9, 'Super Quick Spaghetti & Meatballs', '400g tray Woolworths Pork & Veal Meatballs
+450g tub Leggos Fresh Napoli Sauce
+250g Zafarelli spaghettini pasta no. 3
+240g Woolworths Italian Style Salad Kit
+1 tbs olive oil', '1. Heat oil in a medium fry pan over high heat. Add meatballs and cook, stirring occasionally, for 6-7 minutes or until well browned. Reduce heat to low, stir through the napoli sauce and cook for 2 minutes or until heated through.
+
+2. Meanwhile, in a large saucepan, cook pasta as per packet instructions. Drain, then return to the saucepan and toss through meatballs and sauce.
+
+3. Toss salad kit together in a large bowl. Divide pasta and meatballs into shallow serving bowls and serve with salad on the side.', '2019-10-30 18:52:54', 'eqzoiynwnxyyaesnwfvv', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (10, '15-Minute Chicken Kebabs', '375g Woolworths RSPCA approved lemon and garlic chicken kebabs
+450g pkt Woolworths microwave long grain white rice
+420g can Macro organic black beans no added salt, drained
+350g pkt kale slaw kit
+1 tbs olive oil', '1. Heat olive oil in a large frying pan over medium-high heat. Cook skewers, stirring occasionally, for 7-8 minutes or until cooked through. Remove from the heat.
+
+2. Vent the microwave rice packet and microwave for 2½ minutes. Add rice and black beans to the pan and stir to combine. Season well with salt and pepper.
+
+3. Place salad ingredients and dressing from the kit in a medium bowl and toss to combine. Divide skewers and black bean rice and salad between plates to serve.', '2019-10-30 18:54:14', 'whetdzxvkseqelxpjohi', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (11, 'Easy Crispy Chicken Tortillas', '500g RSPCA approved chicken breast fillets, thinly sliced
+35g pkt Old El Paso crispy chicken spice mix for soft tacos
+410g can Golden Circle corn kernels, drained
+10 pack Old El Paso regular flour tortillas
+1 tbs olive oil', '1. Place chicken in a large bowl, add spice mix and toss to coat well.
+
+2. Heat olive oil in a large frying pan over high heat. Add chicken and corn, then cook for 10-12 minutes, stirring occasionally, until corn is slightly charred and chicken is golden brown.
+
+3. Remove freshness sachet from the tortilla packet and microwave on high for 25 seconds or until warmed.
+
+4. Fill tortillas with chicken and corn to serve.', '2019-10-30 18:55:15', 'uorkfhakfzsogztbgtxm', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (12, 'Double Berry & Coconut Water Iceblocks', '150g fresh raspberries
+100g fresh blueberries
+2 cups coconut water', '1. Divide berries evenly between 10 x -cup iceblock moulds, squashing or halving some as you go. Fill with coconut water. Insert sticks and freeze overnight or until firm.
+
+2. To serve, dip moulds briefly in hot water to loosen and carefully remove iceblocks.', '2019-10-30 18:58:35', 'kuhoixhzjuzitazxythu', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (13, 'Sweet Potato Wellington', '2 large sweet potatoes
+2 tbs olive oil
+400g cup mushrooms, stalks removed, reserved for jus
+5 kale leaves, stalks removed, leaves finely chopped
+30g vegan margarine
+1 large brown onion, finely diced
+2 garlic cloves, crushed
+2 tbs finely chopped fresh tarragon
+3 sheets frozen vegan puff pastry, thawed
+steamed asparagus and sugar snap peas, to serve
+2 cups salt-reduced vegetable stock
+1 small brown onion, quartered, skin on
+2 tsp vegan margarine
+3 tsp cornflour', '1. Preheat oven to 180°c. Line a baking tray with baking paper. Place sweet potatoes on tray and rub with 1 tbs oil. Season and bake for 30 minutes or until tender when pierced with a skewer. Set aside to cool.
+
+2. Meanwhile, finely chop mushroom tops. Place kale in a bowl and cover with boiling water. Stand for 2 minutes to wilt. Drain, rinse under cold water and drain well. Heat remaining oil and 20g margarine in a frying pan over high heat. Add onion and cook for 4 minutes or until soft. Add chopped mushroom and garlic. Cook for 8 minutes or until golden and liquid evaporates. Stir in kale and tarragon. Season to taste and set aside to cool.
+
+3. Preheat oven to 200°c. Line a baking tray with baking paper. Cut 1 pastry sheet in half. Join one half to each full pastry sheet by overlapping edges and pressing firmly together. Join long sides of both together to form a 48cm x 36cm rectangle. Spoon half the mushroom mixture along the centre, leaving 8cm on each side. Peel potatoes and trim ends. Lay over mushroom and press remaining mushroom mixture onto potatoes. Fold one side of pastry over and roll to enclose. Fold ends under and trim excess. Transfer to tray, brush with remaining margarine and bake for 20-25 minutes or until golden.
+
+4. Meanwhile, to make the jus, bring stock, reserved mushroom stalks and onion to the boil in a saucepan over high heat. Reduce heat to medium and simmer for 15 minutes or until reduced by one-third.
+
+5. Mash margarine and cornflour in a small bowl. Gradually whisk into stock mixture. Cook for 2 minutes or until slightly thickened. Strain into a serving jug and discard solids. Slice wellington and serve with jus and steamed vegetables.', '2019-10-30 19:00:28', 'asapweshndgfgfobfgjp', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (14, 'Loaded Vegan Sausage Nachos', '1 avocado
+1 lime, juiced
+2 tsp olive oil
+397g packet Tofurky Original sausages, sliced
+2 tbs tomato paste
+2 tsp smoked paprika
+1 tsp chilli powder (optional)
+1 tsp garlic powder
+1 tsp onion powder
+1/2 tsp dried oregano
+1/2 tsp ground cumin
+1/2 tsp salt
+125g can black beans, drained
+2 x 170g packets plain corn chips
+2 cups shredded dairy-free vegan cheese
+1 cup grape tomatoes, quartered
+1/2 red onion, finely diced
+1/2 bunch coriander, leaves picked
+lime wedges, to serve', '1. Place avocado in a bowl with lime juice and season with salt and pepper. Mash to combine into a guacamole and set aside.
+
+2. Preheat oil in a large frying pan over medium-high heat. Add sausage and cook for 2 minutes or until starting to turn golden brown. Add tomato paste, spices, salt, black beans and 2 tbs water and cook for a further 2 minutes or until thick and fragrant.
+
+3. Arrange corn chips on a serving plate. Spoon over sausage and bean mix. Sprinkle with cheese and top with remaining ingredients. Add guacamole to serve.', '2019-10-30 19:02:40', 'yjxxmwpmkfwfugwknxzl', 'john', -9223372036854775808);
+INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (16, '5-Minute Red Velvet Self-Saucing Puddings', '1/2 cup cream cheese
+11/2 tbs pure icing sugar
+1 lemon, zested
+1 cup plain flour
+1 cup caster sugar
+1/4 cup cocoa, plus extra to dust
+1 tsp baking powder
+150g unsalted butter, melted
+1/2 cup milk
+2 free range eggs
+1 tsp vanilla extract
+125g raspberries, plus extra to serve
+2 tsp red food colouring
+200g 70% cocoa dark chocolate, chopped', '1. Combine cream cheese, icing sugar and zest in a bowl and chill until required.
+
+2. place flour, sugar, cocoa, baking powder, butter, milk, eggs, vanilla, raspberries, food colouring, pinch of salt and half the chocolate in a blender and process for 1 minute Or until smooth.
+
+3. Divide mixture evenly between 4 x 400ml-capacity mugs until three-quarters full. Top each with remaining chocolate and 11/2 tbs water. Place onto a plate and microwave for 2 minutes or until puddings have risen – they will still be soft in the centre. To serve, top with cream cheese mixture and extra raspberries, and dust with extra cocoa.', '2019-10-30 19:14:41', 'yicbxrprnmeaemjmihzs', 'john', -9223372036854775808);
+
+
+INSERT INTO recipetype (recipe_id, type_name) VALUES (2, 'dessert');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (3, 'dessert');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (4, 'healthy food');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (5, 'healthy food');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (6, 'fish');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (8, 'fish');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (9, 'easy cooking');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (10, 'easy cooking');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (11, 'easy cooking');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (12, 'vegans');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (13, 'vegans');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (14, 'vegans');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (15, 'dessert');
+INSERT INTO recipetype (recipe_id, type_name) VALUES (16, 'dessert');
