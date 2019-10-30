@@ -71,7 +71,7 @@ class SelectRecipes {
               + "from recipe r\n"
               + "join recipetype r2 on r.recipe_id = r2.recipe_id\n"
               + "where r2.type_name like '%' || ? || '%' "
-                + "and publicationdate <= current_timestamp \n"
+                + "and publicationdate <= (now() AT TIME ZONE 'UTC') \n"
               + "order by " + sortType + " desc\n"
               + "offset ? fetch first ? row only ")) {
       selectStatement.setString(1, recipeType);
@@ -119,7 +119,7 @@ class SelectRecipes {
             .prepareStatement("select count(distinct r.name) from recipe r\n"
             + "join recipetype r2 on r.recipe_id = r2.recipe_id\n"
             + "where r2.type_name like '%' || ? || '%'"
-              + " and publicationdate <= current_timestamp ")) {
+              + " and publicationdate <= (now() AT TIME ZONE 'UTC') ")) {
       getCountStatement.setString(1, recipeType);
 
       try (ResultSet resultSet = getCountStatement.executeQuery()) {

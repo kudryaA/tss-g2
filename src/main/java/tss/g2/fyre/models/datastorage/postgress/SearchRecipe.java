@@ -43,7 +43,7 @@ public class SearchRecipe {
     try (PreparedStatement searchStatement = connection
             .prepareStatement("select * from recipe "
                     + "where recipecomposition like '%' || ? || '%' "
-                    + "AND publicationdate <= current_timestamp ")) {
+                    + "AND publicationdate <= (now() AT TIME ZONE 'UTC') ")) {
       searchStatement.setString(1, ingredient);
 
       searchRecipeLogger.info(searchStatement.toString());
