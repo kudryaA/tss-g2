@@ -105,10 +105,6 @@
             $("#content-container").empty();
             $("#content-container").load("recipe.html");
         }
-        function showRecipe() {
-            $("#content-container").empty();
-            $("#content-container").load("recipe.html");
-        }
         function searchRecipes() {
             var data = { ingredientName: $("#search-input").val() };
             $.ajax({
