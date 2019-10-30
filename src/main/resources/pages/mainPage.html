@@ -54,12 +54,14 @@
             if (sortType == "publicationDate") {
                 sortType = "publication date";
             }
+            $(document).attr("title", "Recipes ordered by " + sortType);
             $("#content-container").append("<h1 class='my-4'>Recipes sorted by " + sortType + "</h1><hr>");
             $("#content-container").append("<div hidden id='scroll'>1</div>");
             loadRecipes(window.localStorage.getItem("sortType"));
         });
         function addRecipe() {
             $("#content-container").empty();
+            $(document).attr("title", "Add recipe");
             $("#content-container").load("addRecipe.html");
         }
         function moderatorPage() {

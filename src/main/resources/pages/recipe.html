@@ -20,6 +20,7 @@
             var steps = $("#steps").html();
             var date = $("#date").html();
             $("#recipe-container").load("addRecipe.html");
+            $(document).attr("title", "Editing of " + name);
             setTimeout(function (){
                 $("#recipeName").val(name);
                 $("#composition").val(ingredients);
@@ -129,6 +130,7 @@
                         } else if (user.status == false) {
                             $("#recipe-container .btn").remove();
                         }
+                        $(document).attr("title", answer.obj.name);
                         $("#name").html(answer.obj.name);
                         $("#author").html(answer.obj.creator);
                         $("#date").html(answer.obj.publicationDate);
