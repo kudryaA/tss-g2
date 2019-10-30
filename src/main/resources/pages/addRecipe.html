@@ -38,6 +38,7 @@
            });
         });
         function createRecipe() {
+            var check = true;
             $("#recipeForm input").each(function() {
                 $(this).next("span").hide();
                 if ($(this).val() == "") {
@@ -69,12 +70,15 @@
                 }
             });
             var data = new FormData();
-            $.each($('#file')[0].files, function(i, file) {
-                data.append('image', file);
+            $.each($("#file")[0].files, function(i, file) {
+                data.append("image", file);
             });
+            if (!check || data.get("image") == null) {
+                return;
+            }
             data.append("recipeName", $("#recipeName").val());
             data.append("cookingSteps", $("#cookingSteps").val());
-            data.append("recipeComposition", $("#recipeComposition").val());
+            data.append("composition", $("#recipeComposition").val());
 
             var selectedTypes = "";
             $.each($("#selectedTypes").val(), function( index, value ) {
@@ -121,8 +125,8 @@
                         <input type="text" class="form-control" id="recipeName">
                     </div>
                     <div class="form-group">
-                        <label for="recipeComposition">Ingredients</label>
-                        <textarea class="form-control" id="recipeComposition" rows="3"></textarea>
+                        <label for="composition">Ingredients</label>
+                        <textarea class="form-control" id="composition" rows="3"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="cookingSteps">Recipe</label>

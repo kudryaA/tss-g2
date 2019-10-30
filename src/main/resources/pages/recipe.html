@@ -22,7 +22,7 @@
             $("#recipe-container").load("addRecipe.html");
             setTimeout(function (){
                 $("#recipeName").val(name);
-                $("#recipeComposition").val(ingredients);
+                $("#composition").val(ingredients);
                 $("#cookingSteps").val(steps);
                 setTimeout(function (){
                     $("#publicationDate").val(date);
@@ -72,7 +72,7 @@
             data.append("recipeId", id);
             data.append("recipeName", $("#recipeName").val());
             data.append("cookingSteps", $("#cookingSteps").val());
-            data.append("recipeComposition", $("#recipeComposition").val());
+            data.append("composition", $("#composition").val());
             $.ajax({
                 url:"/update/recipe",
                 type:"post",
@@ -81,7 +81,7 @@
                 contentType: false,
                 complete: [
                     function (response) {
-                        showRecipe();
+                        showRecipe(data.get("recipeId"));
                     }
                 ]
             });
