@@ -53,3 +53,6 @@ a {
 	padding: 6px 10px;
 	margin-bottom: 6px;
 }
+.preview {
+    max-height: 300px;
+}
