@@ -305,6 +305,3 @@ INSERT INTO recipetype (recipe_id, type_name) VALUES (13, 'vegans');
 INSERT INTO recipetype (recipe_id, type_name) VALUES (14, 'vegans');
 INSERT INTO recipetype (recipe_id, type_name) VALUES (15, 'dessert');
 INSERT INTO recipetype (recipe_id, type_name) VALUES (16, 'dessert');
-
-
-SELECT setval('recipeSeq', (SELECT MAX(recipe_id)+1 FROM recipe))
