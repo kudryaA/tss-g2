@@ -43,7 +43,7 @@ a {
   background-color: #00818a;
   border-color: #00818a;
 }
-.recipe .btn {
+#load-recipes, .recipe .btn  {
 	font-size: 100%;
 	border: 0;
 	height: auto;
@@ -52,6 +52,9 @@ a {
 	background-color: #00818a;
 	padding: 6px 10px;
 	margin-bottom: 6px;
+}
+#load-recipes {
+    padding: 16px 20px;
 }
 .preview {
     max-height: 300px;

@@ -13,7 +13,7 @@
     <script>
     function login(url) {
         var check = true;
-        $('input').each(function() {
+        $("input").each(function() {
             $(this).next("span").hide();
             if ($(this).val() == "") {
                 $(this).after("<span>This field is required</span>");
