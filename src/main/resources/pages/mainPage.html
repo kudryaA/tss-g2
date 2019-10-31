@@ -16,13 +16,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
     <script>
         var count = 1;
-        $(window).scroll(function() {
+        /*$(window).scroll(function() {
             if($(window).scrollTop() == $(document).height() - $(window).height() && count < window.localStorage.getItem("pages")
                 && $("#scroll").html() == 1) {
                 count++;
                 loadRecipes(window.localStorage.getItem("sortType"));
             }
-        });
+        });*/
         $(function() {
             $.ajax({
                 url:"/session",
@@ -32,7 +32,7 @@
                         var answer = $.parseJSON(response.responseText);
                         if (answer.status == true) {
                             $("#login-page").text("Logout");
-                            $('#login-page').attr('onclick', 'logout()');
+                            $("#login-page").attr("onclick", "logout()");
                             if (answer.obj.moderator != true) {
                                 $("#moderator-page").remove();
                             }
@@ -58,6 +58,7 @@
             $("#content-container").append("<h1 class='my-4'>Recipes sorted by " + sortType + "</h1><hr>");
             $("#content-container").append("<div hidden id='scroll'>1</div>");
             loadRecipes(window.localStorage.getItem("sortType"));
+            $("#load-recipes").show();
         });
         function addRecipe() {
             $("#content-container").empty();
@@ -71,6 +72,14 @@
         function changeSortOfRecipes(sortType) {
             window.localStorage.setItem('sortType', sortType);
             window.location.href = location.pathname.replace(/(.*)\/[^/]*/, '$1/mainPage.html');
+        }
+        function loadMoreRecipes() {
+            if(count < window.localStorage.getItem("pages") && $("#scroll").html() == 1) {
+                count++;
+                loadRecipes(window.localStorage.getItem("sortType"));
+            } else {
+                alert("You scrolled till the end ;)")
+            }
         }
         function loadRecipes(sortType) {
             var data = { pageNumber: count,
@@ -201,6 +210,7 @@
             <div class="container" id="content-container">
 
             </div>
+            <button class="btn btn-primary" id="load-recipes" onclick="loadMoreRecipes()">Load more recipes</button>
         </div>
     </div>
 </div>

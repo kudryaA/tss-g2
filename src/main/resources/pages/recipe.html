@@ -103,6 +103,7 @@
             });
         }
         $(function() {
+            $("#load-recipes").hide();
             var data = { recipeId: window.localStorage.getItem("recipeId") };
             var user;
             $.ajax({

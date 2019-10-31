@@ -17,6 +17,7 @@
 
     <script>
         $(function() {
+           $("#load-recipes").hide();
            $("#publicationDate").datetimepicker({
                 format: "DD/MM/YYYY HH:mm:ss"
            });
@@ -78,7 +79,7 @@
             }
             data.append("recipeName", $("#recipeName").val());
             data.append("cookingSteps", $("#cookingSteps").val());
-            data.append("composition", $("#composition").val());
+            data.append("recipeComposition", $("#composition").val());
 
             var selectedTypes = "";
             $.each($("#selectedTypes").val(), function( index, value ) {
@@ -95,16 +96,18 @@
                 contentType: false,
                 complete: [
                     function (response) {
-                        alert(response.responseText);
-                        $("#recipeForm input").each(function() {
-                            $(this).val("");
-                        });
-                        $("#recipeForm textarea").each(function() {
-                            $(this).val("");
-                        });
-                        $("#recipeForm select").each(function() {
-                            $(this).val([]);
-                        });
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.status == true) {
+                            $("#recipeForm input").each(function() {
+                                $(this).val("");
+                            });
+                            $("#recipeForm textarea").each(function() {
+                                $(this).val("");
+                            });
+                            $("#recipeForm select").each(function() {
+                                $(this).val([]);
+                            });
+                        }
                     }
                 ]
             });
