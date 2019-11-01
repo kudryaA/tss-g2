@@ -20,3 +20,11 @@
 * /image?id={} - получить картинку рецепта. get запрос. Пример  /image?id=42424shfh
 * /search/recipe?ingredientName={} - поиск рецепта по названию ингредиента.
 * /update/recipe?recipeId={}&recipeName={}&composition={}&cookingSteps - обновление рецепта по введенным параметрам.
+## Технологии
+* java
+* javalin
+* postgres
+* slf4j
+* guava
+* gson
+* thymeleaf
