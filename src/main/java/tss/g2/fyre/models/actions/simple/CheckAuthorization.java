@@ -1,6 +1,7 @@
 package tss.g2.fyre.models.actions.simple;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.utils.ToHash;
@@ -31,15 +32,19 @@ public class CheckAuthorization implements Action {
   @Override
   public Answer getAnswer() {
     Person authorization = dataStorage.getAuthorization(login);
-    boolean res = false;
 
     if (authorization == null) {
-      return new Answer<>(false, res);
+      return new Answer<>(false, false);
+    }
+
+    if (authorization.getBannedStatus()) {
+      return new AnswerWithComment(true, false, "You are banned");
     }
 
     if (authorization.getLogin().equals(login) && authorization.getPassword().equals(password)) {
-      res = true;
+      return new Answer<>(true, true);
+    } else {
+      return new AnswerWithComment(true, false, "You entered incorrect login/password");
     }
-    return new Answer<>(true, res);
   }
 }
