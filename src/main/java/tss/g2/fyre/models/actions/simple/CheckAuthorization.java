@@ -31,14 +31,18 @@ public class CheckAuthorization implements Action {
   @Override
   public Answer getAnswer() {
     Person authorization = dataStorage.getAuthorization(login);
-    boolean res = false;
+    String res = "You entered incorrect login/password";
 
     if (authorization == null) {
       return new Answer<>(false, res);
     }
 
     if (authorization.getLogin().equals(login) && authorization.getPassword().equals(password)) {
-      res = true;
+      res = "All right";
+    }
+
+    if (authorization.getBannedStatus()) {
+      res = "You are banned";
     }
     return new Answer<>(true, res);
   }
