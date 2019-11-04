@@ -10,8 +10,8 @@ import com.google.gson.Gson;
  */
 public class Answer<T> {
 
-  private boolean status;
-  private T obj;
+  protected boolean status;
+  protected T obj;
 
   /**
    * Constructor.
