@@ -89,16 +89,18 @@ class SelectRecipes {
     Map<Integer, List<Type>> recipeTypeMap = new HashMap<>();
     try (Statement selectTypesStatement = connection.createStatement()) {
       try (ResultSet resultSet = selectTypesStatement
-              .executeQuery("select recipe_id, t.name, description from recipetype "
+              .executeQuery("select recipe_id, t.name as typeName, description, t.image as typeImage from recipetype "
                       + "join type t on recipetype.type_name = t.name")) {
         while (resultSet.next()) {
-          int recipeId = resultSet.getInt(1);
+          int recipeId = resultSet.getInt("recipe_id");
           if (recipeTypeMap.containsKey(recipeId)) {
             recipeTypeMap.get(recipeId)
-                    .add(new Type(resultSet.getString(2), resultSet.getString(3)));
+                    .add(new Type(resultSet.getString("typeName"),
+                            resultSet.getString("description"), resultSet.getString("typeImage")));
           } else {
             List<Type> types = new ArrayList<>();
-            types.add(new Type(resultSet.getString(2), resultSet.getString(3)));
+            types.add(new Type(resultSet.getString("typeName"),
+                    resultSet.getString("description"), resultSet.getString("typeImage")));
             recipeTypeMap.put(recipeId, types);
           }
         }

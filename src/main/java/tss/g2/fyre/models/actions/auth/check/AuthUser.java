@@ -35,7 +35,7 @@ public class AuthUser {
     Authorization authorization = tokenStorage.get(token);
     Answer answer = null;
     if (authorization != null) {
-      answer = action.getAnswer(authorization.getLogin());
+      answer = action.getAnswer(authorization.getLogin(), authorization.getRole());
     } else  {
       answer = new Answer(false);
     }

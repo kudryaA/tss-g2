@@ -20,7 +20,7 @@ public class DeleteRecipe implements Action {
   }
 
   @Override
-  public Answer getAnswer(String user) {
+  public Answer getAnswer(String user, String role) {
     return new Answer<>(true, dataStorage.deleteRecipe(recipeId, user));
   }
 }

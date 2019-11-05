@@ -13,6 +13,7 @@ import java.util.List;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.utils.RandomString;
+import tss.g2.fyre.utils.StoreImage;
 
 public class AddRecipe implements Action {
   private DataStorage dataStorage;
@@ -43,29 +44,15 @@ public class AddRecipe implements Action {
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
     this.selectedTypes = selectedTypes;
-    this.image = generatePath();
-
-    try {
-      InputStream initialStream = image.getContent();
-      byte[] buffer = new byte[initialStream.available()];
-      initialStream.read(buffer);
-      File targetFile = new File("images/" + this.image);
-      Files.write(buffer, targetFile);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+    this.image = new StoreImage(image).store();
   }
 
   @Override
-  public Answer getAnswer(String user) {
+  public Answer getAnswer(String user, String role) {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
 
     return new Answer<>(true, dataStorage
             .addRecipe(recipeName, recipeComposition,
                 cookingSteps, publicationDate, typesList, image, user));
-  }
-
-  private String generatePath() {
-    return new RandomString(20).generate();
   }
 }

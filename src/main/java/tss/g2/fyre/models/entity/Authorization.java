@@ -6,39 +6,39 @@ package tss.g2.fyre.models.entity;
  */
 public class Authorization {
   private String login;
-  private boolean moderator;
+  private String role;
 
   /**
    * Constructor.
    * @param login login of user
-   * @param moderator is moderator
+   * @param role user role
    */
-  public Authorization(String login, boolean moderator) {
+  public Authorization(String login, String role) {
     this.login = login;
-    this.moderator = moderator;
+    this.role = role;
   }
 
   /**
-   * Get login.
-   * @return return
+   * Get user login.
+   * @return user login
    */
   public String getLogin() {
     return login;
   }
 
   /**
-   * Get is moderator.
-   * @return moderator
+   * Get is user role.
+   * @return user role
    */
-  public boolean isModerator() {
-    return moderator;
+  public String getRole() {
+    return role;
   }
 
   @Override
   public String toString() {
     return "Authorization{"
         + "login='" + login + '\''
-        + ", moderator=" + moderator
+        + ", role=" + role
         + '}';
   }
 }

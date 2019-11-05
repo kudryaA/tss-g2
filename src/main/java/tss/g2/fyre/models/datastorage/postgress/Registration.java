@@ -60,7 +60,7 @@ class Registration {
           return answer;
         } else {
           try (PreparedStatement registrationStatement = connection
-                  .prepareStatement("insert into person values(?, ?, ?, ?, false, ?)")) {
+                  .prepareStatement("insert into person values(?, ?, ?, ?, false, ?, 'user')")) {
             registrationStatement.setString(1, login);
             registrationStatement.setString(2, password);
             registrationStatement.setString(3, name);

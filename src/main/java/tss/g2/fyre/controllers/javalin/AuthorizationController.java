@@ -6,10 +6,7 @@ import java.util.Map;
 
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
-import tss.g2.fyre.models.actions.auth.RegisterModerator;
-import tss.g2.fyre.models.actions.auth.check.ModeratorAuthUser;
 import tss.g2.fyre.models.actions.simple.CheckAuthorization;
-import tss.g2.fyre.models.actions.simple.CheckModerator;
 import tss.g2.fyre.models.actions.simple.RegisterUser;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
@@ -46,10 +43,11 @@ public class AuthorizationController implements CreateController {
       String password = ctx.formParam("password");
       Answer answer = new CheckAuthorization(dataStorage, login, password).getAnswer();
       boolean status = (boolean) answer.getObj();
+
       if (status) {
         String token = new RandomString(tokenSize).generate();
         ctx.sessionAttribute("token", token);
-        tokenStorage.put(token, new Authorization(login, false));
+        tokenStorage.put(token, new Authorization(login, dataStorage.getRole(login)));
       }
       ctx.result(answer.toJson());
     });
@@ -66,38 +64,7 @@ public class AuthorizationController implements CreateController {
       if (status) {
         String token = new RandomString(tokenSize).generate();
         ctx.sessionAttribute("token", token);
-        tokenStorage.put(token, new Authorization(login, false));
-      }
-      ctx.result(answer.toJson());
-    });
-    
-    app.post("/login/moderator", ctx -> {
-      String login = ctx.formParam("login");
-      String password = ctx.formParam("password");
-      Answer answer = new CheckModerator(dataStorage, login, password).getAnswer();
-      boolean status = (boolean) answer.getObj();
-      if (status) {
-        String token = new RandomString(tokenSize).generate();
-        ctx.sessionAttribute("token", token);
-        tokenStorage.put(token, new Authorization(login, true));
-      }
-      ctx.result(answer.toJson());
-    });
-
-    app.post("/registration/moderator", ctx -> {
-      String name = ctx.formParam("name");
-      String login = ctx.formParam("login");
-      String password = ctx.formParam("password");
-      Answer answer = new ModeratorAuthUser(
-          new RegisterModerator(dataStorage, login, password, name),
-          ctx.sessionAttribute("token"),
-          tokenStorage
-      ).getAnswer();
-      boolean status = (boolean) answer.getObj();
-      if (status) {
-        String token = new RandomString(tokenSize).generate();
-        ctx.sessionAttribute("token", token);
-        tokenStorage.put(token, new Authorization(login, true));
+        tokenStorage.put(token, new Authorization(login, "user"));
       }
       ctx.result(answer.toJson());
     });

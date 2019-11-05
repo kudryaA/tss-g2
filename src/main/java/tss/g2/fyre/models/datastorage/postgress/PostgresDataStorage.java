@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
@@ -50,17 +49,6 @@ public class PostgresDataStorage implements DataStorage {
     return new Registration(connection, login, password, name, surname, email)
             .createUser();
   }
-  
-  @Override
-  public Moderator getModerator(String login) {
-    return new GetModerator(connection, login).getModerator();
-  }
-
-  @Override
-  public boolean createModerator(String login, String password, String name) {
-    return new RegistrationModerator(connection, login, password, name)
-            .createModerator();
-  }
 
   @Override
   public boolean addRecipe(String recipeName, String recipeCompostion, String cookingSteps,
@@ -71,8 +59,8 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean addType(String typeName, String description) {
-    return new AddType(connection, typeName, description).addType();
+  public boolean addType(String typeName, String description, String image) {
+    return new AddType(connection, typeName, description, image).addType();
   }
 
   @Override
@@ -117,5 +105,10 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public List<Recipe> searchRecipe(String ingredientName) {
     return new SearchRecipe(connection, ingredientName).searchRecipe();
+  }
+
+  @Override
+  public String getRole(String login) {
+    return new GetUserRole(connection, login).getRole();
   }
 }

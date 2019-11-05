@@ -37,10 +37,11 @@ class GetTypeInformation {
       try (ResultSet resultSet = selectStatement.executeQuery("select * from type")) {
         getTypeInformationLogger.info(selectStatement.toString());
         while (resultSet.next()) {
-          String typeName = resultSet.getString(1);
-          String description = resultSet.getString(2);
+          String typeName = resultSet.getString("name");
+          String description = resultSet.getString("description");
+          String image = resultSet.getString("image");
 
-          typesInfo.add(new Type(typeName, description));
+          typesInfo.add(new Type(typeName, description, image));
         }
       }
     } catch (SQLException e) {

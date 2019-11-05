@@ -69,8 +69,10 @@ public class RecipeController implements CreateController {
     app.post("/add/type", ctx -> {
       String typeName = ctx.formParam("typeName");
       String description = ctx.formParam("description");
+      UploadedFile image = ctx.uploadedFile("image");
+
       Answer answer = new AuthUser(
-          new AddType(dataStorage, typeName, description),
+          new AddType(dataStorage, typeName, description, image),
           ctx.sessionAttribute("token"),
           tokenStorage
       ).getAnswer();

@@ -29,7 +29,7 @@ public class UpdateRecipe implements Action {
   }
 
   @Override
-  public Answer getAnswer(String login) {
+  public Answer getAnswer(String login, String role) {
     return new Answer<>(true, dataStorage
         .updateRecipe(recipeId, recipeName, composition, cookingSteps, login));
   }

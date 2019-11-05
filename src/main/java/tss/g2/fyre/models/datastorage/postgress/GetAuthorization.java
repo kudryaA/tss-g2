@@ -51,7 +51,9 @@ class GetAuthorization {
           String surname = resultSet.getString("surname");
           boolean bannedStatus = resultSet.getBoolean("bannedStatus");
           String email = resultSet.getString("email");
-          result = new Person(login, password, name, surname, bannedStatus, email);
+          String role = resultSet.getString("role");
+
+          result = new Person(login, password, name, surname, bannedStatus, email, role);
         }
       }
     } catch (SQLException e) {

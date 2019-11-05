@@ -1,7 +1,9 @@
 package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.models.entity.Roles;
 
 public class ChangeBannedStatus implements Action {
 
@@ -19,7 +21,12 @@ public class ChangeBannedStatus implements Action {
   }
 
   @Override
-  public Answer getAnswer(String user) {
-    return new Answer<>(true, dataStorage.changeBannedStatus(userLogin));
+  public Answer getAnswer(String user, String role) {
+    if (Roles.moderator.toString().equals(role) || Roles.admin.toString().equals(role)) {
+      return new Answer<>(true, dataStorage.changeBannedStatus(userLogin));
+    } else {
+      return new AnswerWithComment(true, false,
+              "You do not have permission to perform this operation.");
+    }
   }
 }
