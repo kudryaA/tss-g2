@@ -60,8 +60,8 @@ class AddRecipe {
    *
    * @return result of adding new recipe
    */
-  boolean addRecipe() {
-    boolean result = false;
+  String addRecipe() {
+    String result = "";
 
     try (Statement createIdStatement = connection.createStatement()) {
       try (ResultSet resultSet = createIdStatement.executeQuery("SELECT MAX(recipe_id)+1 FROM recipe")) {
@@ -97,7 +97,7 @@ class AddRecipe {
               }
 
               if (i == selectedTypes.size()) {
-                result = true;
+                result = "" + seqValue;
               }
             }
           }

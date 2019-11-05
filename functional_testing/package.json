@@ -1,0 +1,25 @@
+{
+  "name": "functional_testing",
+  "version": "1.0.0",
+  "description": "Functional testing for fyre",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kudryaA/fyre.git"
+  },
+  "author": "Anton Kudryavtsev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kudryaA/fyre/issues"
+  },
+  "homepage": "https://github.com/kudryaA/fyre#readme",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "fetch-cookie": "^0.7.3",
+    "form-data": "^2.5.1",
+    "node-fetch": "^2.6.0"
+  }
+}
