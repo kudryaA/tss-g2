@@ -60,9 +60,13 @@ public class AddRecipe implements Action {
   public Answer getAnswer(String user) {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
 
-    return new Answer<>(true, dataStorage
-            .addRecipe(recipeName, recipeComposition,
-                cookingSteps, publicationDate, typesList, image, user));
+    try {
+      return new Answer<>(true, dataStorage
+          .addRecipe(recipeName, recipeComposition,
+              cookingSteps, publicationDate, typesList, image, user));
+    } catch (Exception e) {
+      return new Answer(false);
+    }
   }
 
   private String generatePath() {

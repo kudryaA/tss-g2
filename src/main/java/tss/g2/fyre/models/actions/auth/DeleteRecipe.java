@@ -21,6 +21,7 @@ public class DeleteRecipe implements Action {
 
   @Override
   public Answer getAnswer(String user) {
-    return new Answer<>(true, dataStorage.deleteRecipe(recipeId, user));
+    //return new Answer(true);
+     return new Answer<>(true, dataStorage.deleteRecipe(recipeId, user));
   }
 }
