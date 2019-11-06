@@ -14,6 +14,10 @@ public class StoreImage {
     this.uploadedFile = uploadedFile;
   }
 
+  /**
+   * Method for saving image to internal folder.
+   * @return path to image
+   */
   public String store() {
     String path = "unnamed";
 
@@ -32,6 +36,6 @@ public class StoreImage {
   }
 
   private static String generatePath() {
-        return new RandomString(100).generate();
-    }
+    return new RandomString(100).generate();
+  }
 }

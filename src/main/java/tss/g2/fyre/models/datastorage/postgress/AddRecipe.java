@@ -64,7 +64,8 @@ class AddRecipe {
     boolean result = false;
 
     try (Statement createIdStatement = connection.createStatement()) {
-      try (ResultSet resultSet = createIdStatement.executeQuery("SELECT MAX(recipe_id)+1 FROM recipe")) {
+      try (ResultSet resultSet = createIdStatement
+              .executeQuery("SELECT MAX(recipe_id)+1 FROM recipe")) {
         if (resultSet.next()) {
           int seqValue = resultSet.getInt(1);
 
