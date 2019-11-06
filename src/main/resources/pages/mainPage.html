@@ -39,13 +39,13 @@
                         if (answer.status == true) {
                             $("#login-page").text("Logout");
                             $("#login-page").attr("onclick", "logout()");
-                            if (answer.obj.moderator != true) {
+                            /*if (answer.obj.role != "moderator" && answer.obj.role != "admin") {
                                 $("#moderator-page").remove();
-                            }
+                            }*/
                         } else {
                             $("#login-page").text("Login");
                             $("#login-page").attr("onclick", "");
-                            $("#moderator-page").remove();
+                            //$("#moderator-page").remove();
                             $("#add-recipe").remove();
                         }
                     }

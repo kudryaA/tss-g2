@@ -30,7 +30,6 @@
                         var answer = $.parseJSON(response.responseText);
                         if (answer.obj != "false") {
                             $.each(answer.obj, function(key, value) {
-                                //alert(value.typeName);
                                 $("#selectedTypes").append($("<option></option>").attr("value",value.typeName).text(value.typeName));
                             });
                         }
@@ -97,7 +96,7 @@
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
-                        if (answer.status == true) {
+                        if (answer.obj == true) {
                             $("#recipeForm input").each(function() {
                                 $(this).val("");
                             });

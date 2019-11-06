@@ -43,7 +43,7 @@
                     if (answer.obj == true) {
                         window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"mainPage.html");
                     } else {
-                        alert("Incorrect login or/and password!");
+                        alert(answer.comment);
                     }
                 }
             ]
@@ -66,12 +66,7 @@
                         <input type="password" id="inputPassword" class="form-control" placeholder="Password">
                         <label for="inputPassword">Password</label>
                     </div>
-                    <div class="btn-group" role="group" aria-label="Basic example">
-                        <button class="btn btn-lg" type="submit" onclick="login('login')">Log In as user</button>
-                        <button class="btn btn-lg" type="submit" onclick="login('login/moderator')">Log In as
-                            moderator
-                        </button>
-                    </div>
+                    <button class="btn btn-lg" type="submit" onclick="login('login')">Log In</button>
                     <a href="registration.html">Register</a>
                 </div>
             </div>

@@ -8,17 +8,18 @@ tr {
 td {
 	text-align: center;
 }
-.ban-btn:focus, .ban-btn:active, .input:focus, .input:active, .form-control:focus, .form-control:active {
+.ban-btn:focus, .ban-btn:active, #toggle-moder-page:focus, #toggle-moder-page:active, .input:focus, .input:active,
+.form-control:focus, .form-control:active {
     outline: none !important;
     box-shadow: none !important;
     border-color: #404b69;
     -webkit-appearance:none;
 }
-.ban-btn:active {
+.ban-btn:active, #toggle-moder-page:active {
   background-color: #404b69 !important;
   border-color: #404b69 !important;
 }
-.ban-btn {
+.ban-btn, #toggle-moder-page {
 	font-size: 100%;
 	border: 0;
 	height: 2rem;
@@ -27,4 +28,12 @@ td {
 	color: white;
 	background: #00818a;
 	width: 100%;
+}
+#toggle-moder-page {
+    padding: 6px 10px;
+    margin-bottom: 10px;
+    height: auto;
+}
+#toggle-moder-page:hover {
+    background: #00818a;
 }
