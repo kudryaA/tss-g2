@@ -26,3 +26,15 @@
 * guava
 * gson
 * thymeleaf
+* nodejs
+* maven
+## Инструкция по установке
+1. Нужно установить java, maven, postgres(запомнить конфигурацию), git.
+2. Склонировать репозиторий.
+3. Настроить файл config/configuration.yml и файл config/password(пароль к базе)
+4. Выполнить в базе скрипт config/initial_script.sql
+5. Собрать и запустить jar файл
+```
+mvn package
+java -jar target/fyre-1.0-SNAPSHOT.jar
+```
