@@ -117,4 +117,9 @@ public class PostgresDataStorage implements DataStorage {
   public List<RecipeWithType> selectUnconfirmedRecipes() {
     return new SelectUnconfirmedRecipes(connection).selectUnconfirmedRecipes();
   }
+
+  @Override
+  public boolean recipeConfirmation(int recipeId) {
+    return new RecipeConfirmation(connection, recipeId).confirmation();
+  }
 }

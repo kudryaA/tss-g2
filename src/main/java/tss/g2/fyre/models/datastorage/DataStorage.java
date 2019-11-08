@@ -142,4 +142,11 @@ public interface DataStorage {
    * Method for get unconfirmed recipes.
    */
   List<RecipeWithType> selectUnconfirmedRecipes();
+
+  /**
+   * Method for edit recipe confirmed status.
+   * @param recipeId recipe id
+   * @return edition result
+   */
+  boolean recipeConfirmation(int recipeId);
 }
