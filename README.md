@@ -18,6 +18,7 @@
 * /image?id={} - получить картинку рецепта. get запрос. Пример  /image?id=42424shfh
 * /search/recipe?ingredientName={} - поиск рецепта по названию ингредиента.
 * /update/recipe?recipeId={}&recipeName={}&composition={}&cookingSteps - обновление рецепта по введенным параметрам.
+* /select/unconfirmedRecipes - получить все рецепты что нуждаются в подтверждении.
 ## Технологии
 * java
 * javalin
