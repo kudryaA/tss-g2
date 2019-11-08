@@ -53,6 +53,7 @@ public class UpdateRecipe {
       updateStatement.setString(3, cookingSteps);
       updateStatement.setInt(4, recipeId);
       updateStatement.setString(5, creator);
+      updateStatement.setString(6, creator);
 
       updateRecipeLogger.info(updateStatement.toString());
       result = updateStatement.executeUpdate() == 1;

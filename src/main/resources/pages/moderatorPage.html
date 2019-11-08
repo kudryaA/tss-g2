@@ -50,7 +50,9 @@
                     complete: [
                         function (response) {
                             var answer = $.parseJSON(response.responseText);
-                            alert(response.responseText);
+                            //alert(response.responseText);
+                            $("#users-table").show();
+                            $(".recipe").remove();
                             $("#users-table tbody tr").remove();
                             $.each(answer.obj, function(key, value) {
                                 var row = "<tr><td>" + value.login + "</td><td>" + value.name + "</td><td>" + value.surname + "</td><td>"
@@ -63,18 +65,14 @@
                     ]
                 });
             } else if (type == "approveRecipes") {
-                /*var data = { pageNumber: count,
-                             recipeType: "",
-                             pageSize: 3,
-                             sortType: sortType };
+                $("#users-table").hide();
                 $.ajax({
-                    url:"/select/recipes",
+                    url:"/select/unconfirmedRecipes",
                     type:"post",
-                    data,
                     complete: [
                         function (response) {
                             var answer = $.parseJSON(response.responseText);
-                            $.each(answer.obj.recipes, function(key, value) {
+                            $.each(answer.obj, function(key, value) {
                                 $("#content-container").append("<div class='row recipe'>"
                                     + "<div class='col-md-7'>"
                                     + "<a>"
@@ -84,19 +82,21 @@
                                     + "<div class='col-md-5'>"
                                     + "<h3>" + value.name + "</h3>"
                                     + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
-                                    + "<a class='btn btn-primary text-center' href='#' onclick='showRecipe(" + value.id + ")'>View recipe</a>"
-                                    + "</div></div><hr>");
+                                    + "<a class='btn btn-primary text-center' href='#' onclick='showRecipeWithApprove("
+                                    + value.id + ")'>View recipe</a>"
+                                    + "</div><hr></div>");
                             });
                         }
                     ]
-                });*/
+                });
             }
         }
         function toggleModeratorPage() {
             if ($("#toggle-moder-page").html() == "Show recipes to approve") {
-                refreshTable("banUnban");
+                refreshTable("approveRecipes");
                 $("#toggle-moder-page").html("Show users");
             } else {
+                refreshTable("banUnban");
                 $("#toggle-moder-page").html("Show recipes to approve");
             }
         }

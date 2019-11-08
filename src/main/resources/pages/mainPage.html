@@ -39,13 +39,13 @@
                         if (answer.status == true) {
                             $("#login-page").text("Logout");
                             $("#login-page").attr("onclick", "logout()");
-                            /*if (answer.obj.role != "moderator" && answer.obj.role != "admin") {
+                            if (answer.obj.role != "moderator" && answer.obj.role != "admin") {
                                 $("#moderator-page").remove();
-                            }*/
+                            }
                         } else {
                             $("#login-page").text("Login");
                             $("#login-page").attr("onclick", "");
-                            //$("#moderator-page").remove();
+                            $("#moderator-page").remove();
                             $("#add-recipe").remove();
                         }
                     }
@@ -121,6 +121,11 @@
             window.localStorage.setItem("recipeId", recipeId);
             $("#content-container").empty();
             $("#content-container").load("recipe.html");
+        }
+        function showRecipeWithApprove(recipeId) {
+            window.localStorage.setItem("recipeId", recipeId);
+            $("#content-container").empty();
+            $("#content-container").load("recipeWithApprove.html");
         }
         function searchRecipes() {
             if ($("#search-input").val() == "") {

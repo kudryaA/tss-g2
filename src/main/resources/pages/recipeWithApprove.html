@@ -82,7 +82,7 @@
                 contentType: false,
                 complete: [
                     function (response) {
-                        showRecipe(data.get("recipeId"));
+                        showRecipeWithApprove(data.get("recipeId"));
                     }
                 ]
             });
@@ -98,6 +98,26 @@
                 complete: [
                     function (response) {
                         window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"mainPage.html");
+                    }
+                ]
+            });
+        }
+        function approveRecipe() {
+            var data = {recipeId: $("#id").html()};
+            $.ajax({
+                type: "post",
+                url: "/recipeConfirmation",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.obj == true) {
+                            alert("Recipe approved!");
+                        } else {
+                            alert("Something went wrong");
+                        }
                     }
                 ]
             });
@@ -126,7 +146,11 @@
                         var answer = $.parseJSON(response.responseText);
                         if (typeof user.obj !== 'undefined') {
                             if (user.obj.login != answer.obj.creator && user.obj.role != "admin") {
-                                $("#recipe-container .btn").remove();
+                                $("#edit-recipe").remove();
+                                $("#delete-recipe").remove();
+                            }
+                            if (user.obj.role != "moderator" && user.obj.role != "admin") {
+                                $("#approve-recipe").remove();
                             }
                         } else if (user.status == false) {
                             $("#recipe-container .btn").remove();
@@ -172,8 +196,9 @@
             <div><h3>Cooking steps:</h3></div>
             <div id="steps"></div>
             <hr>
-            <button class="btn btn-primary" onclick="editRecipe()">Edit recipe</button>
-            <button class="btn btn-primary" onclick="deleteRecipe()">Delete recipe</button>
+            <button class="btn btn-primary" id="edit-recipe" onclick="editRecipe()">Edit recipe</button>
+            <button class="btn btn-primary" id="delete-recipe" onclick="deleteRecipe()">Delete recipe</button>
+            <button class="btn btn-primary" id="approve-recipe" onclick="approveRecipe()">Approve recipe</button>
         </div>
     </div>
 </div>

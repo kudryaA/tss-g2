@@ -19,12 +19,14 @@ td {
   background-color: #404b69 !important;
   border-color: #404b69 !important;
 }
+.btn {
+    transition: all 0.2s;
+}
 .ban-btn, #toggle-moder-page {
 	font-size: 100%;
 	border: 0;
 	height: 2rem;
 	border-radius: 5rem;
-	transition: all 0.2s;
 	color: white;
 	background: #00818a;
 	width: 100%;
@@ -36,4 +38,8 @@ td {
 }
 #toggle-moder-page:hover {
     background: #00818a;
+}
+.btn:hover {
+  background-color: #00818a;
+  border-color: #00818a;
 }
