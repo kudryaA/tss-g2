@@ -8,6 +8,7 @@ import java.util.List;
 
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.models.entity.Roles;
 import tss.g2.fyre.utils.StoreImage;
 
 public class AddRecipe implements Action {
@@ -47,7 +48,7 @@ public class AddRecipe implements Action {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
 
     return new Answer<>(true, dataStorage
-            .addRecipe(recipeName, recipeComposition,
-                cookingSteps, publicationDate, typesList, image, user));
+            .addRecipe(recipeName, recipeComposition, cookingSteps, publicationDate,
+                    typesList, image, user, !Roles.user.toString().equals(role)));
   }
 }

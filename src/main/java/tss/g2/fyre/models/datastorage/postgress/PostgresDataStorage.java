@@ -13,6 +13,7 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
+import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
 /**
  * Postgres data storage.
@@ -53,9 +54,9 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean addRecipe(String recipeName, String recipeCompostion, String cookingSteps,
                            Date publicationDate, List<String> selectedTypes, String image,
-                           String user) {
+                           String user, boolean isConfirmed) {
     return new AddRecipe(connection, recipeName, recipeCompostion,
-            cookingSteps, publicationDate, selectedTypes, image, user).addRecipe();
+            cookingSteps, publicationDate, selectedTypes, image, user, isConfirmed).addRecipe();
   }
 
   @Override
@@ -110,5 +111,10 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public String getRole(String login) {
     return new GetUserRole(connection, login).getRole();
+  }
+
+  @Override
+  public List<RecipeWithType> selectUnconfirmedRecipes() {
+    return new SelectUnconfirmedRecipes(connection).selectUnconfirmedRecipes();
   }
 }

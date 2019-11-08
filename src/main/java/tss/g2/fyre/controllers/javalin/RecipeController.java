@@ -13,6 +13,7 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.auth.AddRecipe;
 import tss.g2.fyre.models.actions.auth.AddType;
 import tss.g2.fyre.models.actions.auth.DeleteRecipe;
+import tss.g2.fyre.models.actions.auth.SelectUnconfirmedRecipes;
 import tss.g2.fyre.models.actions.auth.UpdateRecipe;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.GetRecipe;
@@ -129,6 +130,15 @@ public class RecipeController implements CreateController {
       String ingredientName = ctx.formParam("ingredientName");
 
       ctx.result(new SearchRecipe(dataStorage, ingredientName).getAnswer().toJson());
+    });
+
+    app.post("/select/unconfirmedRecipes", ctx -> {
+      Answer answer = new AuthUser(
+            new SelectUnconfirmedRecipes(dataStorage),
+            ctx.sessionAttribute("token"),
+            tokenStorage
+      ).getAnswer();
+      ctx.result(answer.toJson());
     });
   }
 }

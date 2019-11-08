@@ -7,6 +7,7 @@ import java.util.Map;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
+import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
 /**
  * This interface describe data storage worker.
@@ -45,11 +46,12 @@ public interface DataStorage {
    * @param selectedTypes list with types that the moderator selects
    * @param image image of recipe
    * @param user owner of recipe
+   * @param isConfirmed is the recipe confirmed
    * @return result of adding recipe*
    */
   boolean addRecipe(String recipeName, String recipeComposition, String cookingSteps,
                     Date publicationDate, List<String> selectedTypes, String image,
-                    String user);
+                    String user, boolean isConfirmed);
 
   /**
    * Method for adding new type.
@@ -135,4 +137,9 @@ public interface DataStorage {
    * @return user role
    */
   String getRole(String login);
+
+  /**
+   * Method for get unconfirmed recipes.
+   */
+  List<RecipeWithType> selectUnconfirmedRecipes();
 }

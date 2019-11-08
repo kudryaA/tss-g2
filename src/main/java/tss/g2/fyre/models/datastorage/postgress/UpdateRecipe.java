@@ -46,7 +46,8 @@ public class UpdateRecipe {
 
     try (PreparedStatement updateStatement = connection
             .prepareStatement("update recipe set name = ?, recipecomposition = ?, "
-                    + "cookingsteps = ? where recipe_id = ? and creator = ?")) {
+                    + "cookingsteps = ? where recipe_id = ? "
+                    + "and (creator = ? or (select role from person where login = ?) = 'admin')")) {
       updateStatement.setString(1, recipeName);
       updateStatement.setString(2, composition);
       updateStatement.setString(3, cookingSteps);

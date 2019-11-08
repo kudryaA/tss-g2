@@ -30,7 +30,8 @@ create table recipe (
   publicationDate TIMESTAMP ,
   image text,
   creator text,
-  rating BIGINT
+  rating BIGINT,
+  isConfirmed boolean
 );
 
 create table recipeType (
