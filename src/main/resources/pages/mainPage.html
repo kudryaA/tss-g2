@@ -7,6 +7,12 @@
     <meta name="msapplication-TileColor" content="#00818a">
     <meta name="theme-color" content="#ffffff">
 
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@fyre" />
+    <meta name="twitter:title" content="Title" />
+    <meta name="twitter:description" content="Description" />
+    <meta name="twitter:image" content="https://via.placeholder.com/150" />
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Empty page</title>
@@ -51,6 +57,13 @@
                     }
                 ]
             });
+            var url_string = window.location.href;
+            var url = new URL(url_string);
+            var recipeIdFromUrl = url.searchParams.get("recipeId");
+            if (recipeIdFromUrl != null) {
+                showRecipe(recipeIdFromUrl);
+                return;
+            }
             count = 1;
             $("#content-container").empty();
             if (window.localStorage.getItem("sortType") == null) {
@@ -67,11 +80,13 @@
             $("#load-recipes").show();
         });
         function addRecipe() {
+            window.history.replaceState(null, null, window.location.pathname);
             $("#content-container").empty();
             $(document).attr("title", "Add recipe");
             $("#content-container").load("addRecipe.html");
         }
         function moderatorPage() {
+            window.history.replaceState(null, null, window.location.pathname);
             $("#content-container").empty();
             $("#content-container").load("moderatorPage.html");
         }
@@ -109,8 +124,9 @@
                                 + "<div class='col-md-5'>"
                                 + "<h3>" + value.name + "</h3>"
                                 + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
-                                + "<a class='btn btn-primary text-center' href='#' onclick='showRecipe(" + value.id + ")'>View recipe</a>"
-                        + "</div></div><hr>");
+                                + "<a class='btn btn-primary text-center' href='/mainPage.html?recipeId="
+                                + value.id + "'>View recipe</a>"
+                                + "</div></div><hr>");
                         });
                         window.localStorage.setItem("pages", answer.obj.pages);
                     }
@@ -121,11 +137,6 @@
             window.localStorage.setItem("recipeId", recipeId);
             $("#content-container").empty();
             $("#content-container").load("recipe.html");
-        }
-        function showRecipeWithApprove(recipeId) {
-            window.localStorage.setItem("recipeId", recipeId);
-            $("#content-container").empty();
-            $("#content-container").load("recipeWithApprove.html");
         }
         function searchRecipes() {
             if ($("#search-input").val() == "") {
@@ -140,7 +151,7 @@
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
                         if (answer.status == true) {
-                            alert(response.responseText);
+                            window.history.replaceState(null, null, window.location.pathname);
                             $("#content-container").empty();
                             $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient " + data.ingredientName
                                 + "</h1><hr>");
@@ -154,7 +165,8 @@
                                 + "<div class='col-md-5'>"
                                 + "<h3>" + value.name + "</h3>"
                                 + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
-                                + "<a class='btn btn-primary text-center' href='#' onclick='showRecipe(" + value.id + ")'>View recipe</a>"
+                                + "<a class='btn btn-primary text-center' href='/mainPage.html?recipeId="
+                                + value.id + "'>View recipe</a>"
                                 + "</div></div><hr>");
                             });
                         }

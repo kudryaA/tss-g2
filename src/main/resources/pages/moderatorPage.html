@@ -82,8 +82,8 @@
                                     + "<div class='col-md-5'>"
                                     + "<h3>" + value.name + "</h3>"
                                     + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
-                                    + "<a class='btn btn-primary text-center' href='#' onclick='showRecipeWithApprove("
-                                    + value.id + ")'>View recipe</a>"
+                                    + "<a class='btn btn-primary text-center' href='/mainPage.html?recipeId="
+                                    + value.id + "&isApprove=1'>View recipe</a>"
                                     + "</div><hr></div>");
                             });
                         }

@@ -96,7 +96,7 @@
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
-                        if (answer.obj == true) {
+                        if (answer.status != false) {
                             $("#recipeForm input").each(function() {
                                 $(this).val("");
                             });
