@@ -19,6 +19,7 @@
 * /search/recipe?ingredientName={} - поиск рецепта по названию ингредиента.
 * /update/recipe?recipeId={}&recipeName={}&composition={}&cookingSteps - обновление рецепта по введенным параметрам.
 * /select/unconfirmedRecipes - получить все рецепты что нуждаются в подтверждении.
+* /recipeConfirmation?recipeId={} - подтвердить пользовательский рецепт по id. Результат подтверждения будет сохранен как булевое значение в дополнительной информации к ответу.
 ## Технологии
 * java
 * javalin
