@@ -23,6 +23,10 @@ public class GetRecipe  implements Action {
 
   @Override
   public Answer getAnswer() {
-    return new Answer<>(true, dataStorage.getRecipe(recipeId));
+    try {
+      return new Answer<>(true, dataStorage.getRecipe(recipeId));
+    } catch (Exception e) {
+      return new Answer(false);
+    }
   }
 }

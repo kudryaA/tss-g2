@@ -47,8 +47,12 @@ public class AddRecipe implements Action {
   public Answer getAnswer(String user, String role) {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
 
-    return new Answer<>(true, dataStorage
-            .addRecipe(recipeName, recipeComposition, cookingSteps, publicationDate,
-                    typesList, image, user, !Roles.user.toString().equals(role)));
+    try {
+      return new Answer<>(true, dataStorage
+              .addRecipe(recipeName, recipeComposition, cookingSteps, publicationDate,
+                      typesList, image, user, !Roles.user.toString().equals(role)));
+    } catch (Exception e) {
+      return new Answer(false);
+    }
   }
 }

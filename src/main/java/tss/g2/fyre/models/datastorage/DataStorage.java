@@ -47,9 +47,9 @@ public interface DataStorage {
    * @param image image of recipe
    * @param user owner of recipe
    * @param isConfirmed is the recipe confirmed
-   * @return result of adding recipe*
+   * @return id of recipe
    */
-  boolean addRecipe(String recipeName, String recipeComposition, String cookingSteps,
+  String addRecipe(String recipeName, String recipeComposition, String cookingSteps,
                     Date publicationDate, List<String> selectedTypes, String image,
                     String user, boolean isConfirmed);
 
