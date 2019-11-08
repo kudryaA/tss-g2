@@ -35,7 +35,7 @@ class GetUserInformation {
 
     try (Statement selectStatement = connection.createStatement()) {
       try (ResultSet resultSet = selectStatement
-              .executeQuery("select login, name, surname, bannedstatus, email from person")) {
+              .executeQuery("select login, name, surname, bannedstatus, email, role from person")) {
         getUserInformationLogger.info(selectStatement.toString());
         while (resultSet.next()) {
           String login = resultSet.getString(1);
@@ -43,8 +43,9 @@ class GetUserInformation {
           String surname = resultSet.getString(3);
           boolean bannedStatus = resultSet.getBoolean(4);
           String email = resultSet.getString(5);
+          String role = resultSet.getString(6);
 
-          Person person = new Person(login, name, surname, bannedStatus, email);
+          Person person = new Person(login, name, surname, bannedStatus, email, role);
           personsInfo.add(person);
         }
       }

@@ -10,10 +10,10 @@ import java.util.Map;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
+import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
 /**
  * Postgres data storage.
@@ -50,29 +50,18 @@ public class PostgresDataStorage implements DataStorage {
     return new Registration(connection, login, password, name, surname, email)
             .createUser();
   }
-  
-  @Override
-  public Moderator getModerator(String login) {
-    return new GetModerator(connection, login).getModerator();
-  }
-
-  @Override
-  public boolean createModerator(String login, String password, String name) {
-    return new RegistrationModerator(connection, login, password, name)
-            .createModerator();
-  }
 
   @Override
   public String addRecipe(String recipeName, String recipeCompostion, String cookingSteps,
                            Date publicationDate, List<String> selectedTypes, String image,
-                           String user) {
+                           String user, boolean isConfirmed) {
     return new AddRecipe(connection, recipeName, recipeCompostion,
-            cookingSteps, publicationDate, selectedTypes, image, user).addRecipe();
+            cookingSteps, publicationDate, selectedTypes, image, user, isConfirmed).addRecipe();
   }
 
   @Override
-  public boolean addType(String typeName, String description) {
-    return new AddType(connection, typeName, description).addType();
+  public boolean addType(String typeName, String description, String image) {
+    return new AddType(connection, typeName, description, image).addType();
   }
 
   @Override
@@ -117,5 +106,20 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public List<Recipe> searchRecipe(String ingredientName) {
     return new SearchRecipe(connection, ingredientName).searchRecipe();
+  }
+
+  @Override
+  public String getRole(String login) {
+    return new GetUserRole(connection, login).getRole();
+  }
+
+  @Override
+  public List<RecipeWithType> selectUnconfirmedRecipes() {
+    return new SelectUnconfirmedRecipes(connection).selectUnconfirmedRecipes();
+  }
+
+  @Override
+  public boolean recipeConfirmation(int recipeId) {
+    return new RecipeConfirmation(connection, recipeId).confirmation();
   }
 }

@@ -1,6 +1,5 @@
 drop sequence recipeSeq;
 drop table person;
-drop table moderator;
 drop table recipeType;
 drop table type;
 drop table recipe;
@@ -13,18 +12,14 @@ create table person (
   name TEXT ,
   surname TEXT ,
   bannedStatus boolean ,
-  email TEXT
-);
-
-CREATE TABLE moderator (
-  name TEXT,
-  login TEXT PRIMARY KEY,
-  password TEXT
+  email TEXT ,
+  role TEXT
 );
 
 create table type (
   name Text PRIMARY KEY ,
-  description Text
+  description Text ,
+  image Text
 );
 
 create table recipe (
@@ -35,7 +30,8 @@ create table recipe (
   publicationDate TIMESTAMP ,
   image text,
   creator text,
-  rating BIGINT
+  rating BIGINT,
+  isConfirmed boolean
 );
 
 create table recipeType (

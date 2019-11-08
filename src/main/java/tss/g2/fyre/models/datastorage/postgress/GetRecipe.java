@@ -24,7 +24,9 @@ class GetRecipe {
   private int recipeId;
   private Connection connection;
 
-  private static final String SQL = "SELECT * FROM recipe r "
+  private static final String SQL = "SELECT r.name as recipeName, recipecomposition, cookingsteps, "
+          + "publicationdate, r.image as recipeImage, creator, rating, "
+          + "type_name, description, t.image as typeImage FROM recipe r "
           + "JOIN recipeType rt ON(r.recipe_id = rt.recipe_id) \n"
           + "JOIN type t ON(t.name = rt.type_name) WHERE r.recipe_id = ?;";
 
@@ -60,18 +62,19 @@ class GetRecipe {
           if (recipeWithoutType == null) {
             recipeWithoutType = new Recipe(
                 recipeId,
-                resultSet.getString("name"),
+                resultSet.getString("recipeName"),
                 resultSet.getString("recipecomposition"),
                 resultSet.getString("cookingsteps"),
                 resultSet.getTimestamp("publicationdate"),
-                resultSet.getString("image"),
+                resultSet.getString("recipeImage"),
                 resultSet.getString("creator"),
                 resultSet.getLong("rating")
             );
           }
           types.add(new Type(
                   resultSet.getString("type_name"),
-                  resultSet.getString("description")
+                  resultSet.getString("description"),
+                  resultSet.getString("typeImage")
           ));
         }
         recipe = new RecipeWithType(recipeWithoutType, types);

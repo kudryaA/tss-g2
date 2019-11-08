@@ -14,14 +14,6 @@ body {
     border-color: #404b69;
     -webkit-appearance:none;
 }
-.btn:nth-of-type(1) {
-  background-color: #00818a;
-  border-color: #00818a;
-}
-.btn:nth-of-type(2) {
-  background-color: #283149;
-  border-color: #283149;
-}
 .btn:active {
   background-color: #404b69 !important;
   border-color: #404b69 !important;
@@ -52,19 +44,14 @@ body {
 }
 
 .card-body .btn {
+  background-color: #00818a;
+  border-color: #00818a;
   font-size: 100%;
   border-radius: 5rem;
   padding: 1rem;
   transition: all 0.2s;
   color: white;
-}
-
-.card-body .btn-group {
   width: 100%;
-}
-
-.card-body .btn-group .btn {
-  max-width: 50%;
 }
 
 .form-label-group {

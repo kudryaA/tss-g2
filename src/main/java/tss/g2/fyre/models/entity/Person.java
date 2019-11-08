@@ -14,6 +14,7 @@ public class Person {
   private String surname;
   private boolean bannedStatus;
   private String email;
+  private String role;
 
   /**
    * Constructor.
@@ -23,13 +24,16 @@ public class Person {
    * @param surname user surname
    * @param bannedStatus user banned status
    * @param email user email
+   * @param role user role
    */
-  public Person(String login, String name, String surname, boolean bannedStatus, String email) {
+  public Person(String login, String name, String surname,
+                boolean bannedStatus, String email, String role) {
     this.login = login;
     this.name = name;
     this.surname = surname;
     this.bannedStatus = bannedStatus;
     this.email = email;
+    this.role = role;
   }
 
   /**
@@ -41,15 +45,17 @@ public class Person {
    * @param surname user surname
    * @param bannedStatus user banned status
    * @param email user email
+   * @param role user role
    */
   public Person(String login, String password, String name,
-                String surname, boolean bannedStatus, String email) {
+                String surname, boolean bannedStatus, String email, String role) {
     this.login = login;
     this.password = password;
     this.name = name;
     this.surname = surname;
     this.bannedStatus = bannedStatus;
     this.email = email;
+    this.role = role;
   }
 
   /**
@@ -100,6 +106,14 @@ public class Person {
     return email;
   }
 
+  /**
+   * Method for get user role.
+   * @return user role
+   */
+  public String getRole() {
+    return role;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -108,18 +122,19 @@ public class Person {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Person that = (Person) o;
-    return Objects.equals(login, that.login)
-            && Objects.equals(password, that.password)
-            && Objects.equals(name, that.name)
-            && Objects.equals(surname, that.surname)
-            && Objects.equals(bannedStatus, that.bannedStatus)
-            && Objects.equals(email, that.email);
+    Person person = (Person) o;
+    return bannedStatus == person.bannedStatus
+            && Objects.equals(login, person.login)
+            && Objects.equals(password, person.password)
+            && Objects.equals(name, person.name)
+            && Objects.equals(surname, person.surname)
+            && Objects.equals(email, person.email)
+            && Objects.equals(role, person.role);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(login, password, name, surname, bannedStatus, email);
+    return Objects.hash(login, password, name, surname, bannedStatus, email, role);
   }
 
   @Override
@@ -129,8 +144,9 @@ public class Person {
             + ", password='" + password + '\''
             + ", name='" + name + '\''
             + ", surname='" + surname + '\''
-            + ", bannedStatus='" + bannedStatus + '\''
+            + ", bannedStatus=" + bannedStatus
             + ", email='" + email + '\''
+            + ", role='" + role + '\''
             + '}';
   }
 }

@@ -2,6 +2,8 @@ package tss.g2.fyre.models;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 /**
  * This class describe answer model.
  *

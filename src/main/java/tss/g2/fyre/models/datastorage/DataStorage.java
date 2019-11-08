@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import tss.g2.fyre.models.entity.Moderator;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
+import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
 /**
  * This interface describe data storage worker.
@@ -15,15 +15,6 @@ import tss.g2.fyre.models.entity.recipe.Recipe;
  * @author Anton Kudryavtsev
  */
 public interface DataStorage {
-
-  
-  /**
-   * Get moderator by login.
-   *
-   * @param login login
-   * @return moderator
-   */
-  Moderator getModerator(String login);
   
   /**
    * Get authorization info by login.
@@ -46,16 +37,6 @@ public interface DataStorage {
   boolean createUser(String login, String password, String name, String surname, String email);
 
   /**
-   * Method for adding new moderator.
-   *
-   * @param login moderator login
-   * @param password moderator password
-   * @param name moderator name
-   * @return result of adding moderator
-   */
-  boolean createModerator(String login, String password, String name);
-
-  /**
    * Method for adding new recipe.
    *
    * @param recipeName recipe name
@@ -65,20 +46,22 @@ public interface DataStorage {
    * @param selectedTypes list with types that the moderator selects
    * @param image image of recipe
    * @param user owner of recipe
+   * @param isConfirmed is the recipe confirmed
    * @return id of recipe
    */
   String addRecipe(String recipeName, String recipeComposition, String cookingSteps,
                     Date publicationDate, List<String> selectedTypes, String image,
-                    String user);
+                    String user, boolean isConfirmed);
 
   /**
    * Method for adding new type.
    *
    * @param typeName name of type
    * @param description type description
+   * @param image path to image
    * @return result of adding type
    */
-  boolean addType(String typeName, String description);
+  boolean addType(String typeName, String description, String image);
 
   /**
    * Method for select persons information.
@@ -147,4 +130,23 @@ public interface DataStorage {
    * @return the recipe found
    */
   List<Recipe> searchRecipe(String ingredientName);
+
+  /**
+   * Method for get user role.
+   * @param login user login
+   * @return user role
+   */
+  String getRole(String login);
+
+  /**
+   * Method for get unconfirmed recipes.
+   */
+  List<RecipeWithType> selectUnconfirmedRecipes();
+
+  /**
+   * Method for edit recipe confirmed status.
+   * @param recipeId recipe id
+   * @return edition result
+   */
+  boolean recipeConfirmation(int recipeId);
 }

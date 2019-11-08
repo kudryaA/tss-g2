@@ -42,9 +42,11 @@ class DeleteRecipe {
     boolean result = false;
 
     try (PreparedStatement checkStatement = connection
-            .prepareStatement("select 1 from recipe where recipe_id = ? and creator = ?")) {
+            .prepareStatement("select 1 from recipe where recipe_id = ? "
+                    + "and (creator = ? or (select role from person where login = ?) = 'admin')")) {
       checkStatement.setInt(1, recipeId);
       checkStatement.setString(2, user);
+      checkStatement.setString(3, user);
 
       deleteRecipeLogger.info(checkStatement.toString());
       try (ResultSet resultSet = checkStatement.executeQuery()) {

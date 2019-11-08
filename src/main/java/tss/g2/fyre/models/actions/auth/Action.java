@@ -7,5 +7,5 @@ import tss.g2.fyre.models.Answer;
  * @author Anton Kudryavtsev
  */
 public interface Action {
-  Answer getAnswer(String login);
+  Answer getAnswer(String login, String role);
 }

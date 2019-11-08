@@ -29,6 +29,7 @@ class AddRecipe {
   private Date publicationDate;
   private List<String> selectedTypes;
   private String user;
+  private boolean isConfirmed;
 
   /**
    * Constructor.
@@ -41,10 +42,11 @@ class AddRecipe {
    * @param selectedTypes list with types that the moderator selects
    * @param image image of recipe
    * @param user owner of recipe
+   * @param isConfirmed is the recipe confirmed
    */
   public AddRecipe(Connection connection, String name, String recipeComposition,
-                   String cookingSteps, Date publicationDate,
-                   List<String> selectedTypes, String image, String user) {
+                   String cookingSteps, Date publicationDate, List<String> selectedTypes,
+                   String image, String user, boolean isConfirmed) {
     this.connection = connection;
     this.name = name;
     this.recipeComposition = recipeComposition;
@@ -53,6 +55,7 @@ class AddRecipe {
     this.selectedTypes = selectedTypes;
     this.image = image;
     this.user = user;
+    this.isConfirmed = isConfirmed;
   }
 
   /**
@@ -64,13 +67,14 @@ class AddRecipe {
     String result = "";
 
     try (Statement createIdStatement = connection.createStatement()) {
-      try (ResultSet resultSet = createIdStatement.executeQuery("SELECT MAX(recipe_id)+1 FROM recipe")) {
+      try (ResultSet resultSet = createIdStatement
+              .executeQuery("SELECT MAX(recipe_id)+1 FROM recipe")) {
         if (resultSet.next()) {
           int seqValue = resultSet.getInt(1);
 
           try (PreparedStatement statement = connection
                   .prepareStatement("insert into recipe values "
-                          + "(?, ?, ?, ?, ?, ?, ?, " + -9223372036854775808L + ")")) {
+                          + "(?, ?, ?, ?, ?, ?, ?, " + -9223372036854775808L + ", ?)")) {
             statement.setInt(1, seqValue);
             statement.setString(2, name);
             statement.setString(3, recipeComposition);
@@ -78,6 +82,7 @@ class AddRecipe {
             statement.setTimestamp(5, new Timestamp(publicationDate.getTime()));
             statement.setString(6, image);
             statement.setString(7, user);
+            statement.setBoolean(8, isConfirmed);
 
             addRecipeLogger.info(statement.toString());
             if (statement.executeUpdate() == 1) {

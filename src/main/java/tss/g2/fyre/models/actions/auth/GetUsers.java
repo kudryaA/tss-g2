@@ -16,7 +16,7 @@ public class GetUsers implements Action {
   }
 
   @Override
-  public Answer getAnswer(String auth) {
+  public Answer getAnswer(String auth, String role) {
     return new Answer<>(true, dataStorage.getPersonsInformation());
   }
 }
