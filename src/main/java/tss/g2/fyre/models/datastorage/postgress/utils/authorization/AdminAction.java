@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.authorization;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,8 +11,8 @@ import org.slf4j.LoggerFactory;
  * Class for handling administrator actions.
  * @author Andrey Sherstyuk
  */
-class AdminAction {
-  private Logger adminActionLogger = LoggerFactory.getLogger(AdminAction.class);
+public class AdminAction {
+  private static Logger logger = LoggerFactory.getLogger(AdminAction.class);
 
   private Connection connection;
   private String userLogin;
@@ -23,7 +23,7 @@ class AdminAction {
    * @param connection connection to database
    * @param userLogin user login
    */
-  AdminAction(Connection connection, String userLogin) {
+  public AdminAction(Connection connection, String userLogin) {
     this.connection = connection;
     this.userLogin = userLogin;
   }
@@ -42,13 +42,11 @@ class AdminAction {
                      + "else false end where login = ?")) {
       changeStatusStatement.setString(1, userLogin);
       changeStatusStatement.setString(2, userLogin);
-
-      adminActionLogger.info(changeStatusStatement.toString());
+      logger.info(changeStatusStatement.toString());
       result = changeStatusStatement.executeUpdate() == 1;
     } catch (SQLException e) {
-      adminActionLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
-
     return result;
   }
 }

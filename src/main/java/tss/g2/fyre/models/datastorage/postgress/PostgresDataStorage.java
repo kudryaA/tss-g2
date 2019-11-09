@@ -10,6 +10,13 @@ import java.util.Map;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.models.datastorage.postgress.utils.authorization.*;
+import tss.g2.fyre.models.datastorage.postgress.utils.comment.AddComment;
+import tss.g2.fyre.models.datastorage.postgress.utils.comment.SelectComments;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.*;
+import tss.g2.fyre.models.datastorage.postgress.utils.service.AddTimeApiExecution;
+import tss.g2.fyre.models.datastorage.postgress.utils.type.AddType;
+import tss.g2.fyre.models.datastorage.postgress.utils.type.GetTypeInformation;
 import tss.g2.fyre.models.entity.Comment;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
@@ -23,7 +30,7 @@ import tss.g2.fyre.models.entity.recipe.RecipeWithType;
  */
 public class PostgresDataStorage implements DataStorage {
 
-  private Connection connection = null;
+  private Connection connection;
 
   /**
    * Constructor.
@@ -132,5 +139,10 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public List<Comment> selectComments(int recipeId) {
     return new SelectComments(connection, recipeId).selectComments();
+  }
+
+  @Override
+  public void addTimeApi(String api, long time) {
+    new AddTimeApiExecution(connection, api, time).add();
   }
 }

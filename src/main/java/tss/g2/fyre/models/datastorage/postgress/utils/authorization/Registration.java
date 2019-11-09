@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.authorization;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrey Sherstyuk
  */
-class Registration {
-  private Logger registrationLogger = LoggerFactory.getLogger(Registration.class);
+public class Registration {
+  private static Logger logger = LoggerFactory.getLogger(Registration.class);
 
   private Connection connection;
   private String login;
@@ -33,8 +33,8 @@ class Registration {
    * @param surname user surname
    * @param email user email
    */
-  Registration(Connection connection, String login, String password,
-               String name, String surname, String email) {
+  public Registration(Connection connection, String login, String password,
+                      String name, String surname, String email) {
     this.connection = connection;
     this.login = login;
     this.password = password;
@@ -48,16 +48,15 @@ class Registration {
     *
     * @return result of adding person
     */
-  boolean createUser() {
+  public boolean createUser() {
     boolean answer = false;
     try (PreparedStatement statement
                  = connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {
       statement.setString(1, login);
-
-      registrationLogger.info(statement.toString());
+      logger.info(statement.toString());
       try (ResultSet resultSet = statement.executeQuery()) {
         if (resultSet.next()) {
-          return answer;
+          return false;
         } else {
           try (PreparedStatement registrationStatement = connection
                   .prepareStatement("insert into person values(?, ?, ?, ?, false, ?, 'user')")) {
@@ -66,16 +65,14 @@ class Registration {
             registrationStatement.setString(3, name);
             registrationStatement.setString(4, surname);
             registrationStatement.setString(5, email);
-
-            registrationLogger.info(registrationStatement.toString());
+            logger.info(registrationStatement.toString());
             answer = registrationStatement.executeUpdate() == 1;
           }
         }
       }
     } catch (SQLException e) {
-      registrationLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
-
     return answer;
   }
 }

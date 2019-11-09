@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,8 +17,7 @@ import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
 public class SelectUnconfirmedRecipes {
-  private Logger selectUnconfirmedRecipesLogger = LoggerFactory
-          .getLogger(SelectUnconfirmedRecipes.class);
+  private static Logger logger = LoggerFactory.getLogger(SelectUnconfirmedRecipes.class);
   private Connection connection;
 
   /**
@@ -46,7 +45,7 @@ public class SelectUnconfirmedRecipes {
                   + "join type t on rt.type_name = t.name\n"
                   + "where isconfirmed = false \n"
                   + "order by r.recipe_id")) {
-        selectUnconfirmedRecipesLogger.info(selectStatement.toString());
+        logger.info(selectStatement.toString());
         int i = -1;
         while (resultSet.next()) {
           int recipeId = resultSet.getInt("recipe_id");
@@ -74,7 +73,7 @@ public class SelectUnconfirmedRecipes {
         }
       }
     } catch (SQLException e) {
-      selectUnconfirmedRecipesLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return recipeList;

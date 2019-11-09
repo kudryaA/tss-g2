@@ -3,7 +3,7 @@ package tss.g2.fyre.models.actions.auth;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
-public class AddComment implements Action {
+public class AddComment implements ActionAuth {
   private DataStorage dataStorage;
   private int recipeId;
   private String commentText;
@@ -24,4 +24,5 @@ public class AddComment implements Action {
   public Answer getAnswer(String login, String role) {
     return new Answer<>(true, dataStorage.addComment(login, recipeId, commentText));
   }
+
 }

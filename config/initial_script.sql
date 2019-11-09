@@ -3,6 +3,7 @@ drop table person;
 drop table recipeType;
 drop table type;
 drop table recipe;
+drop table comment;
 
 create sequence recipeSeq;
 
@@ -43,4 +44,9 @@ create table comment (
   user_login Text references person(login) ,
   recipe_id INT references recipe(recipe_id) ,
   comment_text Text
+);
+
+create table api_time(
+    api TEXT,
+    time_execution BIGINT
 );

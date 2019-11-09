@@ -5,7 +5,7 @@ import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Roles;
 
-public class ChangeBannedStatus implements Action {
+public class ChangeBannedStatus implements ActionAuth {
 
   private DataStorage dataStorage;
   private String userLogin;

@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.authorization;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,9 +15,8 @@ import tss.g2.fyre.models.entity.Person;
  *
  * @author Anton Kudryavtsev
  */
-class GetAuthorization {
-  private Logger getAuthorizationLogger = LoggerFactory.getLogger(GetAuthorization.class);
-
+public class GetAuthorization {
+  private static Logger logger = LoggerFactory.getLogger(GetAuthorization.class);
   private Connection connection;
   private String login;
 
@@ -27,7 +26,7 @@ class GetAuthorization {
    * @param connection postgres jdbc connection
    * @param login for authorization
    */
-  GetAuthorization(Connection connection, String login) {
+  public GetAuthorization(Connection connection, String login) {
     this.connection = connection;
     this.login = login;
   }
@@ -37,13 +36,12 @@ class GetAuthorization {
    *
    * @return authorization
    */
-  Person getAuthorization() {
+  public Person getAuthorization() {
     Person result = null;
     try (PreparedStatement statement =
                  connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {
       statement.setString(1, login);
-
-      getAuthorizationLogger.info(statement.toString());
+      logger.info(statement.toString());
       try (ResultSet resultSet = statement.executeQuery()) {
         if (resultSet.next()) {
           String password = resultSet.getString("password");
@@ -52,12 +50,11 @@ class GetAuthorization {
           boolean bannedStatus = resultSet.getBoolean("bannedStatus");
           String email = resultSet.getString("email");
           String role = resultSet.getString("role");
-
           result = new Person(login, password, name, surname, bannedStatus, email, role);
         }
       }
     } catch (SQLException e) {
-      getAuthorizationLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
     return result;
   }

@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class UpdateRecipe {
-  private Logger updateRecipeLogger = LoggerFactory.getLogger(UpdateRecipe.class);
+  private static Logger logger = LoggerFactory.getLogger(UpdateRecipe.class);
 
   private Connection connection;
   private int recipeId;
@@ -54,11 +54,10 @@ public class UpdateRecipe {
       updateStatement.setInt(4, recipeId);
       updateStatement.setString(5, creator);
       updateStatement.setString(6, creator);
-
-      updateRecipeLogger.info(updateStatement.toString());
+      logger.info(updateStatement.toString());
       result = updateStatement.executeUpdate() == 1;
     } catch (SQLException e) {
-      updateRecipeLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return result;

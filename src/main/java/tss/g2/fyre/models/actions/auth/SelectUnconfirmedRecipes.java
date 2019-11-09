@@ -5,7 +5,7 @@ import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Roles;
 
-public class SelectUnconfirmedRecipes implements Action {
+public class SelectUnconfirmedRecipes implements ActionAuth {
   private DataStorage dataStorage;
 
   /**

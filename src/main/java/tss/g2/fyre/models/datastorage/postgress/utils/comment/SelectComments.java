@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.comment;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import tss.g2.fyre.models.entity.Comment;
 
 public class SelectComments {
-  private Logger selectCommentsLogger = LoggerFactory.getLogger(SelectComments.class);
+  private static Logger logger = LoggerFactory.getLogger(SelectComments.class);
   private Connection connection;
   private int recipeId;
 
@@ -37,7 +37,7 @@ public class SelectComments {
     try (PreparedStatement selectCommentsStatement = connection
             .prepareStatement("select user_login, comment_text from comment where recipe_id = ?")) {
       selectCommentsStatement.setInt(1, recipeId);
-      selectCommentsLogger.info(selectCommentsStatement.toString());
+      logger.info(selectCommentsStatement.toString());
 
       try (ResultSet resultSet = selectCommentsStatement.executeQuery()) {
         while (resultSet.next()) {
@@ -48,7 +48,7 @@ public class SelectComments {
         }
       }
     } catch (SQLException e) {
-      selectCommentsLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return comments;

@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class RecipeConfirmation {
-  private Logger recipeConfirmationLogger = LoggerFactory.getLogger(RecipeConfirmation.class);
+  private static Logger logger = LoggerFactory.getLogger(RecipeConfirmation.class);
   private Connection connection;
   private int recipeId;
 
@@ -32,11 +32,11 @@ public class RecipeConfirmation {
     try (PreparedStatement confirmationStatement = connection
             .prepareStatement("update recipe set isconfirmed = true where recipe_id = ?")) {
       confirmationStatement.setInt(1, recipeId);
-      recipeConfirmationLogger.info(confirmationStatement.toString());
+      logger.info(confirmationStatement.toString());
 
       result = confirmationStatement.executeUpdate() == 1;
     } catch (SQLException e) {
-      recipeConfirmationLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return result;

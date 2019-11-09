@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrey Sherstyuk
  */
-class AddRecipe {
-  private Logger addRecipeLogger = LoggerFactory.getLogger(AddRecipe.class);
+public class AddRecipe {
+  private static Logger logger = LoggerFactory.getLogger(AddRecipe.class);
 
   private Connection connection;
   private String name;
@@ -63,7 +63,7 @@ class AddRecipe {
    *
    * @return result of adding new recipe
    */
-  String addRecipe() {
+  public String addRecipe() {
     String result = "";
 
     try (Statement createIdStatement = connection.createStatement()) {
@@ -84,7 +84,7 @@ class AddRecipe {
             statement.setString(7, user);
             statement.setBoolean(8, isConfirmed);
 
-            addRecipeLogger.info(statement.toString());
+            logger.info(statement.toString());
             if (statement.executeUpdate() == 1) {
               int i = 0;
 
@@ -94,7 +94,7 @@ class AddRecipe {
                   addRelationStatement.setInt(1, seqValue);
                   addRelationStatement.setString(2, type);
 
-                  addRecipeLogger.info(addRelationStatement.toString());
+                  logger.info(addRelationStatement.toString());
                   if (addRelationStatement.executeUpdate() == 1) {
                     i++;
                   }
@@ -109,7 +109,7 @@ class AddRecipe {
         }
       }
     } catch (SQLException e) {
-      addRecipeLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return result;

@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,7 +17,7 @@ import tss.g2.fyre.models.entity.recipe.Recipe;
  * @author Andrey Sherstyuk
  */
 public class SearchRecipe {
-  private Logger searchRecipeLogger = LoggerFactory.getLogger(SearchRecipe.class);
+  private static Logger logger = LoggerFactory.getLogger(SearchRecipe.class);
 
   private Connection connection;
   private String ingredient;
@@ -46,12 +46,12 @@ public class SearchRecipe {
                     + "AND publicationdate <= (now() AT TIME ZONE 'UTC') ")) {
       searchStatement.setString(1, ingredient);
 
-      searchRecipeLogger.info(searchStatement.toString());
+      logger.info(searchStatement.toString());
       try (ResultSet resultSet = searchStatement.executeQuery()) {
         new SelectRecipes().fillRecipeList(recipeList, resultSet);
       }
     } catch (SQLException e) {
-      searchRecipeLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return recipeList;
