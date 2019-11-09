@@ -172,5 +172,7 @@ public interface DataStorage {
    * @param api api
    * @param time time in milliseconds
    */
-  void addTimeApi(String api, long time);
+  boolean addTimeApi(String api, long time);
+
+
 }

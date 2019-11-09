@@ -29,14 +29,15 @@ public class AddTimeApiExecution {
     this.connection = connection;
   }
 
-  public void add() {
+  public boolean add() {
+    boolean status = false;
     try (PreparedStatement statement = connection
         .prepareStatement("insert into api_time values (?, ?)")) {
       statement.setString(1, api);
       statement.setLong(2, time);
-
       logger.info("Execution statement for add api execution time ({}) started", statement);
       if (statement.executeUpdate() == 1) {
+        status = true;
         logger.info("Execution statement for add api execution time ({}) finished successfully", statement);
       } else {
         logger.error("Execution statement for add api execution time ({}) finished with error", statement);
@@ -44,5 +45,6 @@ public class AddTimeApiExecution {
     } catch (SQLException e) {
       logger.error("Execution statement for add api execution time are failed with error", e);
     }
+    return status;
   }
 }

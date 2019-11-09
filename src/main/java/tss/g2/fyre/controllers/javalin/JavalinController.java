@@ -39,5 +39,6 @@ public class JavalinController implements CreateController {
     new AuthorizationController(app, dataStorage, tokenStorage).create();
     new RecipeController(app, dataStorage, tokenStorage).create();
     new UserController(app, dataStorage, tokenStorage).create();
+    new ServiceController(app, dataStorage, tokenStorage).create();
   }
 }

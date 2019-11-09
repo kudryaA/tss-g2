@@ -142,7 +142,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public void addTimeApi(String api, long time) {
-    new AddTimeApiExecution(connection, api, time).add();
+  public boolean addTimeApi(String api, long time) {
+    return new AddTimeApiExecution(connection, api, time).add();
   }
 }
