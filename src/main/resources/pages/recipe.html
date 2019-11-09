@@ -145,8 +145,8 @@
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
                         console.log(response.responseText);
-                        var url_string = window.location.href;
-                        var url = new URL(url_string);
+                        var urlString = window.location.href;
+                        var url = new URL(urlString);
                         var isApprove = url.searchParams.get("isApprove");
                         if (typeof user.obj !== 'undefined') {
                             if (user.obj.login != answer.obj.creator && user.obj.role != "admin") {
