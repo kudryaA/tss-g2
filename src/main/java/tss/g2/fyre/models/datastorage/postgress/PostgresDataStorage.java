@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.models.entity.Comment;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
@@ -121,5 +122,15 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean recipeConfirmation(int recipeId) {
     return new RecipeConfirmation(connection, recipeId).confirmation();
+  }
+
+  @Override
+  public boolean addComment(String userLogin, int recipeId, String commentText) {
+    return new AddComment(connection, userLogin, recipeId, commentText).addComment();
+  }
+
+  @Override
+  public List<Comment> selectComments(int recipeId) {
+    return new SelectComments(connection, recipeId).selectComments();
   }
 }

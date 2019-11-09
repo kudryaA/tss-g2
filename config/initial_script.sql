@@ -38,3 +38,9 @@ create table recipeType (
   recipe_id INT references recipe(recipe_id) ,
   type_name Text references type(name)
 );
+
+create table comment (
+  user_login Text references person(login) ,
+  recipe_id INT references recipe(recipe_id) ,
+  comment_text Text
+);

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import tss.g2.fyre.models.entity.Comment;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
@@ -149,4 +150,20 @@ public interface DataStorage {
    * @return edition result
    */
   boolean recipeConfirmation(int recipeId);
+
+  /**
+   * Method for add comment to recipe.
+   * @param userLogin user login
+   * @param recipeId recipe id
+   * @param commentText comment text
+   * @return result of adding
+   */
+  boolean addComment(String userLogin, int recipeId, String commentText);
+
+  /**
+   * Method for select all comments by recipe id.
+   * @param recipeId recipe id
+   * @return comments list
+   */
+  List<Comment> selectComments(int recipeId);
 }

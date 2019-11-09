@@ -10,6 +10,7 @@ import java.util.Map;
 
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.actions.auth.AddComment;
 import tss.g2.fyre.models.actions.auth.AddRecipe;
 import tss.g2.fyre.models.actions.auth.AddType;
 import tss.g2.fyre.models.actions.auth.DeleteRecipe;
@@ -20,6 +21,7 @@ import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.GetRecipe;
 import tss.g2.fyre.models.actions.simple.GetTypes;
 import tss.g2.fyre.models.actions.simple.SearchRecipe;
+import tss.g2.fyre.models.actions.simple.SelectComments;
 import tss.g2.fyre.models.actions.simple.SelectRecipes;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
@@ -151,6 +153,24 @@ public class RecipeController implements CreateController {
               tokenStorage
       ).getAnswer();
       ctx.result(answer.toJson());
+    });
+
+    app.post("/add/comment", ctx -> {
+      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      String commentText = ctx.formParam("commentText");
+
+      Answer answer = new AuthUser(
+              new AddComment(dataStorage, recipeId, commentText),
+              ctx.sessionAttribute("token"),
+              tokenStorage
+      ).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/select/comments", ctx -> {
+      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+
+      ctx.result(new SelectComments(dataStorage, recipeId).getAnswer().toJson());
     });
   }
 }
