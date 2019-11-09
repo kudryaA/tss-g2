@@ -4,8 +4,13 @@ import io.javalin.Javalin;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tss.g2.fyre.controllers.CreateController;
+import tss.g2.fyre.controllers.utils.UserLogin;
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.actions.Action;
+import tss.g2.fyre.models.actions.ActionTime;
 import tss.g2.fyre.models.actions.simple.CheckAuthorization;
 import tss.g2.fyre.models.actions.simple.RegisterUser;
 import tss.g2.fyre.models.datastorage.DataStorage;
@@ -22,6 +27,7 @@ public class AuthorizationController implements CreateController {
   private DataStorage dataStorage;
   private Map<String, Authorization> tokenStorage;
   private static final int tokenSize = 50;
+  private static Logger logger = LoggerFactory.getLogger(AuthorizationController.class);
 
   /**
    * Constructor.
@@ -40,10 +46,11 @@ public class AuthorizationController implements CreateController {
   public void create() {
     app.post("/login", ctx -> {
       String login = ctx.formParam("login");
+      logger.info("Request to /login user {}", login);
       String password = ctx.formParam("password");
-      Answer answer = new CheckAuthorization(dataStorage, login, password).getAnswer();
+      Action action = new CheckAuthorization(dataStorage, login, password);
+      Answer answer = new ActionTime("/login", action, dataStorage).getAnswer();
       boolean status = (boolean) answer.getObj();
-
       if (status) {
         String token = new RandomString(tokenSize).generate();
         ctx.sessionAttribute("token", token);
@@ -54,12 +61,13 @@ public class AuthorizationController implements CreateController {
 
     app.post("/registration", ctx -> {
       String login = ctx.formParam("login");
+      logger.info("Request to /registration user {}", login);
       String password = ctx.formParam("password");
       String name = ctx.formParam("name");
       String surname = ctx.formParam("surname");
       String email = ctx.formParam("email");
-      Answer answer = new RegisterUser(dataStorage, login, password, name, surname, email)
-          .getAnswer();
+      Action action = new RegisterUser(dataStorage, login, password, name, surname, email);
+      Answer answer = new ActionTime("/registration", action, dataStorage).getAnswer();
       boolean status = (boolean) answer.getObj();
       if (status) {
         String token = new RandomString(tokenSize).generate();
@@ -72,6 +80,7 @@ public class AuthorizationController implements CreateController {
     app.post("/session", ctx -> {
       String token = ctx.sessionAttribute("token");
       Authorization authorization = tokenStorage.get(token);
+      logger.info("Request to /session");
       Answer answer = new Answer<>(false);
       if (authorization != null) {
         answer = new Answer<>(true, authorization);
@@ -81,9 +90,10 @@ public class AuthorizationController implements CreateController {
 
     app.post("/logout", ctx -> {
       String token = ctx.sessionAttribute("token");
+      Authorization authorization = tokenStorage.get(token);
+      logger.info("Request to /logout with user {}", new UserLogin(tokenStorage, token).get());
       ctx.sessionAttribute("token", null);
       tokenStorage.remove(token);
-      Authorization authorization = tokenStorage.get(token);
       Answer answer = new Answer<>(true);
       ctx.result(answer.toJson());
     });

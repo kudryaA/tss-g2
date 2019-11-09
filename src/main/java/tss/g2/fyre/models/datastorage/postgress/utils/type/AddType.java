@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.type;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrey Sherstyuk
  */
-class AddType {
-  private Logger addTypeLogger = LoggerFactory.getLogger(AddType.class);
+public class AddType {
+  private static Logger logger = LoggerFactory.getLogger(AddType.class);
 
   private Connection connection;
   private String typeName;
@@ -28,7 +28,7 @@ class AddType {
    * @param description recipe description
    * @param image path to image
    */
-  AddType(Connection connection, String typeName, String description, String image) {
+  public AddType(Connection connection, String typeName, String description, String image) {
     this.connection = connection;
     this.typeName = typeName;
     this.description = description;
@@ -40,18 +40,17 @@ class AddType {
    *
    * @return result of adding type
    */
-  boolean addType() {
+  public boolean addType() {
     boolean result = false;
     try (PreparedStatement addTypeStatement = connection
             .prepareStatement("insert into type values (?, ?, ?)")) {
       addTypeStatement.setString(1, typeName);
       addTypeStatement.setString(2, description);
       addTypeStatement.setString(3, image);
-
-      addTypeLogger.info(addTypeStatement.toString());
+      logger.info(addTypeStatement.toString());
       result = addTypeStatement.executeUpdate() == 1;
     } catch (SQLException e) {
-      addTypeLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return result;

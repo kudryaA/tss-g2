@@ -6,6 +6,6 @@ import tss.g2.fyre.models.Answer;
  * Action with auth.
  * @author Anton Kudryavtsev
  */
-public interface Action {
+public interface ActionAuth {
   Answer getAnswer(String login, String role);
 }

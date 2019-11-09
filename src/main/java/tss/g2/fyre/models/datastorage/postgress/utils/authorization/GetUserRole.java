@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.authorization;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

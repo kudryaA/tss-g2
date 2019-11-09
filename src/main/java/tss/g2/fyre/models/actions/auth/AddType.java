@@ -10,7 +10,7 @@ import tss.g2.fyre.utils.StoreImage;
 /**
  * Action for add type.
  */
-public class AddType implements Action {
+public class AddType implements ActionAuth {
   private DataStorage dataStorage;
   private String typeName;
   private String description;

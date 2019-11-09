@@ -3,7 +3,7 @@ package tss.g2.fyre.models.actions.auth;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
-public class UpdateRecipe implements Action {
+public class UpdateRecipe implements ActionAuth {
   private DataStorage dataStorage;
   private int recipeId;
   private String recipeName;

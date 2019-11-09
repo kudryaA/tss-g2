@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,8 +22,8 @@ import tss.g2.fyre.models.entity.recipe.RecipeWithType;
  * Class for select all recipes with sorting.
  * @author Andrey Sherstyuk
  */
-class SelectRecipes {
-  private Logger selectRecipesLogger = LoggerFactory.getLogger(SelectRecipes.class);
+public class SelectRecipes {
+  private static Logger logger = LoggerFactory.getLogger(SelectRecipes.class);
 
   private Connection connection;
   private int pageNumber;
@@ -46,8 +46,8 @@ class SelectRecipes {
    * @param recipeType recipe type
    * @param sortType sort type
    */
-  SelectRecipes(Connection connection, int pageNumber, int pageSize,
-                String recipeType, String sortType) {
+  public SelectRecipes(Connection connection, int pageNumber, int pageSize,
+                       String recipeType, String sortType) {
     this.connection = connection;
     this.pageNumber = pageNumber;
     this.pageSize = pageSize;
@@ -60,7 +60,7 @@ class SelectRecipes {
    *
    * @return the requested information
    */
-  Map<String, Object> selectRecipes() {
+  public Map<String, Object> selectRecipes() {
     List<RecipeWithType> recipeWithTypesList = new ArrayList<>();
     List<Recipe> recipeList = new ArrayList<>();
 
@@ -79,12 +79,12 @@ class SelectRecipes {
       selectStatement.setInt(2, (pageNumber - 1) * pageSize);
       selectStatement.setInt(3, pageSize);
 
-      selectRecipesLogger.info(selectStatement.toString());
+      logger.info(selectStatement.toString());
       try (ResultSet resultSet = selectStatement.executeQuery()) {
         fillRecipeList(recipeList, resultSet);
       }
     } catch (SQLException e) {
-      selectRecipesLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     Map<Integer, List<Type>> recipeTypeMap = new HashMap<>();

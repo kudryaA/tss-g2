@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,8 +18,8 @@ import tss.g2.fyre.models.entity.recipe.RecipeWithType;
  * Class for get recipe by id from postgres.
  * @author Anton Kudryavtsev
  */
-class GetRecipe {
-  private Logger getRecipeLogger = LoggerFactory.getLogger(GetRecipe.class);
+public class GetRecipe {
+  private static Logger logger = LoggerFactory.getLogger(GetRecipe.class);
 
   private int recipeId;
   private Connection connection;
@@ -35,7 +35,7 @@ class GetRecipe {
    * @param connection postgres jdbc connection
    * @param recipeId for authorization
    */
-  GetRecipe(Connection connection, int recipeId) {
+  public GetRecipe(Connection connection, int recipeId) {
     this.connection = connection;
     this.recipeId = recipeId;
   }
@@ -46,14 +46,14 @@ class GetRecipe {
             connection.prepareStatement("UPDATE recipe SET rating=rating+1 WHERE recipe_id = ?")) {
       updateStatement.setInt(1, recipeId);
 
-      getRecipeLogger.info(updateStatement.toString());
+      logger.info(updateStatement.toString());
       updateStatement.executeUpdate();
     } catch (SQLException e) {
-      getRecipeLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
-      getRecipeLogger.info(preparedStatement.toString());
+      logger.info(preparedStatement.toString());
       preparedStatement.setInt(1, recipeId);
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
         Recipe recipeWithoutType = null;
@@ -80,7 +80,7 @@ class GetRecipe {
         recipe = new RecipeWithType(recipeWithoutType, types);
       }
     } catch (SQLException e) {
-      getRecipeLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
     return recipe;
   }

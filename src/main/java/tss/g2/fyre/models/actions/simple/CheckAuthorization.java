@@ -2,6 +2,7 @@ package tss.g2.fyre.models.actions.simple;
 
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.AnswerWithComment;
+import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.utils.ToHash;

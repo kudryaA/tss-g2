@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.comment;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class AddComment {
-  private Logger addCommentLogger = LoggerFactory.getLogger(AddComment.class);
+  private static Logger logger = LoggerFactory.getLogger(AddComment.class);
   private Connection connection;
   private String userLogin;
   private int recipeId;
@@ -40,11 +40,11 @@ public class AddComment {
       addCommentStatement.setString(1, userLogin);
       addCommentStatement.setInt(2, recipeId);
       addCommentStatement.setString(3, commentText);
-      addCommentLogger.info(addCommentStatement.toString());
+      logger.info(addCommentStatement.toString());
 
       result = addCommentStatement.executeUpdate() == 1;
     } catch (SQLException e) {
-      addCommentLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return result;

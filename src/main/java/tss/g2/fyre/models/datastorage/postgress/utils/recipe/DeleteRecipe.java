@@ -1,4 +1,4 @@
-package tss.g2.fyre.models.datastorage.postgress;
+package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrey Sherstyuk
  */
-class DeleteRecipe {
-  private Logger deleteRecipeLogger = LoggerFactory.getLogger(DeleteRecipe.class);
+public class DeleteRecipe {
+  private static Logger logger = LoggerFactory.getLogger(DeleteRecipe.class);
 
   private Connection connection;
   private int recipeId;
@@ -27,7 +27,7 @@ class DeleteRecipe {
    * @param recipeId recipe id
    * @param user authorization user
    */
-  DeleteRecipe(Connection connection, int recipeId, String user) {
+  public DeleteRecipe(Connection connection, int recipeId, String user) {
     this.connection = connection;
     this.recipeId = recipeId;
     this.user = user;
@@ -48,7 +48,7 @@ class DeleteRecipe {
       checkStatement.setString(2, user);
       checkStatement.setString(3, user);
 
-      deleteRecipeLogger.info(checkStatement.toString());
+      logger.info(checkStatement.toString());
       try (ResultSet resultSet = checkStatement.executeQuery()) {
         if (resultSet.next()) {
           try (PreparedStatement deleteRelationStatement =
@@ -60,14 +60,14 @@ class DeleteRecipe {
                          connection.prepareStatement("delete from recipe where recipe_id = ?")) {
               deleteRecipeStatement.setInt(1, recipeId);
 
-              deleteRecipeLogger.info(deleteRecipeStatement.toString());
+              logger.info(deleteRecipeStatement.toString());
               result = deleteRecipeStatement.executeUpdate() == 1;
             }
           }
         }
       }
     } catch (SQLException e) {
-      deleteRecipeLogger.error(e.getMessage());
+      logger.error(e.getMessage());
     }
 
     return result;

@@ -3,15 +3,16 @@ package tss.g2.fyre.models.actions.auth.check;
 import java.util.Map;
 
 import tss.g2.fyre.models.Answer;
-import tss.g2.fyre.models.actions.auth.Action;
+import tss.g2.fyre.models.actions.Action;
+import tss.g2.fyre.models.actions.auth.ActionAuth;
 import tss.g2.fyre.models.entity.Authorization;
 
 /**
  * Class for controlling auth action.
  * @author Anton Kudryavtsev
  */
-public class AuthUser {
-  protected Action action;
+public class AuthUser implements Action {
+  protected ActionAuth action;
   protected String token;
   protected Map<String, Authorization> tokenStorage;
 
@@ -21,7 +22,7 @@ public class AuthUser {
    * @param token token of authorization
    * @param tokenStorage token storage
    */
-  public AuthUser(Action action, String token, Map<String, Authorization> tokenStorage) {
+  public AuthUser(ActionAuth action, String token, Map<String, Authorization> tokenStorage) {
     this.action = action;
     this.token = token;
     this.tokenStorage = tokenStorage;

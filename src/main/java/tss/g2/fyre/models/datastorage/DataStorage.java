@@ -166,4 +166,11 @@ public interface DataStorage {
    * @return comments list
    */
   List<Comment> selectComments(int recipeId);
+
+  /**
+   * Store time api.
+   * @param api api
+   * @param time time in milliseconds
+   */
+  void addTimeApi(String api, long time);
 }
