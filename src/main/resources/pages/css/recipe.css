@@ -31,3 +31,15 @@
 #ingredients, #steps {
     padding-bottom: 15px;
 }
+.form-control, .card {
+    -webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    border-radius: 2rem;
+ }
+.card-header:first-child {
+    border-radius: 2rem 2rem 0 0;
+}
+.comment-text {
+   word-break: break-all;
+   word-wrap: break-word;
+}

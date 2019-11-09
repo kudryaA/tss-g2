@@ -157,7 +157,8 @@
                                 $("#approve-recipe").remove();
                             }
                         } else if (user.status == false) {
-                            $("#recipe-container .btn").remove();
+                            $("#recipe-btn .btn").remove();
+                            $("#comment-form").remove();
                         }
 
                         $("meta[name='twitter:title']").attr("content", answer.obj.name);
@@ -173,10 +174,59 @@
                         $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
                         $("#image").attr("src", "/image?id=" + answer.obj.image);
                         $("#id").html(answer.obj.id);
+                        loadComments();
                     }
                 ]
             });
         });
+        function sendComment() {
+            var data = {
+                recipeId: $("#id").html(),
+                commentText: $("#comment").val()
+            }
+            $.ajax({
+                type: "post",
+                url: "/add/comment",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.obj != false) {
+                            alert("Comment added");
+                            loadComments();
+                        }
+                    }
+                ]
+            });
+        }
+
+        function loadComments() {
+            var data = {
+                recipeId: $("#id").html()
+            }
+            $.ajax({
+                type: "post",
+                url: "/select/comments",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        $("#comments").empty();
+                        $.each(answer.obj, function(key, value) {
+                            $("#comments").append("<div class='media mb-4'>"
+                                + "<div class='media-body comment-text'>"
+                                + "<h5 class='mt-0'>" + value.userLogin + "</h5>"
+                                + value.commentText
+                                + "</div></div><hr>");
+                        });
+                    }
+                ]
+            });
+        }
     </script>
 </head>
 
@@ -205,9 +255,31 @@
             <div><h3>Cooking steps:</h3></div>
             <div id="steps"></div>
             <hr>
-            <button class="btn btn-primary" id="edit-recipe" onclick="editRecipe()">Edit recipe</button>
-            <button class="btn btn-primary" id="delete-recipe" onclick="deleteRecipe()">Delete recipe</button>
-            <button class="btn btn-primary" id="approve-recipe" onclick="approveRecipe()">Approve recipe</button>
+            <div id="recipe-btn">
+                <button class="btn btn-primary" id="edit-recipe" onclick="editRecipe()">Edit recipe</button>
+                <button class="btn btn-primary" id="delete-recipe" onclick="deleteRecipe()">Delete recipe</button>
+                <button class="btn btn-primary" id="approve-recipe" onclick="approveRecipe()">Approve recipe</button>
+            </div>
+            <div id="comments-container">
+                <div class="card my-4" id="comment-form">
+                    <h5 class="card-header">Leave your comment:</h5>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3" id="comment"></textarea>
+                        </div>
+                        <button class="btn btn-primary" onclick="sendComment()">Send</button>
+                    </div>
+                </div>
+
+                <div class="card my-4">
+                    <h5 class="card-header">Comments:</h5>
+                    <div class="card-body">
+                        <div id="comments">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

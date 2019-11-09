@@ -153,7 +153,8 @@
                         if (answer.status == true) {
                             window.history.replaceState(null, null, window.location.pathname);
                             $("#content-container").empty();
-                            $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient " + data.ingredientName
+                            $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient "
+                                + data.ingredientName
                                 + "</h1><hr>");
                             $.each(answer.obj, function(key, value) {
                             $("#content-container").append("<div class='row recipe'>"
