@@ -5,7 +5,7 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 
 public class UpdateRecipe implements ActionAuth {
   private DataStorage dataStorage;
-  private int recipeId;
+  private String recipeId;
   private String recipeName;
   private String composition;
   private String cookingSteps;
@@ -19,7 +19,7 @@ public class UpdateRecipe implements ActionAuth {
    * @param composition composition
    * @param cookingSteps cooking steps
    */
-  public UpdateRecipe(DataStorage dataStorage, int recipeId, String recipeName,
+  public UpdateRecipe(DataStorage dataStorage, String recipeId, String recipeName,
                       String composition, String cookingSteps) {
     this.dataStorage = dataStorage;
     this.recipeId = recipeId;

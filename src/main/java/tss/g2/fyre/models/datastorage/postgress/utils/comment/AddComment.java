@@ -11,7 +11,7 @@ public class AddComment {
   private static Logger logger = LoggerFactory.getLogger(AddComment.class);
   private Connection connection;
   private String userLogin;
-  private int recipeId;
+  private String recipeId;
   private String commentText;
 
   /**
@@ -21,7 +21,7 @@ public class AddComment {
    * @param recipeId recipe id
    * @param commentText comment text
    */
-  public AddComment(Connection connection, String userLogin, int recipeId, String commentText) {
+  public AddComment(Connection connection, String userLogin, String recipeId, String commentText) {
     this.connection = connection;
     this.userLogin = userLogin;
     this.recipeId = recipeId;
@@ -38,11 +38,12 @@ public class AddComment {
     try (PreparedStatement addCommentStatement = connection
             .prepareStatement("insert into comment values(?, ?, ?)")) {
       addCommentStatement.setString(1, userLogin);
-      addCommentStatement.setInt(2, recipeId);
+      addCommentStatement.setString(2, recipeId);
       addCommentStatement.setString(3, commentText);
       logger.info(addCommentStatement.toString());
 
       result = addCommentStatement.executeUpdate() == 1;
+      logger.info("Adding comment complete successfully.");
     } catch (SQLException e) {
       logger.error(e.getMessage());
     }

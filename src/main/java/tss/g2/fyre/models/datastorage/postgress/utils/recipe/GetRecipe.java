@@ -21,7 +21,7 @@ import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 public class GetRecipe {
   private static Logger logger = LoggerFactory.getLogger(GetRecipe.class);
 
-  private int recipeId;
+  private String recipeId;
   private Connection connection;
 
   private static final String SQL = "SELECT r.name as recipeName, recipecomposition, cookingsteps, "
@@ -35,16 +35,20 @@ public class GetRecipe {
    * @param connection postgres jdbc connection
    * @param recipeId for authorization
    */
-  public GetRecipe(Connection connection, int recipeId) {
+  public GetRecipe(Connection connection, String recipeId) {
     this.connection = connection;
     this.recipeId = recipeId;
   }
 
+  /**
+   * Method for get recipe by recipe id.
+   * @return recipe object
+   */
   public Recipe get() {
     RecipeWithType recipe = null;
     try (PreparedStatement updateStatement =
             connection.prepareStatement("UPDATE recipe SET rating=rating+1 WHERE recipe_id = ?")) {
-      updateStatement.setInt(1, recipeId);
+      updateStatement.setString(1, recipeId);
 
       logger.info(updateStatement.toString());
       updateStatement.executeUpdate();
@@ -54,7 +58,7 @@ public class GetRecipe {
 
     try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
       logger.info(preparedStatement.toString());
-      preparedStatement.setInt(1, recipeId);
+      preparedStatement.setString(1, recipeId);
       try (ResultSet resultSet = preparedStatement.executeQuery()) {
         Recipe recipeWithoutType = null;
         List<Type> types = new ArrayList<>();

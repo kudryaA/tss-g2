@@ -15,14 +15,14 @@ import tss.g2.fyre.models.entity.Comment;
 public class SelectComments {
   private static Logger logger = LoggerFactory.getLogger(SelectComments.class);
   private Connection connection;
-  private int recipeId;
+  private String recipeId;
 
   /**
    * Constructor.
    * @param connection connection to database
    * @param recipeId recipe id
    */
-  public SelectComments(Connection connection, int recipeId) {
+  public SelectComments(Connection connection, String recipeId) {
     this.connection = connection;
     this.recipeId = recipeId;
   }
@@ -36,7 +36,7 @@ public class SelectComments {
 
     try (PreparedStatement selectCommentsStatement = connection
             .prepareStatement("select user_login, comment_text from comment where recipe_id = ?")) {
-      selectCommentsStatement.setInt(1, recipeId);
+      selectCommentsStatement.setString(1, recipeId);
       logger.info(selectCommentsStatement.toString());
 
       try (ResultSet resultSet = selectCommentsStatement.executeQuery()) {

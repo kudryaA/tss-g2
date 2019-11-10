@@ -1,11 +1,9 @@
-drop sequence recipeSeq;
+drop table comment;
 drop table person;
 drop table recipeType;
 drop table type;
 drop table recipe;
-drop table comment;
-
-create sequence recipeSeq;
+drop table api_time;
 
 create table person (
   login TEXT PRIMARY KEY ,
@@ -24,7 +22,7 @@ create table type (
 );
 
 create table recipe (
-  recipe_id INT PRIMARY KEY ,
+  recipe_id Text PRIMARY KEY ,
   name text ,
   recipeComposition text ,
   cookingSteps text ,
@@ -36,13 +34,13 @@ create table recipe (
 );
 
 create table recipeType (
-  recipe_id INT references recipe(recipe_id) ,
+  recipe_id Text references recipe(recipe_id) ,
   type_name Text references type(name)
 );
 
 create table comment (
   user_login Text references person(login) ,
-  recipe_id INT references recipe(recipe_id) ,
+  recipe_id Text references recipe(recipe_id) ,
   comment_text Text
 );
 

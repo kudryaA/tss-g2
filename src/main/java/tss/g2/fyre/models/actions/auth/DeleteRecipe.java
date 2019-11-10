@@ -6,7 +6,7 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 public class DeleteRecipe implements ActionAuth {
 
   private DataStorage dataStorage;
-  private int recipeId;
+  private String recipeId;
 
   /**
    * Constructor.
@@ -14,7 +14,7 @@ public class DeleteRecipe implements ActionAuth {
    * @param dataStorage data storage object
    * @param recipeId recipe id
    */
-  public DeleteRecipe(DataStorage dataStorage, int recipeId) {
+  public DeleteRecipe(DataStorage dataStorage, String recipeId) {
     this.dataStorage = dataStorage;
     this.recipeId = recipeId;
   }

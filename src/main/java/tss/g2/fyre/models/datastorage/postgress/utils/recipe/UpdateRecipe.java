@@ -11,7 +11,7 @@ public class UpdateRecipe {
   private static Logger logger = LoggerFactory.getLogger(UpdateRecipe.class);
 
   private Connection connection;
-  private int recipeId;
+  private String recipeId;
   private String recipeName;
   private String composition;
   private String cookingSteps;
@@ -27,7 +27,7 @@ public class UpdateRecipe {
    * @param cookingSteps cooking steps
    * @param creator user who create recipe
    */
-  public UpdateRecipe(Connection connection, int recipeId, String recipeName,
+  public UpdateRecipe(Connection connection, String recipeId, String recipeName,
                       String composition, String cookingSteps, String creator) {
     this.connection = connection;
     this.recipeId = recipeId;
@@ -51,7 +51,7 @@ public class UpdateRecipe {
       updateStatement.setString(1, recipeName);
       updateStatement.setString(2, composition);
       updateStatement.setString(3, cookingSteps);
-      updateStatement.setInt(4, recipeId);
+      updateStatement.setString(4, recipeId);
       updateStatement.setString(5, creator);
       updateStatement.setString(6, creator);
       logger.info(updateStatement.toString());

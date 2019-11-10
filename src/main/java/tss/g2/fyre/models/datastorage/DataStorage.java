@@ -50,7 +50,7 @@ public interface DataStorage {
    * @param isConfirmed is the recipe confirmed
    * @return id of recipe
    */
-  String addRecipe(String recipeName, String recipeComposition, String cookingSteps,
+  boolean addRecipe(String recipeName, String recipeComposition, String cookingSteps,
                     Date publicationDate, List<String> selectedTypes, String image,
                     String user, boolean isConfirmed);
 
@@ -91,14 +91,14 @@ public interface DataStorage {
    * @param user authorization user
    * @return result of deleting
    */
-  boolean deleteRecipe(int recipeId, String user);
+  boolean deleteRecipe(String recipeId, String user);
 
   /**
    * Get recipe by id.
    * @param recipeId id of recipe
    * @return some recipe
    */
-  Recipe getRecipe(int recipeId);
+  Recipe getRecipe(String recipeId);
 
   /**
    * Method for get the requested information.
@@ -121,7 +121,7 @@ public interface DataStorage {
    * @param creator user who create recipe
    * @return the result of the update
    */
-  boolean updateRecipe(int recipeId, String recipeName, String composition,
+  boolean updateRecipe(String recipeId, String recipeName, String composition,
                        String cookingSteps, String creator);
 
   /**
@@ -149,7 +149,7 @@ public interface DataStorage {
    * @param recipeId recipe id
    * @return edition result
    */
-  boolean recipeConfirmation(int recipeId);
+  boolean recipeConfirmation(String recipeId);
 
   /**
    * Method for add comment to recipe.
@@ -158,14 +158,14 @@ public interface DataStorage {
    * @param commentText comment text
    * @return result of adding
    */
-  boolean addComment(String userLogin, int recipeId, String commentText);
+  boolean addComment(String userLogin, String recipeId, String commentText);
 
   /**
    * Method for select all comments by recipe id.
    * @param recipeId recipe id
    * @return comments list
    */
-  List<Comment> selectComments(int recipeId);
+  List<Comment> selectComments(String recipeId);
 
   /**
    * Store time api.

@@ -6,14 +6,14 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 
 public class SelectComments implements Action {
   private DataStorage dataStorage;
-  private int recipeId;
+  private String recipeId;
 
   /**
    * Constructor.
    * @param dataStorage data storage object
    * @param recipeId recipe id
    */
-  public SelectComments(DataStorage dataStorage, int recipeId) {
+  public SelectComments(DataStorage dataStorage, String recipeId) {
     this.dataStorage = dataStorage;
     this.recipeId = recipeId;
   }

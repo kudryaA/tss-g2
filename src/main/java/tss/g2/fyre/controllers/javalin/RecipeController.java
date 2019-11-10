@@ -94,7 +94,7 @@ public class RecipeController implements CreateController {
 
     app.post("/delete/recipe", ctx -> {
       String token = ctx.sessionAttribute("token");
-      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /delete/recipe with user {} for recipe {}",
           new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new AuthUser(
@@ -108,7 +108,7 @@ public class RecipeController implements CreateController {
 
     app.post("/recipe", ctx -> {
       String token = ctx.sessionAttribute("token");
-      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /recipe with user {} for recipe {}",
           new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new GetRecipe(dataStorage, recipeId);
@@ -147,7 +147,7 @@ public class RecipeController implements CreateController {
 
     app.post("/update/recipe", ctx -> {
       String token = ctx.sessionAttribute("token");
-      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      String recipeId = ctx.formParam("recipeId");
       String recipeName = ctx.formParam("recipeName");
       String composition = ctx.formParam("composition");
       String cookingSteps = ctx.formParam("cookingSteps");
@@ -187,7 +187,7 @@ public class RecipeController implements CreateController {
 
     app.post("/recipeConfirmation", ctx -> {
       String token = ctx.sessionAttribute("token");
-      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /recipeConfirmation with user {} for recipe {}",
           new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new AuthUser(
@@ -201,7 +201,7 @@ public class RecipeController implements CreateController {
 
     app.post("/add/comment", ctx -> {
       String token = ctx.sessionAttribute("token");
-      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /add/comment with user {} for recipe {}",
           new UserLogin(tokenStorage, token).get(), recipeId);
       String commentText = ctx.formParam("commentText");
@@ -216,7 +216,7 @@ public class RecipeController implements CreateController {
 
     app.post("/select/comments", ctx -> {
       String token = ctx.sessionAttribute("token");
-      int recipeId = Integer.parseInt(ctx.formParam("recipeId"));
+      String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /select/comments with user {} for recipe {}",
           new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new SelectComments(dataStorage, recipeId);

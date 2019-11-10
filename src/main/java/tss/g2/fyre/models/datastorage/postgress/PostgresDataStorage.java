@@ -10,10 +10,21 @@ import java.util.Map;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.*;
+import tss.g2.fyre.models.datastorage.postgress.utils.authorization.AdminAction;
+import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetAuthorization;
+import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetUserInformation;
+import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetUserRole;
+import tss.g2.fyre.models.datastorage.postgress.utils.authorization.Registration;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.AddComment;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.SelectComments;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.*;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.AddRecipe;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.DeleteRecipe;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.GetRecipe;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.RecipeConfirmation;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SearchRecipe;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SelectRecipes;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SelectUnconfirmedRecipes;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.UpdateRecipe;
 import tss.g2.fyre.models.datastorage.postgress.utils.service.AddTimeApiExecution;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.AddType;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.GetTypeInformation;
@@ -60,7 +71,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public String addRecipe(String recipeName, String recipeCompostion, String cookingSteps,
+  public boolean addRecipe(String recipeName, String recipeCompostion, String cookingSteps,
                            Date publicationDate, List<String> selectedTypes, String image,
                            String user, boolean isConfirmed) {
     return new AddRecipe(connection, recipeName, recipeCompostion,
@@ -88,12 +99,12 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean deleteRecipe(int recipeId, String user) {
+  public boolean deleteRecipe(String recipeId, String user) {
     return new DeleteRecipe(connection, recipeId, user).deleteRecipe();
   }
 
   @Override
-  public Recipe getRecipe(int recipeId) {
+  public Recipe getRecipe(String recipeId) {
     return new GetRecipe(connection, recipeId).get();
   }
 
@@ -105,7 +116,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean updateRecipe(int recipeId, String recipeName, String composition,
+  public boolean updateRecipe(String recipeId, String recipeName, String composition,
                               String cookingSteps, String creator) {
     return new UpdateRecipe(connection, recipeId, recipeName, composition, cookingSteps, creator)
             .updateRecipe();
@@ -127,17 +138,17 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean recipeConfirmation(int recipeId) {
+  public boolean recipeConfirmation(String recipeId) {
     return new RecipeConfirmation(connection, recipeId).confirmation();
   }
 
   @Override
-  public boolean addComment(String userLogin, int recipeId, String commentText) {
+  public boolean addComment(String userLogin, String recipeId, String commentText) {
     return new AddComment(connection, userLogin, recipeId, commentText).addComment();
   }
 
   @Override
-  public List<Comment> selectComments(int recipeId) {
+  public List<Comment> selectComments(String recipeId) {
     return new SelectComments(connection, recipeId).selectComments();
   }
 
