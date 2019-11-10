@@ -9,7 +9,7 @@ public class Recipe {
   protected Date publicationDate;
   protected String image;
   protected String creator;
-  protected int id;
+  protected String id;
   protected long rating;
 
   /**
@@ -24,7 +24,7 @@ public class Recipe {
    * @param creator author of recipe
    * @param rating recipe rating
    */
-  public Recipe(int id, String name, String composition, String cookingSteps,
+  public Recipe(String id, String name, String composition, String cookingSteps,
                 Date publicationDate, String image, String creator, long rating) {
     this.name = name;
     this.composition = composition;
@@ -96,7 +96,7 @@ public class Recipe {
    * Get id of recipe.
    * @return id
    */
-  public int getId() {
+  public String getId() {
     return id;
   }
 

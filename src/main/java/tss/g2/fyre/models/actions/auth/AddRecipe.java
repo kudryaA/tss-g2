@@ -18,7 +18,7 @@ public class AddRecipe implements ActionAuth {
   private String cookingSteps;
   private Date publicationDate;
   private String selectedTypes;
-  private String image;
+  private UploadedFile image;
 
   /**
    * Constructor.
@@ -40,12 +40,14 @@ public class AddRecipe implements ActionAuth {
     this.cookingSteps = cookingSteps;
     this.publicationDate = publicationDate;
     this.selectedTypes = selectedTypes;
-    this.image = new StoreImage(image).store();
+    this.image = image;
   }
 
   @Override
   public Answer getAnswer(String user, String role) {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
+
+    String image = new StoreImage(this.image).store();
 
     try {
       return new Answer<>(true, dataStorage

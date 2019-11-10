@@ -7,7 +7,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class StoreImage {
+  private Logger logger = LoggerFactory.getLogger(StoreImage.class);
   private UploadedFile uploadedFile;
 
   public StoreImage(UploadedFile uploadedFile) {
@@ -28,8 +32,9 @@ public class StoreImage {
       path = generatePath();
       File targetFile = new File("images/" + path);
       Files.write(buffer, targetFile);
+      logger.info("Storing image executing successfully. Image path - {}", path);
     } catch (IOException e) {
-      e.printStackTrace();
+      logger.error("Some problem with storing image - {}", e.getMessage());
     }
 
     return path;

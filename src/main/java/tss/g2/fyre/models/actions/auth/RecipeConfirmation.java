@@ -7,14 +7,14 @@ import tss.g2.fyre.models.entity.Roles;
 
 public class RecipeConfirmation implements ActionAuth {
   private DataStorage dataStorage;
-  private int recipeId;
+  private String recipeId;
 
   /**
    * Constructor.
    * @param dataStorage data storage object
    * @param recipeId recipe id
    */
-  public RecipeConfirmation(DataStorage dataStorage, int recipeId) {
+  public RecipeConfirmation(DataStorage dataStorage, String recipeId) {
     this.dataStorage = dataStorage;
     this.recipeId = recipeId;
   }

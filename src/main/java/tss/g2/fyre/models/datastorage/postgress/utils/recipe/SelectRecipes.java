@@ -87,14 +87,14 @@ public class SelectRecipes {
       logger.error(e.getMessage());
     }
 
-    Map<Integer, List<Type>> recipeTypeMap = new HashMap<>();
+    Map<String, List<Type>> recipeTypeMap = new HashMap<>();
     try (Statement selectTypesStatement = connection.createStatement()) {
       try (ResultSet resultSet = selectTypesStatement
               .executeQuery("select recipe_id, t.name as typeName, "
                       + "description, t.image as typeImage from recipetype "
                       + "join type t on recipetype.type_name = t.name")) {
         while (resultSet.next()) {
-          int recipeId = resultSet.getInt("recipe_id");
+          String recipeId = resultSet.getString("recipe_id");
           if (recipeTypeMap.containsKey(recipeId)) {
             recipeTypeMap.get(recipeId)
                     .add(new Type(resultSet.getString("typeName"),
@@ -120,7 +120,7 @@ public class SelectRecipes {
 
     int countPages = 0;
     try (PreparedStatement getCountStatement = connection
-            .prepareStatement("select count(distinct r.name) from recipe r\n"
+            .prepareStatement("select count(distinct r.recipe_id) from recipe r\n"
             + "join recipetype r2 on r.recipe_id = r2.recipe_id\n"
             + "where r2.type_name like '%' || ? || '%'"
               + " and publicationdate <= (now() AT TIME ZONE 'UTC') ")) {
@@ -143,7 +143,7 @@ public class SelectRecipes {
   void fillRecipeList(List<Recipe> recipeList, ResultSet resultSet) {
     try {
       while (resultSet.next()) {
-        int id = resultSet.getInt(1);
+        String id = resultSet.getString(1);
         String recipeName = resultSet.getString(2);
         String composition = resultSet.getString(3);
         String cookingSteps = resultSet.getString(4);

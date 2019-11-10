@@ -48,7 +48,7 @@ public class SelectUnconfirmedRecipes {
         logger.info(selectStatement.toString());
         int i = -1;
         while (resultSet.next()) {
-          int recipeId = resultSet.getInt("recipe_id");
+          String recipeId = resultSet.getString("recipe_id");
           String recipeName = resultSet.getString("recipeName");
           String recipeComposition = resultSet.getString("recipeComposition");
           String cookingSteps = resultSet.getString("cookingSteps");

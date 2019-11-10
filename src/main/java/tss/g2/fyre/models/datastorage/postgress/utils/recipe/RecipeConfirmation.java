@@ -10,14 +10,14 @@ import org.slf4j.LoggerFactory;
 public class RecipeConfirmation {
   private static Logger logger = LoggerFactory.getLogger(RecipeConfirmation.class);
   private Connection connection;
-  private int recipeId;
+  private String recipeId;
 
   /**
    * Constructor.
    * @param connection connection to database.
    * @param recipeId recipe id
    */
-  public RecipeConfirmation(Connection connection, int recipeId) {
+  public RecipeConfirmation(Connection connection, String recipeId) {
     this.connection = connection;
     this.recipeId = recipeId;
   }
@@ -31,7 +31,7 @@ public class RecipeConfirmation {
 
     try (PreparedStatement confirmationStatement = connection
             .prepareStatement("update recipe set isconfirmed = true where recipe_id = ?")) {
-      confirmationStatement.setInt(1, recipeId);
+      confirmationStatement.setString(1, recipeId);
       logger.info(confirmationStatement.toString());
 
       result = confirmationStatement.executeUpdate() == 1;

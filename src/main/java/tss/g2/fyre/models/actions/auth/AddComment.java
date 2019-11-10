@@ -5,7 +5,7 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 
 public class AddComment implements ActionAuth {
   private DataStorage dataStorage;
-  private int recipeId;
+  private String recipeId;
   private String commentText;
 
   /**
@@ -14,7 +14,7 @@ public class AddComment implements ActionAuth {
    * @param recipeId recipe id
    * @param commentText comment text
    */
-  public AddComment(DataStorage dataStorage, int recipeId, String commentText) {
+  public AddComment(DataStorage dataStorage, String recipeId, String commentText) {
     this.dataStorage = dataStorage;
     this.recipeId = recipeId;
     this.commentText = commentText;

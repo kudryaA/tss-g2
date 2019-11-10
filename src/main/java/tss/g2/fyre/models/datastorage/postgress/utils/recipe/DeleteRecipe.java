@@ -17,7 +17,7 @@ public class DeleteRecipe {
   private static Logger logger = LoggerFactory.getLogger(DeleteRecipe.class);
 
   private Connection connection;
-  private int recipeId;
+  private String recipeId;
   private String user;
 
   /**
@@ -27,7 +27,7 @@ public class DeleteRecipe {
    * @param recipeId recipe id
    * @param user authorization user
    */
-  public DeleteRecipe(Connection connection, int recipeId, String user) {
+  public DeleteRecipe(Connection connection, String recipeId, String user) {
     this.connection = connection;
     this.recipeId = recipeId;
     this.user = user;
@@ -44,7 +44,7 @@ public class DeleteRecipe {
     try (PreparedStatement checkStatement = connection
             .prepareStatement("select 1 from recipe where recipe_id = ? "
                     + "and (creator = ? or (select role from person where login = ?) = 'admin')")) {
-      checkStatement.setInt(1, recipeId);
+      checkStatement.setString(1, recipeId);
       checkStatement.setString(2, user);
       checkStatement.setString(3, user);
 
@@ -53,12 +53,12 @@ public class DeleteRecipe {
         if (resultSet.next()) {
           try (PreparedStatement deleteRelationStatement =
                        connection.prepareStatement("delete from recipetype where recipe_id = ?")) {
-            deleteRelationStatement.setInt(1, recipeId);
+            deleteRelationStatement.setString(1, recipeId);
             deleteRelationStatement.executeUpdate();
 
             try (PreparedStatement deleteRecipeStatement =
                          connection.prepareStatement("delete from recipe where recipe_id = ?")) {
-              deleteRecipeStatement.setInt(1, recipeId);
+              deleteRecipeStatement.setString(1, recipeId);
 
               logger.info(deleteRecipeStatement.toString());
               result = deleteRecipeStatement.executeUpdate() == 1;

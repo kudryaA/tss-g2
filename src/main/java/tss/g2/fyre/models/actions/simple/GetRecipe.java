@@ -9,7 +9,7 @@ import tss.g2.fyre.models.datastorage.DataStorage;
  */
 public class GetRecipe  implements Action {
 
-  private int recipeId;
+  private String recipeId;
   private DataStorage dataStorage;
 
   /**
@@ -17,7 +17,7 @@ public class GetRecipe  implements Action {
    * @param dataStorage storage
    * @param recipeId id of recipe
    */
-  public GetRecipe(DataStorage dataStorage, int recipeId) {
+  public GetRecipe(DataStorage dataStorage, String recipeId) {
     this.recipeId = recipeId;
     this.dataStorage = dataStorage;
   }
