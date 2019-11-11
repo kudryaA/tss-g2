@@ -61,8 +61,8 @@ public class AddRecipe {
    *
    * @return result of adding new recipe
    */
-  public boolean addRecipe() {
-    boolean result = false;
+  public String addRecipe() {
+    String result = "";
     String key = new RandomString(20).generate() + new Date().getTime();
     logger.info("Start add recipe recipe id = {}.", key);
 
@@ -125,7 +125,7 @@ public class AddRecipe {
 
         if (i == list.size()) {
           logger.info("Execute adding recipe recipe id = {} complete successfully.", key);
-          result = true;
+          result += key;
         } else {
           logger.error("Execute adding recipe recipe id = {} complete with some error.", key);
         }

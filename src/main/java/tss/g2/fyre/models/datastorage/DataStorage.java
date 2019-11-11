@@ -50,7 +50,7 @@ public interface DataStorage {
    * @param isConfirmed is the recipe confirmed
    * @return id of recipe
    */
-  boolean addRecipe(String recipeName, String recipeComposition, String cookingSteps,
+  String addRecipe(String recipeName, String recipeComposition, String cookingSteps,
                     Date publicationDate, List<String> selectedTypes, String image,
                     String user, boolean isConfirmed);
 
