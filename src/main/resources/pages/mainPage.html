@@ -25,13 +25,8 @@
 
     <script>
         var count = 1;
-        /*$(window).scroll(function() {
-            if($(window).scrollTop() == $(document).height() - $(window).height() && count < window.localStorage.getItem("pages")
-                && $("#scroll").html() == 1) {
-                count++;
-                loadRecipes(window.localStorage.getItem("sortType"));
-            }
-        });*/
+        var sortType;
+        var pages;
         $(function() {
             $.ajax({
                 url:"/session",
@@ -64,16 +59,18 @@
             count = 1;
             $("#content-container").empty();
             if (window.localStorage.getItem("sortType") == null) {
-                window.localStorage.setItem("sortType", "publicationDate");
+                sortType = "publicationDate";
+            } else {
+                sortType = window.localStorage.getItem("sortType");
             }
-            var sortType = window.localStorage.getItem("sortType");
+            var title = sortType;
             if (sortType == "publicationDate") {
-                sortType = "publication date";
+                title = "publication date";
             }
-            $(document).attr("title", "Recipes ordered by " + sortType);
+            $(document).attr("title", "Recipes ordered by " + title);
             $("#content-container").append("<h1 class='my-4'>Recipes sorted by " + sortType + "</h1><hr>");
             $("#content-container").append("<div hidden id='scroll'>1</div>");
-            loadRecipes(window.localStorage.getItem("sortType"));
+            loadRecipes(sortType);
             $("#load-recipes").show();
         });
         function addRecipe() {
@@ -88,13 +85,13 @@
             $("#content-container").load("moderatorPage.html");
         }
         function changeSortOfRecipes(sortType) {
-            window.localStorage.setItem('sortType', sortType);
+            window.localStorage.setItem("sortType", sortType);
             window.location.href = location.pathname.replace(/(.*)\/[^/]*/, '$1/mainPage.html');
         }
         function loadMoreRecipes() {
-            if(count < window.localStorage.getItem("pages") && $("#scroll").html() == 1) {
+            if(count < pages && $("#scroll").html() == 1) {
                 count++;
-                loadRecipes(window.localStorage.getItem("sortType"));
+                loadRecipes(sortType);
             } else {
                 alert("You scrolled till the end ;)")
             }
@@ -125,7 +122,7 @@
                                 + value.id + "'>View recipe</a>"
                                 + "</div></div><hr>");
                         });
-                        window.localStorage.setItem("pages", answer.obj.pages);
+                        pages = answer.obj.pages;
                     }
                 ]
             });
@@ -179,7 +176,7 @@
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
-                        window.location.href = location.pathname.replace(/(.*)\/[^/]*/, '$1/login.html');
+                        window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/login.html");
                     }
                 ]
             });
