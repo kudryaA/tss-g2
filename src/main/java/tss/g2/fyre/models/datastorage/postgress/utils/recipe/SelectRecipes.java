@@ -123,7 +123,8 @@ public class SelectRecipes {
             .prepareStatement("select count(distinct r.recipe_id) from recipe r\n"
             + "join recipetype r2 on r.recipe_id = r2.recipe_id\n"
             + "where r2.type_name like '%' || ? || '%'"
-              + " and publicationdate <= (now() AT TIME ZONE 'UTC') ")) {
+              + " and publicationdate <= (now() AT TIME ZONE 'UTC') "
+              + " and isConfirmed = true ")) {
       getCountStatement.setString(1, recipeType);
 
       try (ResultSet resultSet = getCountStatement.executeQuery()) {
