@@ -16,7 +16,7 @@
 * /recipe?recipeId={} - получение информации про рецепт по айди
 * /select/recipes?pageNumber={}&pageSize={}&recipeType={}&sortType={} - получение  информации про рецепты по заданым параметрам и количесво страниц которые можно получить из них.
 * /image?id={} - получить картинку рецепта. get запрос. Пример  /image?id=42424shfh
-* /search/recipe?ingredientName={} - поиск рецепта по названию ингредиента.
+* /search/recipe?ingredientName={}&pageNumber={}&pageSize={} - поиск рецепта по названию ингредиента.
 * /update/recipe?recipeId={}&recipeName={}&composition={}&cookingSteps - обновление рецепта по введенным параметрам.
 * /select/unconfirmedRecipes - получить все рецепты что нуждаются в подтверждении.
 * /recipeConfirmation?recipeId={} - подтвердить пользовательский рецепт по id. Результат подтверждения будет сохранен как булевое значение в дополнительной информации к ответу.
