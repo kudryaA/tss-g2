@@ -123,8 +123,8 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public List<Recipe> searchRecipe(String ingredientName) {
-    return new SearchRecipe(connection, ingredientName).searchRecipe();
+  public Map<String, Object> searchRecipe(String ingredientName, int pageNumber, int pageSize) {
+    return new SearchRecipe(connection, ingredientName, pageNumber, pageSize).searchRecipe();
   }
 
   @Override

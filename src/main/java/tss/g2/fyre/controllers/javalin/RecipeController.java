@@ -165,9 +165,11 @@ public class RecipeController implements CreateController {
     app.post("/search/recipe", ctx -> {
       String token = ctx.sessionAttribute("token");
       String ingredientName = ctx.formParam("ingredientName");
+      int pageNumber = Integer.parseInt(ctx.formParam("pageNumber"));
+      int pageSize = Integer.parseInt(ctx.formParam("pageSize"));
       logger.info("Request to /search/recipe with user {} with ingredient {}",
           new UserLogin(tokenStorage, token).get(), ingredientName);
-      Action action = new SearchRecipe(dataStorage, ingredientName);
+      Action action = new SearchRecipe(dataStorage, ingredientName, pageNumber, pageSize);
       Answer answer = new ActionTime("/search/recipe", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });

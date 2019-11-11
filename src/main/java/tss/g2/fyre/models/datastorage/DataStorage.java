@@ -128,9 +128,11 @@ public interface DataStorage {
    * Method for search recipe by ingredient name.
    *
    * @param ingredientName ingredient name
+   * @param pageNumber page number
+   * @param pageSize page size
    * @return the recipe found
    */
-  List<Recipe> searchRecipe(String ingredientName);
+  Map<String, Object> searchRecipe(String ingredientName, int pageNumber, int pageSize);
 
   /**
    * Method for get user role.
