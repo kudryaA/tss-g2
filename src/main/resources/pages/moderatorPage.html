@@ -17,7 +17,9 @@
 
         function banUnban(name) {
             alert(name);
-            var data = {userLogin: name};
+            var data = {
+                userLogin: name
+            };
             $.ajax({
                 type: "post",
                 url: "/change/status",

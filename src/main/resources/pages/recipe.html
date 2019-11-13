@@ -88,7 +88,9 @@
             });
         }
         function deleteRecipe() {
-            var data = {recipeId: $("#id").html()};
+            var data = {
+                recipeId: $("#id").html()
+            };
             $.ajax({
                 type: "post",
                 url: "/delete/recipe",
@@ -103,7 +105,9 @@
             });
         }
         function approveRecipe() {
-            var data = {recipeId: $("#id").html()};
+            var data = {
+                recipeId: $("#id").html()
+            };
             $.ajax({
                 type: "post",
                 url: "/recipeConfirmation",
@@ -124,7 +128,9 @@
         }
         $(function() {
             $("#load-recipes").hide();
-            var data = { recipeId: window.localStorage.getItem("recipeId") };
+            var data = {
+                recipeId: window.localStorage.getItem("recipeId")
+            };
             var user;
             $.ajax({
                 url:"/session",

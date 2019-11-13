@@ -27,6 +27,7 @@
         var count = 1;
         var sortType;
         var pages;
+        var isSearch = false;
         $(function() {
             $.ajax({
                 url:"/session",
@@ -91,16 +92,22 @@
         function loadMoreRecipes() {
             if(count < pages && $("#scroll").html() == 1) {
                 count++;
-                loadRecipes(sortType);
+                if (isSearch == true) {
+                    searchRecipes();
+                } else {
+                    loadRecipes(sortType);
+                }
             } else {
                 alert("You scrolled till the end ;)")
             }
         }
         function loadRecipes(sortType) {
-            var data = { pageNumber: count,
-                         recipeType: "",
-                         pageSize: 3,
-                         sortType: sortType };
+            var data = {
+                pageNumber: count,
+                recipeType: "",
+                pageSize: 3,
+                sortType: sortType
+             };
             $.ajax({
                 url:"/select/recipes",
                 type:"post",
@@ -136,7 +143,12 @@
             if ($("#search-input").val() == "") {
                 return;
             }
-            var data = { ingredientName: $("#search-input").val() };
+            ingredientName = $("#search-input").val();
+            var data = {
+                pageNumber: count,
+                pageSize: 3,
+                ingredientName: ingredientName
+            };
             $.ajax({
                 url:"/search/recipe",
                 type:"post",
@@ -144,26 +156,29 @@
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
+                        console.log(answer);
                         if (answer.status == true) {
                             window.history.replaceState(null, null, window.location.pathname);
                             $("#content-container").empty();
                             $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient "
                                 + data.ingredientName
                                 + "</h1><hr>");
-                            $.each(answer.obj, function(key, value) {
-                            $("#content-container").append("<div class='row recipe'>"
-                                + "<div class='col-md-7'>"
-                                + "<a>"
-                                + "<img class='img-fluid rounded mb-3 mb-md-0 preview' src='/image?id=" + value.image + "' alt=''>"
-                                + "</a>"
-                                + "</div>"
-                                + "<div class='col-md-5'>"
-                                + "<h3>" + value.name + "</h3>"
-                                + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
-                                + "<a class='btn btn-primary text-center' href='/mainPage.html?recipeId="
-                                + value.id + "'>View recipe</a>"
-                                + "</div></div><hr>");
+                            $.each(answer.obj.recipes, function(key, value) {
+                                $("#content-container").append("<div class='row recipe'>"
+                                    + "<div class='col-md-7'>"
+                                    + "<a>"
+                                    + "<img class='img-fluid rounded mb-3 mb-md-0 preview' src='/image?id=" + value.image + "' alt=''>"
+                                    + "</a>"
+                                    + "</div>"
+                                    + "<div class='col-md-5'>"
+                                    + "<h3>" + value.name + "</h3>"
+                                    + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
+                                    + "<a class='btn btn-primary text-center' href='/mainPage.html?recipeId="
+                                    + value.id + "'>View recipe</a>"
+                                    + "</div></div><hr>");
                             });
+                            $("#content-container").append("<div hidden id='scroll'>1</div>");
+                            pages = answer.obj.pages;
                         }
                     }
                 ]
