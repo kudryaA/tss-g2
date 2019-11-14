@@ -31,13 +31,16 @@ label {
    	background: #404b69 !important;
    	border-color: #404b69;
 }
-.form-control {
+.form-control, .tox-tinymce {
 	-webkit-border-radius: 2rem;
     -moz-border-radius: 2rem;
     border-radius: 2rem;
 }
-.form-group span {
+textarea ~ span,  input ~ span, select ~ span, .tox-tinymce ~ span {
   padding-left: 20px;
   font-size: 0.7em;
   color: red;
+}
+.tox-statusbar__text-container {
+    padding: 1rem !important;
 }
