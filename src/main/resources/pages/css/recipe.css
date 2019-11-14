@@ -43,3 +43,6 @@
    word-break: break-all;
    word-wrap: break-word;
 }
+#steps p {
+    margin: 0;
+}
