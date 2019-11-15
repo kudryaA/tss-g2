@@ -13,26 +13,30 @@
 
     <script>
         function editRecipe() {
+            $("#recipe-container").load("addRecipe.html");
             var id = $("#id").html();
             var name = $("#name").html();
             var categories = $("#categories").html().split(",");
             var ingredients = $("#ingredients").html();
             var steps = $("#steps").html();
             var date = $("#date").html();
-            $("#recipe-container").load("addRecipe.html");
             $(document).attr("title", "Editing of " + name);
             setTimeout(function (){
                 $("#recipeName").val(name);
                 $("#composition").val(ingredients);
-                $("#cookingSteps").val(steps);
                 setTimeout(function (){
+                    $("#publicationDate").prop("type", "text");
                     $("#publicationDate").val(date);
                     $("#publicationDate").prop("disabled", true);
                 }, 5);
                 $("#img-form-group").remove();
                 $("#select-form-group").remove();
-                $("#submitRecipe").attr("onclick","submitChanges(" + id + ")");
+                $("#submitRecipe").attr("onclick","submitChanges('" + id + "')");
             }, 100);
+
+            setTimeout(function (){
+                tinymce.get("cookingSteps").setContent(steps);
+            }, 500);
         }
         function submitChanges(id) {
             var check = true;
@@ -56,24 +60,20 @@
                     $(this).css("border-color","");
                 }
             });
-            $("#recipeForm select").each(function() {
-                $(this).next("span").hide();
-                if ($(this).val() == "") {
-                    $(this).after("<span>This field is required</span>");
-                    $(this).css("border-color","red");
-                    check = false;
-                } else {
-                    $(this).css("border-color","");
-                }
-            });
+            $(".tox-tinymce").next("span").remove();
+            if (tinymce.get("cookingSteps").getContent() == "") {
+                $(".tox-tinymce").after("<span>This field is required</span>");
+                $(".tox-tinymce").css("border-color","red");
+                check = false;
+            }
             if (!check) {
                 return;
             }
             var data = new FormData();
             data.append("recipeId", id);
             data.append("recipeName", $("#recipeName").val());
-            data.append("cookingSteps", $("#cookingSteps").val());
             data.append("composition", $("#composition").val());
+            data.append("cookingSteps", tinymce.get("cookingSteps").getContent());
             $.ajax({
                 url:"/update/recipe",
                 type:"post",
@@ -82,7 +82,7 @@
                 contentType: false,
                 complete: [
                     function (response) {
-                        window.location.href = location.pathname.replace(window.location.href);
+                        document.location.reload(true);
                     }
                 ]
             });
