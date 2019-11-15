@@ -8,18 +8,19 @@ import tss.g2.fyre.utils.Configuration;
 import java.sql.*;
 import java.util.Properties;
 
-public class GetAuthorizationTest {
+public class GetAuthorizationTestPostgres {
 
   private static Person testPerson;
+  private static Properties properties = new Configuration("config/configuration.yml").getProperties();
+  private static String host = properties.getProperty("database_host");
+  private static String port = properties.getProperty("database_port");
+  private static String database = properties.getProperty("database_database");
+  private static String user = properties.getProperty("database_user");
+  private static String password = properties.getProperty("database_password");
+
 
   @Before
   public void init() {
-    Properties properties = new Configuration("config/configuration.yml").getProperties();
-    String host = properties.getProperty("database_host");
-    String port = properties.getProperty("database_port");
-    String database = properties.getProperty("database_database");
-    String user = properties.getProperty("database_user");
-    String password = properties.getProperty("database_password");
     try (Connection connection =
         DriverManager.getConnection(
         "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
@@ -38,21 +39,14 @@ public class GetAuthorizationTest {
 
   @Test
   public void testGetAuthorization() throws SQLException {
-    Properties properties = new Configuration("config/configuration.yml").getProperties();
     PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
     Person result = dataStorage.getAuthorization("john_test_1");
-    Assert.assertEquals(result, testPerson);
+    Assert.assertEquals(testPerson, result);
     dataStorage.close();
   }
 
   @After
   public void finish() {
-    Properties properties = new Configuration("config/configuration.yml").getProperties();
-    String host = properties.getProperty("database_host");
-    String port = properties.getProperty("database_port");
-    String database = properties.getProperty("database_database");
-    String user = properties.getProperty("database_user");
-    String password = properties.getProperty("database_password");
     try (Connection connection =
              DriverManager.getConnection(
                  "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
