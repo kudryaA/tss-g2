@@ -21,4 +21,10 @@ public class AnswerTest {
     Answer answer2 = new Answer(true, "sfjvsfvsfhsf");
     Assert.assertEquals(answer2.toJson(), "{\"status\":true,\"obj\":\"sfjvsfvsfhsf\"}");
   }
+
+  @Test
+  public void check() {
+    Answer answer1 = new Answer(true);
+    Assert.assertEquals(new Answer(true), answer1);
+  }
 }

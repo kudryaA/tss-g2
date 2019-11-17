@@ -1,5 +1,7 @@
 package tss.g2.fyre.models.entity;
 
+import java.util.Objects;
+
 /**
  * Class for store authorization info.
  * @author Anton Kudryavtsev
@@ -40,5 +42,24 @@ public class Authorization {
         + "login='" + login + '\''
         + ", role=" + role
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Authorization that = (Authorization) o;
+    return Objects.equals(login, that.login)
+            &&
+            Objects.equals(role, that.role);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(login, role);
   }
 }
