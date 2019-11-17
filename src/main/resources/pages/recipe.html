@@ -167,15 +167,17 @@
                             $("#comment-form").remove();
                         }
 
-                        $("meta[name='twitter:title']").attr("content", answer.obj.name);
-                        $("meta[name='twitter:description']").attr("content", "Tasty meal");
-                        //$("meta[name=' twitter:image']").attr("content", "/image?id=" + answer.obj.image);
-
                         $(document).attr("title", answer.obj.name);
                         $("#name").html(answer.obj.name);
                         $("#author").html(answer.obj.creator);
                         $("#date").html(answer.obj.publicationDate);
-                        $("#categories").html(answer.obj.types.join(","));
+                        $.each(answer.obj.types, function(key, value) {
+                            if (key === answer.obj.types.length - 1) {
+                                $("#categories").append("<a href='/mainPage.html?findByCategory=" + value + "'>" + value + "</a>");
+                            } else {
+                                $("#categories").append("<a href='/mainPage.html?findByCategory=" + value + "'>" + value + ", </a>");
+                            }
+                        });
                         $("#ingredients").html(answer.obj.composition.split("\n").join("<br>"));
                         $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
                         $("#image").attr("src", "/image?id=" + answer.obj.image);
