@@ -104,6 +104,7 @@ public class ActionAddTypeTest {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

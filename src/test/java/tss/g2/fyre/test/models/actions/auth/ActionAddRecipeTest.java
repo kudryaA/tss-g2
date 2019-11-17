@@ -8,8 +8,12 @@ import org.junit.Test;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.auth.AddComment;
 import tss.g2.fyre.models.actions.auth.AddRecipe;
+import tss.g2.fyre.models.actions.simple.GetRecipe;
 import tss.g2.fyre.models.datastorage.postgress.PostgresDataStorage;
 import tss.g2.fyre.models.entity.Roles;
+import tss.g2.fyre.models.entity.Type;
+import tss.g2.fyre.models.entity.recipe.Recipe;
+import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 import tss.g2.fyre.utils.Configuration;
 
 import java.io.File;
@@ -22,8 +26,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 
 public class ActionAddRecipeTest {
     private final static Properties properties = new Configuration("config/configuration.yml").getProperties();
@@ -61,12 +64,35 @@ public class ActionAddRecipeTest {
                     new FileInputStream(new File("images/unnamed")), "text",
                     Files.readAllBytes(Paths.get("images/unnamed")).length,
                     "images/unnamed", "unnamed");
+            Date date = new Date();
 
             AddRecipe addRecipe = new AddRecipe(
                     dataStorage, "test_recipe", "some recipe composition",
-                    "some cooking steps", new Date(), "some_type_name", file);
+                    "some cooking steps", date, "some_type_name", file);
 
-            Assert.assertEquals(new Answer<>(true, true), addRecipe.getAnswer("john_test_1", Roles.admin.toString()));
+            Answer addRecipeAnswer = addRecipe.getAnswer("john_test_1", Roles.admin.toString());
+            GetRecipe getRecipe = new GetRecipe(dataStorage, addRecipeAnswer.getObj().toString());
+            Answer getRecipeAnswer = getRecipe.getAnswer();
+
+            RecipeWithType recipeById = (RecipeWithType) getRecipeAnswer.getObj();
+            Recipe recipe = new Recipe(addRecipeAnswer.getObj().toString(), "test_recipe", "some recipe composition",
+                    "some cooking steps", recipeById.getPublicationDate(), recipeById.getImage(),
+                    "john_test_1", recipeById.getRating());
+            Type type = new Type("some_type_name", "asd", "asd");
+            ArrayList<Type> list = new ArrayList(Collections.singleton(type));
+
+            RecipeWithType recipeWithType = new RecipeWithType(recipe, list);
+
+            boolean result = recipeWithType.getRating() == recipeById.getRating()
+                    && Objects.equals(recipeWithType.getName(), recipeById.getName())
+                    && Objects.equals(recipeWithType.getComposition(), recipeById.getComposition())
+                    && Objects.equals(recipeWithType.getCookingSteps(), recipeById.getCookingSteps())
+                    && Objects.equals(recipeWithType.getPublicationDate(), recipeById.getPublicationDate())
+                    && Objects.equals(recipeWithType.getImage(), recipeById.getImage())
+                    && Objects.equals(recipeWithType.getCreator(), recipeById.getCreator())
+                    && Objects.equals(recipeWithType.getId(), recipeById.getId())
+                    && recipeWithType.equals(recipeById);
+            Assert.assertTrue(result);
             dataStorage.close();
         } catch (IOException e) {
         }
@@ -81,25 +107,26 @@ public class ActionAddRecipeTest {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM recipetype WHERE type_name = 'some_type_name'")) {
+                statement.executeUpdate();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM type WHERE name = 'some_type_name'")) {
+                statement.executeUpdate();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM recipe WHERE name = 'test_recipe'")) {
+                statement.executeUpdate();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM person WHERE login = 'john_test_1'")) {
                 statement.executeUpdate();
             }
-
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM recipetype WHERE type_name = 'some_type_name' and recipe_id = 'test_recipe_id'")) {
-                statement.executeUpdate();
-            }
-
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM type WHERE type_name = 'some_type_name'")) {
-                statement.executeUpdate();
-            }
-
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM recipe WHERE recipe_id = 'test_recipe_id'")) {
-                statement.executeUpdate();
-            }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

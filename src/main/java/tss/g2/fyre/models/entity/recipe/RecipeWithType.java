@@ -1,6 +1,7 @@
 package tss.g2.fyre.models.entity.recipe;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import tss.g2.fyre.models.entity.Type;
@@ -53,5 +54,22 @@ public class RecipeWithType extends Recipe {
         + ", id=" + id
         + ", rating=" + rating
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    RecipeWithType that = (RecipeWithType) o;
+    return Objects.equals(types, that.types);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(types);
   }
 }

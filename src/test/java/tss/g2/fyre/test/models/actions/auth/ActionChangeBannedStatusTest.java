@@ -76,6 +76,7 @@ public class ActionChangeBannedStatusTest {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
