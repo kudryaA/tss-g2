@@ -23,21 +23,4 @@ public class DateConverter {
     date.setTime(date.getTime() + date.getTimezoneOffset() * 60000);
     return date;
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    DateConverter that = (DateConverter) o;
-    return Objects.equals(stringDate, that.stringDate);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(stringDate);
-  }
 }
