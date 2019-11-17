@@ -3,6 +3,7 @@ package tss.g2.fyre.models;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This class describe answer model.
@@ -59,5 +60,23 @@ public class Answer<T> {
    */
   public String toJson() {
     return new Gson().toJson(this);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Answer<?> answer = (Answer<?>) o;
+    return status == answer.status
+            && Objects.equals(obj, answer.obj);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(status, obj);
   }
 }
