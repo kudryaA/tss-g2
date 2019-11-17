@@ -29,6 +29,7 @@
         var sortType;
         var pages;
         var isSearch = false;
+        var ingredientName;
         $(function() {
             $.ajax({
                 url:"/session",
@@ -87,6 +88,7 @@
             $("#content-container").load("moderatorPage.html");
         }
         function changeSortOfRecipes(sortType) {
+            isSearch = false;
             window.localStorage.setItem("sortType", sortType);
             window.location.href = location.pathname.replace(/(.*)\/[^/]*/, '$1/mainPage.html');
         }
@@ -94,7 +96,7 @@
             if(count < pages && $("#scroll").html() == 1) {
                 count++;
                 if (isSearch == true) {
-                    searchRecipes();
+                    loadSearchResults();
                 } else {
                     loadRecipes(sortType);
                 }
@@ -145,6 +147,17 @@
                 return;
             }
             ingredientName = $("#search-input").val();
+            isSearch = true;
+            $("#content-container").empty();
+            window.history.replaceState(null, null, window.location.pathname);
+            $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient "
+                + ingredientName
+                + "</h1><hr>");
+            $("#content-container").append("<div hidden id='scroll'>1</div>");
+            loadSearchResults();
+        }
+
+        function loadSearchResults() {
             var data = {
                 pageNumber: count,
                 pageSize: 3,
@@ -159,11 +172,6 @@
                         var answer = $.parseJSON(response.responseText);
                         console.log(answer);
                         if (answer.status == true) {
-                            window.history.replaceState(null, null, window.location.pathname);
-                            $("#content-container").empty();
-                            $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient "
-                                + data.ingredientName
-                                + "</h1><hr>");
                             $.each(answer.obj.recipes, function(key, value) {
                                 $("#content-container").append("<div class='row recipe'>"
                                     + "<div class='col-md-7'>"
@@ -178,13 +186,13 @@
                                     + value.id + "'>View recipe</a>"
                                     + "</div></div><hr>");
                             });
-                            $("#content-container").append("<div hidden id='scroll'>1</div>");
                             pages = answer.obj.pages;
                         }
                     }
                 ]
             });
         }
+
         function logout() {
             $.ajax({
                 url:"/logout",
