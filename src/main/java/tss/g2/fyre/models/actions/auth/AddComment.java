@@ -17,7 +17,7 @@ public class AddComment implements ActionAuth {
   public AddComment(DataStorage dataStorage, String recipeId, String commentText) {
     this.dataStorage = dataStorage;
     this.recipeId = recipeId;
-    this.commentText = commentText;
+    this.commentText = commentText.replace("<", "&lt");
   }
 
   @Override

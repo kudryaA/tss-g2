@@ -1,6 +1,7 @@
 package tss.g2.fyre.models.actions.simple;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.utils.ToHash;
@@ -35,6 +36,16 @@ public class RegisterUser implements Action {
 
   @Override
   public Answer getAnswer() {
+    if (!login.matches("\\w{" + login.length() + "}")) {
+      return new AnswerWithComment(true, false, "Login must contain only [a-z0-9_-].");
+    }
+    if (!name.matches("\\w{" + name.length() + "}")) {
+      return new AnswerWithComment(true, false, "Name must contain only [a-z0-9_-].");
+    }
+    if (!surname.matches("\\w{" + surname.length() + "}")) {
+      return new AnswerWithComment(true, false, "Name must contain only [a-z0-9_-].");
+    }
+
     return new Answer<>(true,
             dataStorage.createUser(login, password, name, surname, email));
   }

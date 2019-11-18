@@ -38,6 +38,10 @@ public class CheckAuthorization implements Action {
       return new Answer<>(false, false);
     }
 
+    if (!login.matches("\\w{" + login.length() + "}")) {
+      return new AnswerWithComment(true, false, "Login must contain only [a-z0-9_-].");
+    }
+
     if (authorization.getBannedStatus()) {
       return new AnswerWithComment(true, false, "You are banned");
     }

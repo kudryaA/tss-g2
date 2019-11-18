@@ -35,9 +35,12 @@ public class AddRecipe implements ActionAuth {
                    String cookingSteps, Date publicationDate,
                    String selectedTypes, UploadedFile image) {
     this.dataStorage = dataStorage;
-    this.recipeName = recipeName;
-    this.recipeComposition = recipeComposition;
-    this.cookingSteps = cookingSteps;
+    this.recipeName = recipeName.replace("<", "&lt");
+    this.recipeComposition = recipeComposition.replace("<", "&lt");
+    this.cookingSteps = cookingSteps.replace("<img", "&ltimg")
+            .replace("<script", "&ltscript")
+            .replace("<meta", "&ltmeta")
+            .replace("<style", "&ltstyle");
     this.publicationDate = publicationDate;
     this.selectedTypes = selectedTypes;
     this.image = image;

@@ -25,8 +25,8 @@ public class AddType implements ActionAuth {
    */
   public AddType(DataStorage dataStorage, String typeName, String description, UploadedFile image) {
     this.dataStorage = dataStorage;
-    this.typeName = typeName;
-    this.description = description;
+    this.typeName = typeName.replace("<", "&lt");
+    this.description = description.replace("<", "&lt");
     this.image = new StoreImage(image).store();
   }
 
