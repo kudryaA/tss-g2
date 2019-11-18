@@ -24,20 +24,21 @@ public class AddRecipeTestPostgres {
     private static String user = properties.getProperty("database_user");
     private static String password = properties.getProperty("database_password");
 
-@Before
-public void init() {
-    try (Connection connection =
-                 DriverManager.getConnection(
-                         "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
-        try (PreparedStatement statement = connection.prepareStatement(
-                "INSERT INTO type (name, description, image) " +
-                        "VALUES ('test_type1', 'test_type1', 'test_type1')," +
-                        "('test_type2', 'test_type2', 'test_type2')"))  {
-            statement.executeQuery();
+    @Before
+    public void init() {
+        try (Connection connection =
+                     DriverManager.getConnection(
+                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO type (name, description, image) " +
+                            "VALUES ('test_type1', 'test_type1', 'test_type1')," +
+                            "('test_type2', 'test_type2', 'test_type2')"))  {
+                statement.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
     }
-}
 
     @Test
     public void testAddRecipe() throws SQLException, ParseException {
@@ -73,12 +74,6 @@ public void init() {
                     }
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        try(Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM recipeType where recipe_id = ?")){
                 statement.setString(1, recipeId);
                 try (ResultSet resultSet = statement.executeQuery()) {
@@ -104,29 +99,19 @@ public void init() {
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipeType WHERE recipe_id = ?")) {
                 statement.setString(1, recipeId);
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM type WHERE name in ('test_type1', 'test_type2')")) {
-                //statement.setString(1, recipeId);
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipe WHERE recipe_id = ?")) {
                 statement.setString(1, recipeId);
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

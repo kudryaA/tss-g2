@@ -39,9 +39,10 @@ public class GetPersonsInformationTestPostgres {
                             "('john_test_2'," +
                             "'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john2', 'doe2', false," +
                             "'john@doe.com', 'user')")) {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -63,9 +64,10 @@ public class GetPersonsInformationTestPostgres {
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM person WHERE login in ('john_test_1', 'john_test_2')")) {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

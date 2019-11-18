@@ -27,19 +27,15 @@ public class AddCommentTestPostgres {
                     "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) " +
                             "VALUES ('john_comment_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb'," +
                             "'john_1', 'doe', false, 'john@doe.com', 'user')")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO recipe (recipe_id, name, recipeComposition, cookingSteps, publicationDate, image, creator, rating, isConfirmed) " +
                             "VALUES ('test_com_recipe', 'test_com_recipe', 'composition_com', 'steps_com', timestamp '2001-09-28 01:00', 'image_com', 'julia', 178, true)")) {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -77,27 +73,18 @@ public class AddCommentTestPostgres {
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM comment WHERE user_login = 'john_comment_1' and recipe_id = 'test_com_recipe' and comment_text = 'my_comment'")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM person WHERE login = 'john_comment_1'")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipe WHERE recipe_id = 'test_com_recipe'")) {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

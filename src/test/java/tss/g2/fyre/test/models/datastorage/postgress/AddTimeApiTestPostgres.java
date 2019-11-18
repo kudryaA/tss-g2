@@ -50,9 +50,10 @@ public class AddTimeApiTestPostgres {
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM api_time WHERE api = 'test/api' and time_execution = '123'")) {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

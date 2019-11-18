@@ -35,35 +35,24 @@ public class GetRecipeTestPostgres {
                     "INSERT INTO type (name, description, image) " +
                             "VALUES ('test_type1', 'test_type1', 'test_type1')," +
                             "('test_type2', 'test_type2', 'test_type2')"))  {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO recipe (recipe_id, name, recipeComposition, cookingSteps, publicationDate, image, creator, rating, isConfirmed) " +
                             "VALUES ('test_id', 'test_recipe', 'composition', 'steps', ?, 'image'," +
                             "'julia', 178, true)")) {
                 statement.setTimestamp(1, date);
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO recipeType (recipe_id, type_name) " +
                             "VALUES ('test_id', 'test_type1')," +
                             "('test_id', 'test_type2')"))  {
-                statement.executeQuery();
+                statement.execute();
             }
-
         } catch (SQLException e) {
+            e.printStackTrace();
         }
-
     }
 
     @Test
@@ -71,8 +60,6 @@ public class GetRecipeTestPostgres {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
         Recipe res = dataStorage.getRecipe("test_id");
         RecipeWithType result = (RecipeWithType) res;
-        System.out.println(res);
-        System.out.println(result);
         Assert.assertEquals(res, result);
         Assert.assertEquals("test_id", result.getId());
         Assert.assertEquals("test_recipe", result.getName());
@@ -98,28 +85,18 @@ public class GetRecipeTestPostgres {
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipeType WHERE recipe_id = 'test_id'")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipe WHERE recipe_id = 'test_id'")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM type WHERE name in ('test_type1', 'test_type2')")) {
-                //statement.setString(1, recipeId);
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tss.g2.fyre.models.datastorage.postgress.PostgresDataStorage;
-import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.utils.Configuration;
 
 import java.sql.Connection;
@@ -15,7 +14,6 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class GetRoleTestPostgres {
-    private static Person testPerson;
     private static Properties properties = new Configuration("config/configuration.yml").getProperties();
     private static String host = properties.getProperty("database_host");
     private static String port = properties.getProperty("database_port");
@@ -34,9 +32,10 @@ public class GetRoleTestPostgres {
                             "'doe', false, 'john@doe.com', 'admin'), ('john_test_2'," +
                             "'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
                             "'doe', false, 'john@doe.com', 'user')")) {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -57,9 +56,10 @@ public class GetRoleTestPostgres {
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM person WHERE login in('john_test_1', 'john_test_2') ")) {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

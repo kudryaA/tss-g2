@@ -61,13 +61,8 @@ public class SelectUnconfirmedRecipesTestPostgres {
                     "INSERT INTO type (name, description, image) " +
                             "VALUES ('test_type1', 'test_type1', 'test_type1')," +
                             "('test_type2', 'test_type2', 'test_type2')"))  {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO recipe (recipe_id, name, recipeComposition, cookingSteps, publicationDate, image, creator, rating, isConfirmed) " +
                             "VALUES ('test_id1', 'test_recipe1', 'composition', 'steps', ?, 'image', 'julia', 178, true)," +
@@ -78,13 +73,8 @@ public class SelectUnconfirmedRecipesTestPostgres {
                 statement.setTimestamp(2, date);
                 statement.setTimestamp(3, date);
                 statement.setTimestamp(4, date);
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO recipeType (recipe_id, type_name) " +
                             "VALUES ('test_id1', 'test_type1')," +
@@ -93,9 +83,10 @@ public class SelectUnconfirmedRecipesTestPostgres {
                             "('test_id3', 'test_type2')," +
                             "('test_id4', 'test_type1')," +
                             "('test_id4', 'test_type2')"))  {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -127,28 +118,18 @@ public class SelectUnconfirmedRecipesTestPostgres {
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipeType WHERE recipe_id in ('test_id1', 'test_id2', 'test_id3', 'test_id4')")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipe WHERE recipe_id in ('test_id1', 'test_id2', 'test_id3', 'test_id4')")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM type WHERE name in ('test_type1', 'test_type2')")) {
-                //statement.setString(1, recipeId);
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

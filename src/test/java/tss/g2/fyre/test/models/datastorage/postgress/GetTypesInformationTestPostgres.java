@@ -37,12 +37,13 @@ public class GetTypesInformationTestPostgres {
             types.add(type3);
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO type (name, description, image) " +
-                            "VALUES ('type1', 'type1', 'type1')," +
-                            "('type2', 'type2', 'type2')," +
-                            "('type3', 'type3', 'type3')")) {
-                statement.executeQuery();
+                            "VALUES ('test1', 'type1', 'type1')," +
+                            "('test2', 'type2', 'type2')," +
+                            "('test3', 'type3', 'type3')")) {
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -53,7 +54,7 @@ public class GetTypesInformationTestPostgres {
                 filter(i -> types.contains(i)).collect(Collectors.toList());
         Collections.sort(result);
         Collections.sort(types);
-        Assert.assertEquals(types, result);
+        Assert.assertEquals(types.toString(), result.toString());
         dataStorage.close();
     }
 
@@ -63,10 +64,11 @@ public class GetTypesInformationTestPostgres {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM type WHERE name in ('task1', 'task2', 'task3')")) {
-                statement.executeQuery();
+                    "DELETE FROM type WHERE name in ('test1', 'test2', 'test3')")) {
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

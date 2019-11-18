@@ -32,22 +32,18 @@ public class UpdateRecipeTestPostgres {
                     "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) " +
                             "VALUES ('john_test_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
                             "'doe', false, 'john@doe.com', 'admin')")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO recipe (recipe_id, name, recipeComposition, cookingSteps, publicationDate, image, creator, rating, isConfirmed) " +
                             "VALUES ('test_id1', 'test_recipe1', 'composition', 'steps', ?, 'image_com', 'julia', 178, true)," +
                             "('test_id2', 'test_recipe2', 'composition', 'steps', ?, 'image_com', 'john', 178, true)")) {
                 statement.setTimestamp(1, date);
                 statement.setTimestamp(2, date);
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -56,6 +52,8 @@ public class UpdateRecipeTestPostgres {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
         boolean result1 = dataStorage.updateRecipe("test_id1", "test_recipe_new", "composition_new", "steps", "julia");
         Assert.assertEquals(true, result1);
+        boolean result2 = dataStorage.updateRecipe("test_id2", "recipe_new", "new_composition", "new_steps", "john_test_1");
+        Assert.assertEquals(true, result2);
         try(Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM recipe WHERE recipe_id = 'test_id1'")){
@@ -84,13 +82,6 @@ public class UpdateRecipeTestPostgres {
                     }
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        boolean result2 = dataStorage.updateRecipe("test_id2", "recipe_new", "new_composition", "new_steps", "john_test_1");
-        Assert.assertEquals(true, result2);
-        try(Connection connection = DriverManager.getConnection(
-                "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM recipe WHERE recipe_id = 'test_id2'")){
                 try (ResultSet resultSet = statement.executeQuery()){
                     if (resultSet.next()) {
@@ -130,18 +121,14 @@ public class UpdateRecipeTestPostgres {
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipe WHERE recipe_id in ('test_id1', 'test_id2')")) {
-                statement.executeQuery();
+                statement.execute();
             }
-        } catch (SQLException e) {
-        }
-        try (Connection connection =
-                     DriverManager.getConnection(
-                             "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM person WHERE login = 'john_test_1'")) {
-                statement.executeQuery();
+                statement.execute();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
