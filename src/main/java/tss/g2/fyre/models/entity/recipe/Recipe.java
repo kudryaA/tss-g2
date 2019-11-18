@@ -1,6 +1,7 @@
 package tss.g2.fyre.models.entity.recipe;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Recipe {
   protected String name;
@@ -112,5 +113,25 @@ public class Recipe {
         + ", id=" + id
         + ", rating=" + rating
         + '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Recipe recipe = (Recipe) o;
+    return rating == recipe.rating &&
+            Objects.equals(name, recipe.name) &&
+            Objects.equals(composition, recipe.composition) &&
+            Objects.equals(cookingSteps, recipe.cookingSteps) &&
+            Objects.equals(publicationDate, recipe.publicationDate) &&
+            Objects.equals(image, recipe.image) &&
+            Objects.equals(creator, recipe.creator) &&
+            Objects.equals(id, recipe.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(name, composition, cookingSteps, publicationDate, image, creator, id, rating);
   }
 }

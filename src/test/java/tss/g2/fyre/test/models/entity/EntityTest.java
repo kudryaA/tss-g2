@@ -3,6 +3,9 @@ package tss.g2.fyre.test.models.entity;
 import org.junit.Assert;
 import org.junit.Test;
 import tss.g2.fyre.models.entity.*;
+import tss.g2.fyre.models.entity.recipe.Recipe;
+
+import java.util.Date;
 
 public class EntityTest {
     @Test
@@ -49,5 +52,20 @@ public class EntityTest {
         Assert.assertEquals("descr", t.getDescription());
         Assert.assertEquals("12345", t.getImage());
         Assert.assertEquals(new Type("type1", "descr", "12345"), t);
+    }
+
+    @Test
+    public void recipeTest() {
+        Date d = new Date();
+        Recipe recipe = new Recipe("13", "rec", "qwe", "qwe", d, "123", "qwe", 12);
+        Assert.assertEquals("13", recipe.getId());
+        Assert.assertEquals("rec", recipe.getName());
+        Assert.assertEquals("qwe", recipe.getComposition());
+        Assert.assertEquals("qwe", recipe.getCookingSteps());
+        Assert.assertEquals(d, recipe.getPublicationDate());
+        Assert.assertEquals("123", recipe.getImage());
+        Assert.assertEquals("qwe", recipe.getCreator());
+        Assert.assertEquals(12, recipe.getRating());
+        Assert.assertEquals(new Recipe("13", "rec", "qwe", "qwe", d, "123", "qwe", 12), recipe);
     }
 }
