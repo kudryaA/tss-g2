@@ -32,6 +32,13 @@ public class ActionUpdateRecipeTest {
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)) {
 
             try (PreparedStatement statement = connection.prepareStatement(
+                "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) VALUES " +
+                    "('asd', 'qwe', 'john', " +
+                    "'asd', false, 'asd@doe.com', 'admin')")) {
+              statement.execute();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) VALUES " +
                             "('john_test_experiencedUser', 'qwe', 'john', " +
                             "'asd', false, 'asd@doe.com', 'experiencedUser')")) {
@@ -44,6 +51,8 @@ public class ActionUpdateRecipeTest {
                             "'some_cooking_steps', current_timestamp , 'unnamed', 'john_test_experiencedUser', 1, false)")) {
                 statement.execute();
             }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -75,6 +84,11 @@ public class ActionUpdateRecipeTest {
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM person WHERE login = 'john_test_experiencedUser'")) {
                 statement.executeUpdate();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                "DELETE FROM person WHERE login = 'asd'")) {
+              statement.executeUpdate();
             }
         } catch (SQLException e) {
         }

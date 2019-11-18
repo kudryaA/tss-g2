@@ -20,7 +20,7 @@ exports.addRecipe = async (fetch, configuration, recipeName = '2', cookingSteps 
         timeout: 0
       }));
       const res = await (answer).json();
-      //console.log(res);
+      console.log(res);
       return res.obj;
     } catch (e) {
       return false;

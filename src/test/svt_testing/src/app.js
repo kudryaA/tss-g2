@@ -3,7 +3,7 @@ const parallel = require('run-parallel')
  
 
 const configuration = {
-  host: 'http://g2.sumdu-tss.site:7000'
+  host: 'http://0.0.0.0:7000'
 };
 
 async function runParalel() {
