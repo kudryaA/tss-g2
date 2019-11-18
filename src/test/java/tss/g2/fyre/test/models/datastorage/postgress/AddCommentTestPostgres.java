@@ -10,8 +10,7 @@ import tss.g2.fyre.utils.Configuration;
 import java.sql.*;
 import java.util.Properties;
 
-public class CreateUserTestPostgres {
-
+public class AddCommentTestPostgres {
     private static Properties properties = new Configuration("config/configuration.yml").getProperties();
     private static String host = properties.getProperty("database_host");
     private static String port = properties.getProperty("database_port");
@@ -24,11 +23,15 @@ public class CreateUserTestPostgres {
         try (Connection connection =
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
-            //password = a
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) " +
-                            "VALUES ('john_test_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
-                            "'doe', false, 'john@doe.com', 'admin')")) {
+                            "VALUES ('john_comment_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb'," +
+                            "'john_1', 'doe', false, 'john@doe.com', 'user')")) {
+                statement.execute();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO recipe (recipe_id, name, recipeComposition, cookingSteps, publicationDate, image, creator, rating, isConfirmed) " +
+                            "VALUES ('test_com_recipe', 'test_com_recipe', 'composition_com', 'steps_com', timestamp '2001-09-28 01:00', 'image_com', 'julia', 178, true)")) {
                 statement.execute();
             }
         } catch (SQLException e) {
@@ -37,28 +40,22 @@ public class CreateUserTestPostgres {
     }
 
     @Test
-    public void testCreateUser() throws SQLException {
+    public void testAddComment() throws SQLException {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
-        boolean result = dataStorage.createUser("john_test_2", "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "john", "doe", "john@doe.com");
+        boolean result = dataStorage.addComment("john_comment_1", "test_com_recipe", "my_comment");
+        Assert.assertEquals(true, result);
         try(Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
-            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM person WHERE login = 'john_test_2'")){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM comment WHERE user_login = 'john_comment_1' and " +
+                    "recipe_id = 'test_com_recipe' and comment_text = 'my_comment'")){
                 try (ResultSet resultSet = statement.executeQuery()){
                     if (resultSet.next()) {
-                        String login = resultSet.getString("login");
-                        String password = resultSet.getString("password");
-                        String name = resultSet.getString("name");
-                        String surname = resultSet.getString("surname");
-                        String email = resultSet.getString("email");
-                        boolean bannedStatus = resultSet.getBoolean("bannedStatus");
-                        String role = resultSet.getString("role");
-                        Assert.assertEquals("john_test_2", login);
-                        Assert.assertEquals("ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", password);
-                        Assert.assertEquals("john", name);
-                        Assert.assertEquals("doe", surname);
-                        Assert.assertEquals("john@doe.com", email);
-                        Assert.assertEquals(false, bannedStatus);
-                        Assert.assertEquals("user", role);
+                        String userLogin = resultSet.getString("user_login");
+                        String recipeId = resultSet.getString("recipe_id");
+                        String commentText = resultSet.getString("comment_text");
+                        Assert.assertEquals("john_comment_1", userLogin);
+                        Assert.assertEquals("test_com_recipe", recipeId);
+                        Assert.assertEquals("my_comment", commentText);
                     }
                 }
             }
@@ -69,23 +66,21 @@ public class CreateUserTestPostgres {
         dataStorage.close();
     }
 
-    @Test
-    public void testCreateUserExist() throws SQLException {
-        PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
-        boolean result = dataStorage.createUser("john_test_1",
-                "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "john",
-                "doe", "john@doe.com");
-        Assert.assertEquals(false, result);
-        dataStorage.close();
-    }
-
     @After
     public void finish() {
         try (Connection connection =
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM person WHERE login in ('john_test_2', 'john_test_1')")) {
+                    "DELETE FROM comment WHERE user_login = 'john_comment_1' and recipe_id = 'test_com_recipe' and comment_text = 'my_comment'")) {
+                statement.execute();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM person WHERE login = 'john_comment_1'")) {
+                statement.execute();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM recipe WHERE recipe_id = 'test_com_recipe'")) {
                 statement.execute();
             }
         } catch (SQLException e) {

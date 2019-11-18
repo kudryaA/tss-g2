@@ -1,8 +1,10 @@
 package tss.g2.fyre.models.entity;
 
+import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
-public class Comment {
+public class Comment implements Comparable<Comment>{
+
   private String userLogin;
   private String commentText;
 
@@ -33,6 +35,10 @@ public class Comment {
   }
 
   @Override
+  public int compareTo(@NotNull Comment o) {
+    return this.getUserLogin().compareTo(o.getUserLogin());
+  }
+  
   public boolean equals(Object o) {
     if (this == o) {
       return true;
