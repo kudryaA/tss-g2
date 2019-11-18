@@ -133,6 +133,11 @@
             });
         }
         $(function() {
+            var urlString = window.location.href;
+                var url = new URL(urlString);
+            if(url.pathname == "/recipe") {
+                window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"mainPage.html?recipeId=" + url.searchParams.get("recipeId"));
+            }
             $("#load-recipes").hide();
             var data = {
                 recipeId: window.localStorage.getItem("recipeId")
@@ -188,6 +193,12 @@
                         $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
                         $("#image").attr("src", "/image?id=" + answer.obj.image);
                         $("#id").html(answer.obj.id);
+
+                        var shareUrl = url.origin + "/recipe?recipeId=" + answer.obj.id;
+                        //var shareUrl = "http://g2.sumdu-tss.site/recipe?recipeId=" + answer.obj.id;
+                        $("#twt-share").attr("data-url", shareUrl);
+                        $("#fb-share").attr("data-href", shareUrl);
+
                         loadComments();
                     }
                 ]
@@ -247,6 +258,8 @@
 <body>
 <!-- Page Content -->
 <div class="container" id="recipe-container">
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_UK/sdk.js#xfbml=1&version=v5.0"></script>
     <div class="row">
         <div class="col-lg-12 text-left">
             <!-- Title -->
@@ -273,6 +286,19 @@
                 <button class="btn btn-primary" id="edit-recipe" onclick="editRecipe()">Edit recipe</button>
                 <button class="btn btn-primary" id="delete-recipe" onclick="deleteRecipe()">Delete recipe</button>
                 <button class="btn btn-primary" id="approve-recipe" onclick="approveRecipe()">Approve recipe</button>
+            </div>
+            <div id="share-btn">
+                <div>
+                    <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw" class="twitter-hashtag-button"
+                       id="twt-share" data-url="" data-show-count="false"></a>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+                <div>
+                    <div class="fb-share-button" id="fb-share" data-href="" data-layout="button" data-size="small">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkprepar"
+                           class="fb-xfbml-parse-ignore" target="_blank">Share</a>
+                    </div>
+                </div>
             </div>
             <div id="comments-container">
                 <div class="card my-4" id="comment-form">
