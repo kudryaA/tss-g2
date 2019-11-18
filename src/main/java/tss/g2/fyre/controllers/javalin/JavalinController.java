@@ -54,7 +54,7 @@ public class JavalinController implements CreateController {
       model.put("title", recipe.getName());
       model.put("description", recipe.getComposition());
       model.put("image", "http://g2.sumdu-tss.site/image?id=" + recipe.getImage());
-      model.put("url", "http://g2.sumdu-tss.site/mainPage.html?recipeId=" + recipeId);
+      model.put("url", "http://g2.sumdu-tss.site/recipe?recipeId=" + recipeId);
       model.put("refresh", "0;url=http://g2.sumdu-tss.site/mainPage.html?recipeId=" + recipeId);
       ctx.render("pages/recipe.html", model);
     });
