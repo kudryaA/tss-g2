@@ -12,7 +12,22 @@
     <script>
         $(function() {
             $("#load-recipes").hide();
+            $("#category-form").hide();
             refreshTable("banUnban");
+            $.ajax({
+                url:"/session",
+                type:"post",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.status == true) {
+                            if (answer.obj.role != "admin") {
+                                $("#category-add").remove();
+                            }
+                        }
+                    }
+                ]
+            });
         });
 
         function banUnban(name) {
@@ -102,6 +117,70 @@
                 $("#toggle-moder-page").html("Show recipes to approve");
             }
         }
+        function toggleCategoryAdding() {
+            if ($("#toggle-category-adding").html() == "Show form to add new category") {
+                $("#category-form").show();
+                $("#toggle-category-adding").html("Hide form");
+            } else {
+                $("#category-form").hide();
+                $("#toggle-category-adding").html("Show form to add new category");
+            }
+        }
+        function createCategory() {
+            var check = true;
+            $("#recipeForm input").each(function() {
+                $(this).next("span").remove();
+                if ($(this).val() == "") {
+                    $(this).after("<span>This field is required</span>");
+                    $(this).css("border-color","red");
+                    check = false;
+                } else {
+                    $(this).css("border-color","");
+                }
+            });
+            $("#recipeForm textarea").each(function() {
+                $(this).next("span").remove();
+                if ($(this).val() == "") {
+                    $(this).after("<span>This field is required</span>");
+                    $(this).css("border-color","red");
+                    check = false;
+                } else {
+                    $(this).css("border-color","");
+                }
+            });
+            var data = new FormData();
+            $.each($("#category-file")[0].files, function(i, file) {
+                data.append("image", file);
+            });
+            if (!check || data.get("image") == null) {
+                return;
+            }
+            data.append("typeName", $("#category-name").val());
+            data.append("description", $("#category-description").val());
+            $.ajax({
+                url:"/add/type",
+                type:"post",
+                data: data,
+                processData: false,
+                contentType: false,
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.status != false) {
+                            $("#category-form input").next("span").remove();
+                            $("#category-form textarea").next("span").remove();
+
+                            $("#category-form input").each(function() {
+                                $(this).val("");
+                            });
+                            $("#category-form textarea").each(function() {
+                                $(this).val("");
+                            });
+                        }
+                    }
+                ]
+            });
+        }
     </script>
 </head>
 <body>
@@ -109,24 +188,45 @@
 <div class="container" id="main-container">
     <div class="row">
         <div class="col-lg-12 text-center">
-            <button class="btn btn-primary" id="toggle-moder-page" onclick="toggleModeratorPage()">Show recipes to approve</button>
-            <!-- Page Content -->
-            <div class="container" id="content-container">
-                <table class="table" id="users-table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Login</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Is banned</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+            <div id="category-add">
+                <button class="btn btn-primary" id="toggle-category-adding" onclick="toggleCategoryAdding()">Show form to add new category</button>
+                <div id="category-form">
+                    <div class="form-group">
+                        <label for="category-name">Name</label>
+                        <input type="text" class="form-control" id="category-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="category-description">Description</label>
+                        <textarea class="form-control" id="category-description" rows="3"></textarea>
+                    </div>
+                    <div class="form-group" id="img-form-group">
+                        <label for="category-file">Image</label>
+                        <input name="image" type="file" class="form-control" id="category-file"/>
+                    </div>
+                    <button class="btn btn-primary" id="category-submit" onclick="createCategory()">Submit</button>
+                    <hr>
+                </div>
+            </div>
+            <div id="table">
+                <button class="btn btn-primary" id="toggle-moder-page" onclick="toggleModeratorPage()">Show recipes to approve</button>
+                <!-- Page Content -->
+                <div class="container" id="content-container">
+                    <table class="table" id="users-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Login</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Surname</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Is banned</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
 
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
