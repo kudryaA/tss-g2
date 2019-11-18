@@ -67,13 +67,13 @@ public class Answer<T> {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())  {
+    
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Answer<?> answer = (Answer<?>) o;
     return status == answer.status
-            &&
-            Objects.equals(obj, answer.obj);
+            && Objects.equals(obj, answer.obj);
   }
 
   @Override
