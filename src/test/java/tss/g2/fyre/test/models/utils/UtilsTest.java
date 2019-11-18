@@ -86,6 +86,8 @@ public class UtilsTest {
         RandomString rs = new RandomString(10);
         String s1 = rs.generate();
         String s2 = rs.generate();
+        String s3 = rs.generate();
         Assert.assertNotEquals(s1, s2);
+        Assert.assertNotEquals(s1, s3);
     }
 }
