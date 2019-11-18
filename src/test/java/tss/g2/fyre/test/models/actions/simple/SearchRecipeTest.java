@@ -40,8 +40,6 @@ public class SearchRecipeTest {
                             "?, 'testimage', 'testcreator', 1, true)")) {
                 statement1.setTimestamp(1, new Timestamp(new DateConverter("10/10/2010 10:10:10").date().getTime()));
                 statement1.execute();
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         } catch (SQLException e) {
         }

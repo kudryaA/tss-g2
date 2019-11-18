@@ -45,7 +45,7 @@ public class RegisterUserTest {
     public void testRegisterUser() throws SQLException {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
         //Assert.assertEquals(testPerson, result);
-        RegisterUser user = new RegisterUser(dataStorage, "john_test_3", "a", "john", "doe",
+        RegisterUser user = new RegisterUser(dataStorage, "bdfshbfdbsfbsjfbjsbdfjsbdjsbfd", "a", "john", "doe",
                 "john@doe.com");
         Answer answer = user.getAnswer();
         System.out.println(answer);
@@ -62,7 +62,7 @@ public class RegisterUserTest {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM person WHERE login = 'john_test_3'")) {
+                    "DELETE FROM person WHERE login = 'bdfshbfdbsfbsjfbjsbdfjsbdjsbfd'")) {
                 statement.execute();
             }
         } catch (SQLException e) {
