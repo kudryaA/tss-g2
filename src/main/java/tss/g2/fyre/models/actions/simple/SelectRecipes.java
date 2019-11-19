@@ -4,6 +4,9 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
+/**
+ * Action class for select recipes by recipe type with sorting.
+ */
 public class SelectRecipes implements Action {
   private DataStorage dataStorage;
   private int pageNumber;

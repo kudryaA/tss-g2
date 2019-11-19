@@ -3,6 +3,9 @@ package tss.g2.fyre.models.actions.auth;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
+/**
+ * Action class for delete recipe from database.
+ */
 public class DeleteRecipe implements ActionAuth {
 
   private DataStorage dataStorage;

@@ -7,6 +7,9 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.utils.ToHash;
 
+/**
+ * Action class for check authorization.
+ */
 public class CheckAuthorization implements Action {
   private DataStorage dataStorage;
   private String login;

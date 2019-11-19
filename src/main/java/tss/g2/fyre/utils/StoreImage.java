@@ -10,6 +10,9 @@ import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class for save image.
+ */
 public class StoreImage {
   private Logger logger = LoggerFactory.getLogger(StoreImage.class);
   private UploadedFile uploadedFile;

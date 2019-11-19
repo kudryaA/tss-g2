@@ -6,6 +6,9 @@ import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.utils.ToHash;
 
+/**
+ * Action class for check user registration.
+ */
 public class RegisterUser implements Action {
   private DataStorage dataStorage;
   private String login;

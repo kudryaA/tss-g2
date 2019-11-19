@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import tss.g2.fyre.models.entity.Comment;
 
+/**
+ * Class for select comments by recipe id.
+ */
 public class SelectComments {
   private static Logger logger = LoggerFactory.getLogger(SelectComments.class);
   private Connection connection;

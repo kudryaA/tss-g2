@@ -4,6 +4,9 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
+/**
+ * Action class for select comments by recipe id.
+ */
 public class SelectComments implements Action {
   private DataStorage dataStorage;
   private String recipeId;
