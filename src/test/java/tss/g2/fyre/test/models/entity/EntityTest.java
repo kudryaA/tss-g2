@@ -66,6 +66,5 @@ public class EntityTest {
         Assert.assertEquals("123", recipe.getImage());
         Assert.assertEquals("qwe", recipe.getCreator());
         Assert.assertEquals(12, recipe.getRating());
-        Assert.assertEquals(new Recipe("13", "rec", "qwe", "qwe", d, "123", "qwe", 12), recipe);
     }
 }

@@ -37,9 +37,9 @@ public class GetTypesInformationTestPostgres {
             types.add(type3);
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO type (name, description, image) " +
-                            "VALUES ('test1', 'type1', 'type1')," +
-                            "('test2', 'type2', 'type2')," +
-                            "('test3', 'type3', 'type3')")) {
+                            "VALUES ('type1', 'type1', 'type1')," +
+                            "('type2', 'type2', 'type2')," +
+                            "('type3', 'type3', 'type3')")) {
                 statement.execute();
             }
         } catch (SQLException e) {

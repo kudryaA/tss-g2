@@ -2,7 +2,7 @@ const fs = require('fs');
 const FormData = require('form-data');
 
 exports.addRecipe = async (fetch, configuration, recipeName = '2', cookingSteps = '22',
-  recipeComposition = '222', selectedTypes = 'f',
+  recipeComposition = '222', selectedTypes = 'Category1',
   publicationDate = '05/10/2019 14:10:10', image = fs.createReadStream('unnamed.jpg')) => {
     try {
       const { host } = configuration;
