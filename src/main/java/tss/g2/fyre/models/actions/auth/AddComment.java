@@ -3,6 +3,9 @@ package tss.g2.fyre.models.actions.auth;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
+/**
+ * Action class for add comment to recipe.
+ */
 public class AddComment implements ActionAuth {
   private DataStorage dataStorage;
   private String recipeId;

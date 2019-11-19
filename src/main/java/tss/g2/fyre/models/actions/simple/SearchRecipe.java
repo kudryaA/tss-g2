@@ -4,6 +4,9 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
+/**
+ * Action class for search recipe by ingredient name.
+ */
 public class SearchRecipe implements Action {
   private DataStorage dataStorage;
   private String ingredientName;

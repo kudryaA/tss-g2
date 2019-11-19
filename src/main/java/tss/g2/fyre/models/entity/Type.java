@@ -4,6 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
+/**
+ * Type class.
+ */
 public class Type implements Comparable<Type>{
   private String typeName;
   private String description;

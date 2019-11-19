@@ -3,6 +3,9 @@ package tss.g2.fyre.models.entity;
 import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
+/**
+ * Comment class.
+ */
 public class Comment implements Comparable<Comment>{
 
   private String userLogin;

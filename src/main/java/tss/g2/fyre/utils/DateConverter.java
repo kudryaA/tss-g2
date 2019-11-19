@@ -1,12 +1,15 @@
 package tss.g2.fyre.utils;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Class for convert string into date.
+ */
 public class DateConverter {
   private static Logger logger = LoggerFactory.getLogger(DateConverter.class);
   private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");

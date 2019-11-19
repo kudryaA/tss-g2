@@ -5,6 +5,9 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Recipe class.
+ */
 public class Recipe implements Comparable<Recipe>{
   protected String name;
   protected String composition;
