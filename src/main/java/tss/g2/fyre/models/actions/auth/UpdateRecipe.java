@@ -23,9 +23,12 @@ public class UpdateRecipe implements ActionAuth {
                       String composition, String cookingSteps) {
     this.dataStorage = dataStorage;
     this.recipeId = recipeId;
-    this.recipeName = recipeName;
-    this.composition = composition;
-    this.cookingSteps = cookingSteps;
+    this.recipeName = recipeName.replace("<", "&lt");
+    this.composition = composition.replace("<", "&lt");
+    this.cookingSteps = cookingSteps.replace("<img", "&ltimg")
+            .replace("<script", "&ltscript")
+            .replace("<meta", "&ltmeta")
+            .replace("<style", "&ltstyle");
   }
 
   @Override

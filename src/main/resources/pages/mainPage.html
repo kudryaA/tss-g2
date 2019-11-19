@@ -7,12 +7,6 @@
     <meta name="msapplication-TileColor" content="#00818a">
     <meta name="theme-color" content="#ffffff">
 
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:site" content="@fyre" />
-    <meta name="twitter:title" content="Title" />
-    <meta name="twitter:description" content="Description" />
-    <meta name="twitter:image" content="https://via.placeholder.com/150" />
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Empty page</title>
@@ -29,6 +23,9 @@
         var sortType;
         var pages;
         var isSearch = false;
+        var isCategory = false;
+        var ingredientName;
+        var category;
         $(function() {
             $.ajax({
                 url:"/session",
@@ -51,14 +48,39 @@
                     }
                 ]
             });
-            var url_string = window.location.href;
-            var url = new URL(url_string);
+            count = 1;
+            var urlString = window.location.href;
+            var url = new URL(urlString);
             var recipeIdFromUrl = url.searchParams.get("recipeId");
             if (recipeIdFromUrl != null) {
                 showRecipe(recipeIdFromUrl);
                 return;
             }
-            count = 1;
+            var categoryFromUrl = url.searchParams.get("findByCategory");
+            if (categoryFromUrl != null) {
+                isSearch = false;
+                isCategory = true;
+                category = categoryFromUrl;
+                $(document).attr("title", category);
+                $("#content-container").append("<h1 class='my-4' id='cat-name'>Recipes in category " + category + "</h1>");
+                $.ajax({
+                    url:"/select/types",
+                    type:"post",
+                    complete: [
+                        function (response) {
+                            var answer = $.parseJSON(response.responseText);
+                            if (answer.obj != "false") {
+                                var categoryObj = answer.obj.find(x => x.typeName == category);
+                                $("#content-container").append("<h3 class='my-4'>" + categoryObj.description + "</h3><hr>");
+                                $("#content-container").append("<img id='cat-img' src='/image?id=" + categoryObj.image + "'/><hr>");
+                            }
+                        }
+                    ]
+                });
+                $("#content-container").append("<div hidden id='scroll'>1</div>");
+                loadRecipes("publicationDate", category);
+                return;
+            }
             $("#content-container").empty();
             if (window.localStorage.getItem("sortType") == null) {
                 sortType = "publicationDate";
@@ -87,6 +109,8 @@
             $("#content-container").load("moderatorPage.html");
         }
         function changeSortOfRecipes(sortType) {
+            isSearch = false;
+            isCategory = false;
             window.localStorage.setItem("sortType", sortType);
             window.location.href = location.pathname.replace(/(.*)\/[^/]*/, '$1/mainPage.html');
         }
@@ -94,7 +118,9 @@
             if(count < pages && $("#scroll").html() == 1) {
                 count++;
                 if (isSearch == true) {
-                    searchRecipes();
+                    loadSearchResults();
+                } else if (isCategory == true) {
+                    loadRecipes("publicationDate", category);
                 } else {
                     loadRecipes(sortType);
                 }
@@ -102,10 +128,10 @@
                 alert("You scrolled till the end ;)")
             }
         }
-        function loadRecipes(sortType) {
+        function loadRecipes(sortType, category = "") {
             var data = {
                 pageNumber: count,
-                recipeType: "",
+                recipeType: category,
                 pageSize: 3,
                 sortType: sortType
              };
@@ -145,6 +171,18 @@
                 return;
             }
             ingredientName = $("#search-input").val();
+            isSearch = true;
+            isCategory = false;
+            $("#content-container").empty();
+            window.history.replaceState(null, null, window.location.pathname);
+            $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient "
+                + ingredientName
+                + "</h1><hr>");
+            $("#content-container").append("<div hidden id='scroll'>1</div>");
+            loadSearchResults();
+        }
+
+        function loadSearchResults() {
             var data = {
                 pageNumber: count,
                 pageSize: 3,
@@ -159,11 +197,6 @@
                         var answer = $.parseJSON(response.responseText);
                         console.log(answer);
                         if (answer.status == true) {
-                            window.history.replaceState(null, null, window.location.pathname);
-                            $("#content-container").empty();
-                            $("#content-container").append("<h1 class='my-4'>Recipes found by ingredient "
-                                + data.ingredientName
-                                + "</h1><hr>");
                             $.each(answer.obj.recipes, function(key, value) {
                                 $("#content-container").append("<div class='row recipe'>"
                                     + "<div class='col-md-7'>"
@@ -178,13 +211,13 @@
                                     + value.id + "'>View recipe</a>"
                                     + "</div></div><hr>");
                             });
-                            $("#content-container").append("<div hidden id='scroll'>1</div>");
                             pages = answer.obj.pages;
                         }
                     }
                 ]
             });
         }
+
         function logout() {
             $.ajax({
                 url:"/logout",

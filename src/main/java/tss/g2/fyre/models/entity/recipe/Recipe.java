@@ -1,9 +1,12 @@
 package tss.g2.fyre.models.entity.recipe;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
-public class Recipe {
+public class Recipe implements Comparable<Recipe>{
   protected String name;
   protected String composition;
   protected String cookingSteps;
@@ -115,5 +118,8 @@ public class Recipe {
         + '}';
   }
 
-
+  @Override
+  public int compareTo(@NotNull Recipe o) {
+    return this.getId().compareTo(o.getId());
+  }
 }

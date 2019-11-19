@@ -59,3 +59,6 @@ a {
 .preview {
     max-height: 300px;
 }
+#cat-img {
+    max-width: 100%;
+}

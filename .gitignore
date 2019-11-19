@@ -22,7 +22,8 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 .idea/*
-functional_testing/node_modules/*
+src/test/functional_testing/node_modules/*
 images/*
 target/*
 fyre.iml
+src/test/svt_testing/node_modules/*

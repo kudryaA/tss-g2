@@ -60,7 +60,7 @@ public class SelectUnconfirmedRecipes {
           String description = resultSet.getString("description");
           String typeImage = resultSet.getString("typeImage");
 
-          if (recipeList.size() == 0 || recipeList.get(i).getId() != recipeId) {
+          if (recipeList.size() == 0 || !recipeList.get(i).getId().equals(recipeId)) {
             recipeList.add(new RecipeWithType(
                     new Recipe(recipeId, recipeName, recipeComposition,
                             cookingSteps, publicationDate, recipeImage,
