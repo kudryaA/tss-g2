@@ -1,15 +1,15 @@
 package tss.g2.fyre.test.models.utils;
 
+import io.javalin.http.UploadedFile;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import tss.g2.fyre.utils.Configuration;
-import tss.g2.fyre.utils.DateConverter;
-import tss.g2.fyre.utils.RandomString;
-import tss.g2.fyre.utils.ToHash;
+import tss.g2.fyre.utils.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -89,5 +89,24 @@ public class UtilsTest {
         String s3 = rs.generate();
         Assert.assertNotEquals(s1, s2);
         Assert.assertNotEquals(s1, s3);
+    }
+
+    private static double compareByteArrays(byte[] a, byte[] b) {
+      int n = Math.min(a.length, b.length), nLarge = Math.max(a.length, b.length);
+      int unequalCount = nLarge - n;
+      for (int i=0; i<n; i++)
+        if (a[i] != b[i]) unequalCount++;
+      return unequalCount * 100.0 / nLarge;
+    }
+
+    @Test
+    public void testStoreImage () throws IOException {
+      UploadedFile file = new UploadedFile(new FileInputStream(new File("images/unnamed")),
+          "image", Files.readAllBytes(Paths.get("images/unnamed")).length,
+          "images/unnamed", "jpg");
+      String path = "images/" + new StoreImage(file).store();
+      double p = compareByteArrays(Files.readAllBytes(Paths.get("images/unnamed")), Files.readAllBytes(Paths.get(path)));
+      Assert.assertEquals(p, 0, 0.0000001);
+      new File(path).delete();
     }
 }
