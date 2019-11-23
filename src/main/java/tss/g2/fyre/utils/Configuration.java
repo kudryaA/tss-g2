@@ -57,7 +57,7 @@ public class Configuration {
       setProperty("database_port", obj.get("database_port"));
       setProperty("database_database", obj.get("database_database"));
       setProperty("database_user", obj.get("database_user"));
-      setProperty("email", obj.get("email_password"));
+      setProperty("email", obj.get("email"));
       setProperty("email_password", obj.get("email_password"));
       String passwordPath = obj.get("database_password").toString();
       String password = Files.readLines(new File(passwordPath), StandardCharsets.UTF_8).get(0);
