@@ -176,5 +176,11 @@ public interface DataStorage {
    */
   boolean addTimeApi(String api, long time);
 
-
+  /**
+   * Method for add like to recipe.
+   * @param login user login
+   * @param recipeId recipe id
+   * @return result of add
+   */
+  boolean addLike(String login, String recipeId);
 }

@@ -16,6 +16,7 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
 import tss.g2.fyre.models.actions.auth.AddComment;
+import tss.g2.fyre.models.actions.auth.AddLike;
 import tss.g2.fyre.models.actions.auth.AddRecipe;
 import tss.g2.fyre.models.actions.auth.AddType;
 import tss.g2.fyre.models.actions.auth.DeleteRecipe;
@@ -223,6 +224,20 @@ public class RecipeController implements CreateController {
           new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new SelectComments(dataStorage, recipeId);
       Answer answer = new ActionTime("/select/comments", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/add/like", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      String recipeId = ctx.formParam("recipeId");
+      logger.info("Request to /add/like with user {} for recipe {}",
+              new UserLogin(tokenStorage, token).get(), recipeId);
+      Action action = new AuthUser(
+              new AddLike(dataStorage, recipeId),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/add/like", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
   }
