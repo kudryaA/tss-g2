@@ -170,6 +170,29 @@ public interface DataStorage {
   List<Comment> selectComments(String recipeId);
 
   /**
+   * Method for add subscribe.
+   * @param user_login user login
+   * @param sub_login user login on which want to subscribe
+   * @return result of add
+   */
+  boolean addSubscribe(String user_login, String sub_login);
+
+  /**
+   * Method for delete subscribe.
+   * @param user_login user login
+   * @param sub_login user login on which want to unsubscribed
+   * @return result of delete
+   */
+  boolean deleteSubscribe(String user_login, String sub_login);
+
+  /**
+   * Method for select subscribers email address.
+   * @param login user login
+   * @return subscribers email address
+   */
+  List<String> selectSubscribers(String login);
+
+  /**
    * Store time api.
    * @param api api
    * @param time time in milliseconds

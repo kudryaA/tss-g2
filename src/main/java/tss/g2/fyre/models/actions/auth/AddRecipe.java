@@ -9,6 +9,7 @@ import java.util.List;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Roles;
+import tss.g2.fyre.utils.SendMail;
 import tss.g2.fyre.utils.StoreImage;
 
 /**
@@ -56,9 +57,15 @@ public class AddRecipe implements ActionAuth {
     String image = new StoreImage(this.image).store();
 
     try {
-      return new Answer<>(true, dataStorage
-              .addRecipe(recipeName, recipeComposition, cookingSteps, publicationDate,
-                      typesList, image, user, !Roles.user.toString().equals(role)));
+      String result = dataStorage.addRecipe(recipeName, recipeComposition, cookingSteps,
+              publicationDate, typesList, image, user, !Roles.user.toString().equals(role));
+      if ("".equals(result)) {
+        List<String> emailList = dataStorage.selectSubscribers(user);
+        for (String email : emailList) {
+          new SendMail("some message", email).sendMail();
+        }
+      }
+      return new Answer<>(true, result);
     } catch (Exception e) {
       return new Answer(false);
     }

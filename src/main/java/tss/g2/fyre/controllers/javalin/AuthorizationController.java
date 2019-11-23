@@ -11,6 +11,9 @@ import tss.g2.fyre.controllers.utils.UserLogin;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
+import tss.g2.fyre.models.actions.auth.AddSubscribe;
+import tss.g2.fyre.models.actions.auth.DeleteSubscribe;
+import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.CheckAuthorization;
 import tss.g2.fyre.models.actions.simple.RegisterUser;
 import tss.g2.fyre.models.datastorage.DataStorage;
@@ -98,5 +101,32 @@ public class AuthorizationController implements CreateController {
       ctx.result(answer.toJson());
     });
 
+    app.post("/add/subscribe", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      String subLogin = ctx.formParam("subLogin");
+      logger.info("Request to /add/subscribe with user {} for user {}",
+              new UserLogin(tokenStorage, token).get(), subLogin);
+      Action action = new AuthUser(
+              new AddSubscribe(dataStorage, subLogin),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/add/subscribe", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/delete/subscribe", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      String subLogin = ctx.formParam("subLogin");
+      logger.info("Request to /delete/subscribe with user {} for user {}",
+              new UserLogin(tokenStorage, token).get(), subLogin);
+      Action action = new AuthUser(
+              new DeleteSubscribe(dataStorage, subLogin),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/delete/subscribe", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
   }
 }

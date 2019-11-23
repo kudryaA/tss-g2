@@ -10,21 +10,10 @@ import java.util.Map;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.AdminAction;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetAuthorization;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetUserInformation;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetUserRole;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.Registration;
+import tss.g2.fyre.models.datastorage.postgress.utils.authorization.*;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.AddComment;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.SelectComments;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.AddRecipe;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.DeleteRecipe;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.GetRecipe;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.RecipeConfirmation;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SearchRecipe;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SelectRecipes;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SelectUnconfirmedRecipes;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.UpdateRecipe;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.*;
 import tss.g2.fyre.models.datastorage.postgress.utils.service.AddTimeApiExecution;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.AddType;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.GetTypeInformation;
@@ -155,6 +144,21 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean addTimeApi(String api, long time) {
     return new AddTimeApiExecution(connection, api, time).add();
+  }
+
+  @Override
+  public boolean addSubscribe(String user_login, String sub_login) {
+    return new AddSubscribe(connection, user_login, sub_login).addSubscribe();
+  }
+
+  @Override
+  public boolean deleteSubscribe(String user_login, String sub_login) {
+    return new DeleteSubscribe(connection, user_login, sub_login).deleteSubscribe();
+  }
+
+  @Override
+  public List<String> selectSubscribers(String login) {
+    return new SelectSubscribers(connection, login).selectSubscribers();
   }
 
   /**
