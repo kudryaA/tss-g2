@@ -238,7 +238,7 @@ public class RecipeController implements CreateController {
               token,
               tokenStorage
       );
-      Answer answer = new ActionTime("/add/comment", action, dataStorage).getAnswer();
+      Answer answer = new ActionTime("/add/subscribedRecipes", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
   }
