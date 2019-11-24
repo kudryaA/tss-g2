@@ -193,6 +193,16 @@ public interface DataStorage {
   List<String> selectSubscribers(String login);
 
   /**
+   * Method for select subscribed recipes by user login.
+   *
+   * @param login user login
+   * @param pageNumber page number
+   * @param pageSize page size
+   * @return the recipe found
+   */
+  Map<String, Object> selectSubscribedRecipes(String login, int pageNumber, int pageSize);
+
+  /**
    * Store time api.
    * @param api api
    * @param time time in milliseconds

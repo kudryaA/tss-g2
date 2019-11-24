@@ -20,6 +20,7 @@ import tss.g2.fyre.models.actions.auth.AddRecipe;
 import tss.g2.fyre.models.actions.auth.AddType;
 import tss.g2.fyre.models.actions.auth.DeleteRecipe;
 import tss.g2.fyre.models.actions.auth.RecipeConfirmation;
+import tss.g2.fyre.models.actions.auth.SelectSubscribedRecipes;
 import tss.g2.fyre.models.actions.auth.SelectUnconfirmedRecipes;
 import tss.g2.fyre.models.actions.auth.UpdateRecipe;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
@@ -223,6 +224,21 @@ public class RecipeController implements CreateController {
           new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new SelectComments(dataStorage, recipeId);
       Answer answer = new ActionTime("/select/comments", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/select/subscribedRecipes", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      int pageNumber = Integer.parseInt(ctx.formParam("pageNumber"));
+      int pageSize = Integer.parseInt(ctx.formParam("pageSize"));
+      logger.info("Request to /select/subscribedRecipes for user {}",
+              new UserLogin(tokenStorage, token).get());
+      Action action = new AuthUser(
+              new SelectSubscribedRecipes(dataStorage, pageNumber, pageSize),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/add/comment", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
   }

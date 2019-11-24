@@ -21,6 +21,20 @@ public class Recipe implements Comparable<Recipe>{
 
   /**
    * Constructor.
+   * @param name recipe name
+   * @param cookingSteps recipe cooking steps
+   * @param image path to recipe image
+   * @param id recipe id
+   */
+  public Recipe(String name, String cookingSteps, String image, String id) {
+    this.name = name;
+    this.cookingSteps = cookingSteps;
+    this.image = image;
+    this.id = id;
+  }
+
+  /**
+   * Constructor.
    *
    * @param name recipe name
    * @param composition composition of the recipe

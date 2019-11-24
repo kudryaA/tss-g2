@@ -1,15 +1,13 @@
 package tss.g2.fyre.models.actions.auth;
 
 import io.javalin.http.UploadedFile;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+
+import java.util.*;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.actions.SendEmailThread;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Roles;
-import tss.g2.fyre.utils.SendMail;
 import tss.g2.fyre.utils.StoreImage;
 
 /**
@@ -57,15 +55,13 @@ public class AddRecipe implements ActionAuth {
     String image = new StoreImage(this.image).store();
 
     try {
-      String result = dataStorage.addRecipe(recipeName, recipeComposition, cookingSteps,
+      String recipeId = dataStorage.addRecipe(recipeName, recipeComposition, cookingSteps,
               publicationDate, typesList, image, user, !Roles.user.toString().equals(role));
-      if ("".equals(result)) {
-        List<String> emailList = dataStorage.selectSubscribers(user);
-        for (String email : emailList) {
-          new SendMail("some message", email).sendMail();
-        }
+      if (!"".equals(recipeId) && !Roles.user.toString().equals(role)) {
+        Thread thread = new Thread(new SendEmailThread(dataStorage, user, recipeId, recipeName));
+        thread.start();
       }
-      return new Answer<>(true, result);
+      return new Answer<>(true, recipeId);
     } catch (Exception e) {
       return new Answer(false);
     }

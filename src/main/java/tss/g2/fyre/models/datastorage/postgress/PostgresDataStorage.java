@@ -161,6 +161,12 @@ public class PostgresDataStorage implements DataStorage {
     return new SelectSubscribers(connection, login).selectSubscribers();
   }
 
+  @Override
+  public Map<String, Object> selectSubscribedRecipes(String login, int pageNumber, int pageSize) {
+    return new SelectSubscribedRecipes(connection, pageNumber, pageSize, login)
+            .selectSubscribedRecipes();
+  }
+
   /**
    * Close connection.
    */
