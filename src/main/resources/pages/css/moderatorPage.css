@@ -8,21 +8,22 @@ tr {
 td {
 	text-align: center;
 }
-.ban-btn:focus, .ban-btn:active, #toggle-moder-page:focus, #toggle-moder-page:active, .input:focus, .input:active,
-.form-control:focus, .form-control:active {
+.ban-btn:focus, .ban-btn:active, #toggle-moder-page:focus, #toggle-moder-page:active, #toggle-category-adding:focus,
+#toggle-category-adding:active, .input:focus, .input:active, .form-control:focus, .form-control:active,
+#category-submit:focus, #category-submit:active{
     outline: none !important;
     box-shadow: none !important;
     border-color: #404b69;
     -webkit-appearance:none;
 }
-.ban-btn:active, #toggle-moder-page:active {
+.ban-btn:active, #toggle-moder-page:active, #toggle-category-adding:active, #category-submit:active {
   background-color: #404b69 !important;
   border-color: #404b69 !important;
 }
 .btn {
     transition: all 0.2s;
 }
-.ban-btn, #toggle-moder-page {
+.ban-btn, #toggle-moder-page, #toggle-category-adding, #category-submit {
 	font-size: 100%;
 	border: 0;
 	height: 2rem;
@@ -31,15 +32,30 @@ td {
 	background: #00818a;
 	width: 100%;
 }
-#toggle-moder-page {
+#toggle-moder-page, #toggle-category-adding, #category-submit {
     padding: 6px 10px;
     margin-bottom: 10px;
     height: auto;
 }
-#toggle-moder-page:hover {
+#toggle-moder-page:hover, #toggle-category-adding:hover, #category-submit:hover {
     background: #00818a;
 }
 .btn:hover {
   background-color: #00818a;
   border-color: #00818a;
+}
+#category-form {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.input:focus, .input:active, .form-control:focus, .form-control:active {
+   	outline: none !important;
+  	box-shadow: none !important;
+  	border-color: #404b69;
+  	-webkit-appearance:none;
+}
+.form-control {
+	-webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    border-radius: 2rem;
 }

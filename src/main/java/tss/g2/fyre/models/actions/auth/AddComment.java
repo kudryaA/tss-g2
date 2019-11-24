@@ -3,6 +3,9 @@ package tss.g2.fyre.models.actions.auth;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
+/**
+ * Action class for add comment to recipe.
+ */
 public class AddComment implements ActionAuth {
   private DataStorage dataStorage;
   private String recipeId;
@@ -17,7 +20,7 @@ public class AddComment implements ActionAuth {
   public AddComment(DataStorage dataStorage, String recipeId, String commentText) {
     this.dataStorage = dataStorage;
     this.recipeId = recipeId;
-    this.commentText = commentText;
+    this.commentText = commentText.replace("<", "&lt");
   }
 
   @Override

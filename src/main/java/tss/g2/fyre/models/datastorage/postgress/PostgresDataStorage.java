@@ -158,7 +158,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   /**
-   * Close connection
+   * Close connection.
    */
   public void close() throws SQLException {
     connection.close();

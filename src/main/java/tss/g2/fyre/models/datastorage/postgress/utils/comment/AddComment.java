@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class for add new comment to recipe.
+ */
 public class AddComment {
   private static Logger logger = LoggerFactory.getLogger(AddComment.class);
   private Connection connection;

@@ -7,6 +7,9 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.utils.ToHash;
 
+/**
+ * Action class for check authorization.
+ */
 public class CheckAuthorization implements Action {
   private DataStorage dataStorage;
   private String login;
@@ -36,6 +39,10 @@ public class CheckAuthorization implements Action {
 
     if (authorization == null) {
       return new Answer<>(false, false);
+    }
+
+    if (!login.matches("\\w{" + login.length() + "}")) {
+      return new AnswerWithComment(true, false, "Login must contain only [a-z0-9_-].");
     }
 
     if (authorization.getBannedStatus()) {

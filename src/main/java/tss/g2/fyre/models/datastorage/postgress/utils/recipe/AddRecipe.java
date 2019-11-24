@@ -1,7 +1,10 @@
 package tss.g2.fyre.models.datastorage.postgress.utils.recipe;
 
-import java.sql.*;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -77,16 +80,19 @@ public class AddRecipe {
       for (int i = 1; i <= selectedTypes.size(); i++) {
         checkStatement.setString(i, selectedTypes.get(i - 1));
       }
-      logger.info("Start executing statement for check types - {}.", checkStatement);
+      logger.info("Start executing statement for check types - {}.",
+              checkStatement);
 
       try (ResultSet resultSet = checkStatement.executeQuery()) {
-        logger.info("Executing statement for check types complete successfully - {}", checkStatement);
+        logger.info("Executing statement for check types complete successfully - {}",
+                checkStatement);
         while (resultSet.next()) {
           list.add(resultSet.getString("name"));
         }
       }
     } catch (SQLException e) {
-      logger.error("Executing statement for check types complete with errors - {}", e.getMessage());
+      logger.error("Executing statement for check types complete with errors - {}",
+              e.getMessage());
     }
 
     try (PreparedStatement statement = connection
@@ -101,10 +107,12 @@ public class AddRecipe {
       statement.setString(7, user);
       statement.setBoolean(8, isConfirmed);
 
-      logger.info("Executing statement for add recipe to database recipe started - {}", statement);
+      logger.info("Executing statement for add recipe to database recipe started - {}",
+              statement);
       if (statement.executeUpdate() == 1) {
 
-        logger.info("Executing statement for add recipe to database recipe complete successfully - {}", statement);
+        logger.info("Executing statement for add recipe to database recipe "
+                + "complete successfully - {}", statement);
         int i = 0;
 
         for (String type : list) {
@@ -113,12 +121,15 @@ public class AddRecipe {
             addRelationStatement.setString(1, key);
             addRelationStatement.setString(2, type);
 
-            logger.info("Executing statement for add type to database recipetype started - {}", addRelationStatement);
+            logger.info("Executing statement for add type to database recipetype started - {}",
+                    addRelationStatement);
             if (addRelationStatement.executeUpdate() == 1) {
-              logger.info("Executing statement for add type to database recipetype complete successfully - {}", addRelationStatement);
+              logger.info("Executing statement for add type to database recipetype "
+                      + "complete successfully - {}", addRelationStatement);
               i++;
             } else {
-              logger.error("Executing statement for add type to database recipetype complete with error - {}", addRelationStatement);
+              logger.error("Executing statement for add type to database recipetype "
+                      + "complete with error - {}", addRelationStatement);
             }
           }
         }
@@ -130,10 +141,12 @@ public class AddRecipe {
           logger.error("Execute adding recipe recipe id = {} complete with some error.", key);
         }
       } else {
-        logger.error("Executing statement for add recipe to database complete with error - {}", statement);
+        logger.error("Executing statement for add recipe to database complete with error - {}",
+                statement);
       }
     } catch (SQLException e) {
-      logger.error("Executing statement for add recipe to database complete with errors - {}", e.getMessage());
+      logger.error("Executing statement for add recipe to database complete with errors - {}",
+              e.getMessage());
     }
 
     return result;

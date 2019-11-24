@@ -16,6 +16,9 @@ import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
+/**
+ * Class for select unconfirmed recipes.
+ */
 public class SelectUnconfirmedRecipes {
   private static Logger logger = LoggerFactory.getLogger(SelectUnconfirmedRecipes.class);
   private Connection connection;
@@ -60,7 +63,7 @@ public class SelectUnconfirmedRecipes {
           String description = resultSet.getString("description");
           String typeImage = resultSet.getString("typeImage");
 
-          if (recipeList.size() == 0 || recipeList.get(i).getId() != recipeId) {
+          if (recipeList.size() == 0 || !recipeList.get(i).getId().equals(recipeId)) {
             recipeList.add(new RecipeWithType(
                     new Recipe(recipeId, recipeName, recipeComposition,
                             cookingSteps, publicationDate, recipeImage,
