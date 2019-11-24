@@ -6,6 +6,7 @@ import java.util.Map;
 
 import tss.g2.fyre.models.entity.Comment;
 import tss.g2.fyre.models.entity.Person;
+import tss.g2.fyre.models.entity.Statistic;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
@@ -184,6 +185,12 @@ public interface DataStorage {
    * @return result of check
    */
   boolean checkLike(String login, String recipeId);
+
+  /**
+   * Method for select time statistics.
+   * @return time statistics
+   */
+  List<Statistic> selectStatistics();
 
   /**
    * Store time api.

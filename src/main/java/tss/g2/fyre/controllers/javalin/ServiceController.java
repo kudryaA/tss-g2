@@ -1,5 +1,6 @@
 package tss.g2.fyre.controllers.javalin;
 
+import com.google.gson.Gson;
 import io.javalin.Javalin;
 
 import java.util.Map;
@@ -50,6 +51,10 @@ public class ServiceController implements CreateController {
       Action action = new StoreTime(dataStorage, page, time);
       Answer answer = new ActionTime("/store/time/interactive", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
+    });
+
+    app.post("/select/statistics", ctx -> {
+      ctx.result(new Gson().toJson(dataStorage.selectStatistics()));
     });
   }
 }

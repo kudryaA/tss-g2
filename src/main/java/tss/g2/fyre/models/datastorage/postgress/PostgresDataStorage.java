@@ -19,10 +19,12 @@ import tss.g2.fyre.models.datastorage.postgress.utils.comment.AddComment;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.SelectComments;
 import tss.g2.fyre.models.datastorage.postgress.utils.recipe.*;
 import tss.g2.fyre.models.datastorage.postgress.utils.service.AddTimeApiExecution;
+import tss.g2.fyre.models.datastorage.postgress.utils.service.SelectStatistics;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.AddType;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.GetTypeInformation;
 import tss.g2.fyre.models.entity.Comment;
 import tss.g2.fyre.models.entity.Person;
+import tss.g2.fyre.models.entity.Statistic;
 import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
@@ -158,6 +160,11 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean checkLike(String login, String recipeId) {
     return new CheckLike(connection, login, recipeId).checkLike();
+  }
+
+  @Override
+  public List<Statistic> selectStatistics() {
+    return new SelectStatistics(connection).selectStatistics();
   }
 
   /**
