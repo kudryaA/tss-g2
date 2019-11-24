@@ -49,6 +49,7 @@ public class SelectSubscribedRecipes {
                     + " join person p on us.user_login = p.login "
                     + "where publicationdate <= (now() AT TIME ZONE 'UTC') "
                     + " and isConfirmed = true and p.login = ? "
+                    + "order by publicationdate desc "
                     + "offset ? fetch first ? row only")) {
       selectStatement.setString(1, login);
       selectStatement.setInt(2, (pageNumber - 1) * pageSize);
