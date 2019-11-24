@@ -46,3 +46,6 @@
 #steps p {
     margin: 0;
 }
+#like {
+    cursor: pointer;
+}

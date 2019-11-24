@@ -17,14 +17,7 @@ import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetUserRole;
 import tss.g2.fyre.models.datastorage.postgress.utils.authorization.Registration;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.AddComment;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.SelectComments;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.AddRecipe;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.DeleteRecipe;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.GetRecipe;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.RecipeConfirmation;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SearchRecipe;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SelectRecipes;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.SelectUnconfirmedRecipes;
-import tss.g2.fyre.models.datastorage.postgress.utils.recipe.UpdateRecipe;
+import tss.g2.fyre.models.datastorage.postgress.utils.recipe.*;
 import tss.g2.fyre.models.datastorage.postgress.utils.service.AddTimeApiExecution;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.AddType;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.GetTypeInformation;
@@ -155,6 +148,16 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean addTimeApi(String api, long time) {
     return new AddTimeApiExecution(connection, api, time).add();
+  }
+
+  @Override
+  public boolean addLike(String login, String recipeId) {
+    return new AddLike(connection, login, recipeId).addLike();
+  }
+
+  @Override
+  public boolean checkLike(String login, String recipeId) {
+    return new CheckLike(connection, login, recipeId).checkLike();
   }
 
   /**

@@ -51,17 +51,23 @@ public class DeleteRecipe {
       logger.info(checkStatement.toString());
       try (ResultSet resultSet = checkStatement.executeQuery()) {
         if (resultSet.next()) {
-          try (PreparedStatement deleteRelationStatement =
+          try (PreparedStatement deleteLikesStatement = connection
+                  .prepareStatement("delete from likes where recipe_id = ?")) {
+            deleteLikesStatement.setString(1, recipeId);
+            deleteLikesStatement.executeUpdate();
+
+            try (PreparedStatement deleteRelationStatement =
                        connection.prepareStatement("delete from recipetype where recipe_id = ?")) {
-            deleteRelationStatement.setString(1, recipeId);
-            deleteRelationStatement.executeUpdate();
+              deleteRelationStatement.setString(1, recipeId);
+              deleteRelationStatement.executeUpdate();
 
-            try (PreparedStatement deleteRecipeStatement =
-                         connection.prepareStatement("delete from recipe where recipe_id = ?")) {
-              deleteRecipeStatement.setString(1, recipeId);
+              try (PreparedStatement deleteRecipeStatement =
+                           connection.prepareStatement("delete from recipe where recipe_id = ?")) {
+                deleteRecipeStatement.setString(1, recipeId);
 
-              logger.info(deleteRecipeStatement.toString());
-              result = deleteRecipeStatement.executeUpdate() == 1;
+                logger.info(deleteRecipeStatement.toString());
+                result = deleteRecipeStatement.executeUpdate() == 1;
+              }
             }
           }
         }

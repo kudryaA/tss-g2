@@ -1,9 +1,10 @@
+drop table api_time;
 drop table comment;
+drop table likes;
 drop table person;
 drop table recipeType;
 drop table type;
 drop table recipe;
-drop table api_time;
 
 create table person (
   login TEXT PRIMARY KEY ,
@@ -42,6 +43,11 @@ create table comment (
   user_login Text references person(login) ,
   recipe_id Text references recipe(recipe_id) ,
   comment_text Text
+);
+
+create table likes (
+  user_login Text references person(login),
+  recipe_id Text references recipe(recipe_id)
 );
 
 create table api_time(
