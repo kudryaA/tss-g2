@@ -144,63 +144,63 @@
                 complete: [
                     function (response) {
                         user = $.parseJSON(response.responseText);
-                    }
-                ]
-            });
-            $.ajax({
-                type: "post",
-                url: "/recipe",
-                dataType: "json",
-                data,
-                contentType: "application/json; charset=utf-8",
-                complete: [
-                    function (response) {
-                        var answer = $.parseJSON(response.responseText);
-                        var urlString = window.location.href;
-                        var url = new URL(urlString);
-                        var isApprove = url.searchParams.get("isApprove");
-                        if (typeof user.obj != "undefined") {
-                            if (user.obj.login != answer.obj.creator && user.obj.role != "admin") {
-                                $("#edit-recipe").remove();
-                                $("#delete-recipe").remove();
-                            }
-                            if ((user.obj.role != "moderator" && user.obj.role != "admin") || isApprove == null) {
-                                $("#approve-recipe").remove();
-                            }
-                            if (user.obj.login == answer.obj.creator) {
-                                $("#subscribe-recipe").remove();
-                            }
-                        } else if (user.status == false) {
-                            $("#recipe-btn .btn").remove();
-                            $("#comment-form").remove();
-                            $("#like").remove();
-                        }
+                        $.ajax({
+                            type: "post",
+                            url: "/recipe",
+                            dataType: "json",
+                            data,
+                            contentType: "application/json; charset=utf-8",
+                            complete: [
+                                function (response) {
+                                    var answer = $.parseJSON(response.responseText);
+                                    var urlString = window.location.href;
+                                    var url = new URL(urlString);
+                                    var isApprove = url.searchParams.get("isApprove");
+                                    if (typeof user.obj != "undefined") {
+                                        if (user.obj.login != answer.obj.creator && user.obj.role != "admin") {
+                                            $("#edit-recipe").remove();
+                                            $("#delete-recipe").remove();
+                                        }
+                                        if ((user.obj.role != "moderator" && user.obj.role != "admin") || isApprove == null) {
+                                            $("#approve-recipe").remove();
+                                        }
+                                        if (user.obj.login == answer.obj.creator) {
+                                            $("#subscribe-recipe").remove();
+                                        }
+                                    } else if (user.status == false) {
+                                        $("#recipe-btn .btn").remove();
+                                        $("#comment-form").remove();
+                                        $("#like").remove();
+                                    }
 
-                        $(document).attr("title", answer.obj.name);
-                        $("#name").html(answer.obj.name);
-                        $("#author").html(answer.obj.creator);
-                        $("#date").html(answer.obj.publicationDate);
-                        $.each(answer.obj.types, function(key, value) {
-                            if (key === answer.obj.types.length - 1) {
-                                $("#categories").append("<a href='/mainPage.html?findByCategory=" + value + "'>" + value + "</a>");
-                            } else {
-                                $("#categories").append("<a href='/mainPage.html?findByCategory=" + value + "'>" + value + ", </a>");
-                            }
+                                    $(document).attr("title", answer.obj.name);
+                                    $("#name").html(answer.obj.name);
+                                    $("#author").html(answer.obj.creator);
+                                    $("#date").html(answer.obj.publicationDate);
+                                    $.each(answer.obj.types, function(key, value) {
+                                        if (key === answer.obj.types.length - 1) {
+                                            $("#categories").append("<a href='/mainPage.html?findByCategory=" + value + "'>" + value + "</a>");
+                                        } else {
+                                            $("#categories").append("<a href='/mainPage.html?findByCategory=" + value + "'>" + value + ", </a>");
+                                        }
+                                    });
+                                    $("#ingredients").html(answer.obj.composition.split("\n").join("<br>"));
+                                    $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
+                                    $("#image").attr("src", "/image?id=" + answer.obj.image);
+                                    $("#id").html(answer.obj.id);
+                                    $("#qrcode").attr("src", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + window.location.href);
+
+                                    var shareUrl = url.origin + "/recipe?recipeId=" + answer.obj.id;
+                                    //var shareUrl = "http://g2.sumdu-tss.site/recipe?recipeId=" + answer.obj.id;
+                                    $("#twt-share").attr("data-url", shareUrl);
+                                    $("#fb-share").attr("data-href", shareUrl);
+
+                                    checkLike();
+                                    checkSubscribe();
+                                    loadComments();
+                                }
+                            ]
                         });
-                        $("#ingredients").html(answer.obj.composition.split("\n").join("<br>"));
-                        $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
-                        $("#image").attr("src", "/image?id=" + answer.obj.image);
-                        $("#id").html(answer.obj.id);
-                        $("#qrcode").attr("src", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + window.location.href);
-
-                        var shareUrl = url.origin + "/recipe?recipeId=" + answer.obj.id;
-                        //var shareUrl = "http://g2.sumdu-tss.site/recipe?recipeId=" + answer.obj.id;
-                        $("#twt-share").attr("data-url", shareUrl);
-                        $("#fb-share").attr("data-href", shareUrl);
-
-                        checkLike();
-                        checkSubscribe();
-                        loadComments();
                     }
                 ]
             });
