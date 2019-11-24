@@ -43,7 +43,7 @@ public class SelectSubscribedRecipes {
     Map<String, Object> map = new HashMap<>();
 
     try (PreparedStatement selectStatement = connection
-            .prepareStatement("select r.recipe_id, r.name, cookingsteps, image "
+            .prepareStatement("select r.recipe_id, r.name, recipecomposition, image "
                     + "from recipe r "
                     + " join usersubscribe us on r.creator = us.sub_login "
                     + " join person p on us.user_login = p.login "
@@ -59,7 +59,7 @@ public class SelectSubscribedRecipes {
         while (resultSet.next()) {
           recipeList.add(new Recipe(
                 resultSet.getString("name"),
-                resultSet.getString("cookingsteps"),
+                resultSet.getString("recipecomposition"),
                 resultSet.getString("image"),
                 resultSet.getString("recipe_id")));
         }
