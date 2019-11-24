@@ -9,18 +9,5 @@ exports.testRecipe = async (fetch, configuration, result) => {
     action: 'Add recipe',
     status: id ? true : false
   });
-  if (id) {
-    const recipe = (await getRecipe(fetch, configuration, id)).obj;
-    result.push({
-      action: 'Get recipe',
-      status: recipe.id == id
-    });
-    await deleteRecipe(fetch, configuration, id);
-    const statusAfterDelete = (await getRecipe(fetch, configuration, id)).status;
-    result.push({
-      action: 'Delete recipe',
-      status: !statusAfterDelete
-    });
-  }
 
 };

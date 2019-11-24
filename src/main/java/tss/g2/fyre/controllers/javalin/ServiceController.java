@@ -1,21 +1,20 @@
 package tss.g2.fyre.controllers.javalin;
 
 import io.javalin.Javalin;
+
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.controllers.utils.UserLogin;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
-import tss.g2.fyre.models.actions.auth.ChangeBannedStatus;
-import tss.g2.fyre.models.actions.auth.GetUsers;
-import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.service.StoreTime;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
-
-import java.util.Map;
 
 /**
  * Service controller.

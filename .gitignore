@@ -26,3 +26,4 @@ src/test/functional_testing/node_modules/*
 images/*
 target/*
 fyre.iml
+src/test/svt_testing/node_modules/*

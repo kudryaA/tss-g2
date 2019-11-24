@@ -5,9 +5,11 @@ const { testRecipe } = require('./test/test_recipe');
 
 exports.runScenario = async (configuration) => {
   const result = [];
-  await testAuth(fetch, configuration, result);
-  for (let i = 0; i < 100; i++) {
-    await testRecipe(fetch, configuration, result);
+  for (let j = 0; j < 100; j++) {
+    await testAuth(fetch, configuration, result);
+    for (let i = 0; i < 100; i++) {
+      await testRecipe(fetch, configuration, result);
+    }
   }
   console.log(result);
   console.log(result.filter(item => item.status).length / result.length);

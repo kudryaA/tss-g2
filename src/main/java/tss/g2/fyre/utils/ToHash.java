@@ -3,7 +3,6 @@ package tss.g2.fyre.utils;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 /**
  * Class for hashing string.

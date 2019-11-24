@@ -1,8 +1,8 @@
 package tss.g2.fyre.controllers.utils;
 
-import tss.g2.fyre.models.entity.Authorization;
-
 import java.util.Map;
+
+import tss.g2.fyre.models.entity.Authorization;
 
 /**
  * Class for get user login from token storage.
@@ -28,7 +28,7 @@ public class UserLogin {
   public String get() {
     String login = "-";
     Authorization authorization = tokenStorage.get(token);
-    if (token != null && authorization != null ) {
+    if (token != null && authorization != null) {
       login = authorization.getLogin();
     }
     return login;

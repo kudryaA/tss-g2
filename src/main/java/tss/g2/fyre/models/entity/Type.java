@@ -1,8 +1,13 @@
 package tss.g2.fyre.models.entity;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
-public class Type {
+/**
+ * Type class.
+ */
+public class Type implements Comparable<Type>{
   private String typeName;
   private String description;
   private String image;
@@ -70,5 +75,10 @@ public class Type {
             + ", description='" + description + '\''
             + ", image='" + image + '\''
             + '}';
+  }
+
+  @Override
+  public int compareTo(@NotNull Type o) {
+    return this.getTypeName().compareTo(o.getTypeName());
   }
 }

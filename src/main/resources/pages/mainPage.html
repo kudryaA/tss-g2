@@ -62,7 +62,7 @@
                 isCategory = true;
                 category = categoryFromUrl;
                 $(document).attr("title", category);
-                $("#content-container").append("<h1 class='my-4'>Recipes in category " + category + "</h1>");
+                $("#content-container").append("<h1 class='my-4' id='cat-name'>Recipes in category " + category + "</h1>");
                 $.ajax({
                     url:"/select/types",
                     type:"post",
@@ -70,8 +70,9 @@
                         function (response) {
                             var answer = $.parseJSON(response.responseText);
                             if (answer.obj != "false") {
-                                var categoryObj = answer.obj.find(x => x.typeName === category);
+                                var categoryObj = answer.obj.find(x => x.typeName == category);
                                 $("#content-container").append("<h3 class='my-4'>" + categoryObj.description + "</h3><hr>");
+                                $("#content-container").append("<img id='cat-img' src='/image?id=" + categoryObj.image + "'/><hr>");
                             }
                         }
                     ]

@@ -11,6 +11,9 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Roles;
 import tss.g2.fyre.utils.StoreImage;
 
+/**
+ * Action class for add recipe to database.
+ */
 public class AddRecipe implements ActionAuth {
   private DataStorage dataStorage;
   private String recipeName;

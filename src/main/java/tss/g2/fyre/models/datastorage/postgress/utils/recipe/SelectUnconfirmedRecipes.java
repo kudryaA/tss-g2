@@ -16,6 +16,9 @@ import tss.g2.fyre.models.entity.Type;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
+/**
+ * Class for select unconfirmed recipes.
+ */
 public class SelectUnconfirmedRecipes {
   private static Logger logger = LoggerFactory.getLogger(SelectUnconfirmedRecipes.class);
   private Connection connection;

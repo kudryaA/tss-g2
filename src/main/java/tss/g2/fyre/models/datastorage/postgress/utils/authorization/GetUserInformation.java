@@ -12,6 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import tss.g2.fyre.models.entity.Person;
 
+/**
+ * Class for get users information.
+ */
 public class GetUserInformation {
   private static Logger logger = LoggerFactory.getLogger(GetUserInformation.class);
 

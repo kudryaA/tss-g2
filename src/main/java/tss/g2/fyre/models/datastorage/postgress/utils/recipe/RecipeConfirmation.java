@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Class for confirmation recipe.
+ */
 public class RecipeConfirmation {
   private static Logger logger = LoggerFactory.getLogger(RecipeConfirmation.class);
   private Connection connection;

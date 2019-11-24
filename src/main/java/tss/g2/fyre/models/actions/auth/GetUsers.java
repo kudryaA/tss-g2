@@ -5,6 +5,9 @@ import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Roles;
 
+/**
+ * Action class for get users if you are a admin.
+ */
 public class GetUsers implements ActionAuth {
   private DataStorage dataStorage;
 

@@ -22,18 +22,19 @@ public class GetAuthorizationTestPostgres {
   @Before
   public void init() {
     try (Connection connection =
-        DriverManager.getConnection(
-        "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
+                 DriverManager.getConnection(
+                         "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
       //password = a
       testPerson = new Person("john_test_1", "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
-          "john", "doe", false, "john@doe.com", "admin");
+              "john", "doe", false, "john@doe.com", "admin");
       try (PreparedStatement statement = connection.prepareStatement(
               "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) " +
-                  "VALUES ('john_test_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
-                  "'doe', false, 'john@doe.com', 'admin')")) {
-        statement.executeQuery();
+                      "VALUES ('john_test_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
+                      "'doe', false, 'john@doe.com', 'admin')")) {
+        statement.execute();
       }
     } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 
@@ -48,13 +49,14 @@ public class GetAuthorizationTestPostgres {
   @After
   public void finish() {
     try (Connection connection =
-             DriverManager.getConnection(
-                 "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
+                 DriverManager.getConnection(
+                         "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
       try (PreparedStatement statement = connection.prepareStatement(
-                          "DELETE FROM person WHERE login = 'john_test_1'")) {
-        statement.executeQuery();
+              "DELETE FROM person WHERE login = 'john_test_1'")) {
+        statement.execute();
       }
     } catch (SQLException e) {
+      e.printStackTrace();
     }
   }
 }

@@ -1,5 +1,7 @@
 package tss.g2.fyre.models.entity;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Objects;
 
 /**
@@ -7,7 +9,7 @@ import java.util.Objects;
  *
  * @author Anton Kudryavtsev
  */
-public class Person {
+public class Person implements Comparable<Person>{
   private String login;
   private String password;
   private String name;
@@ -148,5 +150,10 @@ public class Person {
             + ", email='" + email + '\''
             + ", role='" + role + '\''
             + '}';
+  }
+
+  @Override
+  public int compareTo(@NotNull Person o) {
+    return this.getLogin().compareTo(o.getLogin());
   }
 }

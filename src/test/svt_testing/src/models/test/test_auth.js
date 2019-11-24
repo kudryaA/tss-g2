@@ -96,6 +96,8 @@ async function loginModeratorAction(fetch, host, login, password) {
 async function registration(fetch, host, login, password) {
   const formData = new FormData();
   formData.append('login', login);
+  formData.append('name', login);
+  formData.append('surname', login);
   formData.append('password', password);
   const answer = await (fetch(`${host}/registration`, {
     method: 'POST',

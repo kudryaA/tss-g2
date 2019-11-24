@@ -5,6 +5,9 @@ import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Roles;
 
+/**
+ * Action class for change user banned status.
+ */
 public class ChangeBannedStatus implements ActionAuth {
 
   private DataStorage dataStorage;

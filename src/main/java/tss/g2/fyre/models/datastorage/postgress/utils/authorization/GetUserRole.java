@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class for get user role by login.
+ */
 public class GetUserRole {
   private Connection connection;
   private String login;

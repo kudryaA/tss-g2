@@ -11,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tss.g2.fyre.models.entity.Type;
 
+/**
+ * Class for get type information.
+ */
 public class GetTypeInformation {
   private static Logger logger = LoggerFactory.getLogger(GetTypeInformation.class);
 
