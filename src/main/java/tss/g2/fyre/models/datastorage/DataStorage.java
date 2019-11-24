@@ -170,17 +170,25 @@ public interface DataStorage {
   List<Comment> selectComments(String recipeId);
 
   /**
-   * Store time api.
-   * @param api api
-   * @param time time in milliseconds
-   */
-  boolean addTimeApi(String api, long time);
-
-  /**
    * Method for add like to recipe.
    * @param login user login
    * @param recipeId recipe id
    * @return result of add
    */
   boolean addLike(String login, String recipeId);
+
+  /**
+   * Method for checking like on a recipe from a given user.
+   * @param login user login
+   * @param recipeId recipe id
+   * @return result of check
+   */
+  boolean checkLike(String login, String recipeId);
+
+  /**
+   * Store time api.
+   * @param api api
+   * @param time time in milliseconds
+   */
+  boolean addTimeApi(String api, long time);
 }
