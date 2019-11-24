@@ -173,6 +173,7 @@
                         } else if (user.status == false) {
                             $("#recipe-btn .btn").remove();
                             $("#comment-form").remove();
+                            $("#like").remove();
                         }
 
                         $(document).attr("title", answer.obj.name);
@@ -197,6 +198,7 @@
                         $("#twt-share").attr("data-url", shareUrl);
                         $("#fb-share").attr("data-href", shareUrl);
 
+                        checkLike();
                         checkSubscribe();
                         loadComments();
                     }
@@ -251,7 +253,48 @@
                 ]
             });
         }
-
+        function checkLike() {
+            var data = {
+                recipeId: $("#id").html()
+            }
+            $.ajax({
+                type: "post",
+                url: "/check/like",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        console.log(answer);
+                        console.log(answer.obj == false);
+                        if(answer.obj == false) {
+                            $("#like").attr("style", "color: #00818a;");
+                        } else {
+                            $("#like").attr("style", "color: #283149;");
+                        }
+                    }
+                ]
+            });
+        }
+        function loadLikes() {
+            var data = {
+                recipeId: window.localStorage.getItem("recipeId")
+            };
+            $.ajax({
+                type: "post",
+                url: "/recipe",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        $("#likes").html(answer.obj.likes + " like(s)");
+                    }
+                ]
+            });
+        }
         function printRecipe(){
             var element = "#recipe-info";
             var filename = $("#name").html() + ".doc";
@@ -279,7 +322,24 @@
 
             document.body.removeChild(downloadLink);
         }
-
+        function like(){
+            var data = {
+                recipeId: $("#id").html()
+            }
+            $.ajax({
+                type: "post",
+                url: "/add/like",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        checkLike();
+                        loadLikes();
+                    }
+                ]
+            });
+        }
         function subscribeOnRecipeAuthor() {
             var data = {
                 subLogin: $("#author").html()
@@ -395,6 +455,12 @@
             </div>
             <button class="btn btn-primary" id="print-recipe" onclick="printRecipe()">Print recipe</button>
             <div id="share-btn">
+                <div>
+                    <h5>
+                        <a class="material-icons" id="like" onclick="like()">thumb_up</a>
+                        <a id="likes"></a>
+                    </h5>
+                </div>
                 <div>
                     <a href="https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw" class="twitter-hashtag-button"
                        id="twt-share" data-url="" data-show-count="false"></a>
