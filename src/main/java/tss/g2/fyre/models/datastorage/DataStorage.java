@@ -203,6 +203,14 @@ public interface DataStorage {
   Map<String, Object> selectSubscribedRecipes(String login, int pageNumber, int pageSize);
 
   /**
+   * Method for check subscribe.
+   * @param user_login user login
+   * @param sub_login user login to which this user is subscribed
+   * @return result of check
+   */
+  boolean checkSubscribe(String user_login, String sub_login);
+
+  /**
    * Store time api.
    * @param api api
    * @param time time in milliseconds

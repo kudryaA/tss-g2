@@ -167,7 +167,12 @@ public class PostgresDataStorage implements DataStorage {
             .selectSubscribedRecipes();
   }
 
-  /**
+  @Override
+  public boolean checkSubscribe(String user_login, String sub_login) {
+    return new CheckSubscribe(connection, user_login, sub_login).checkSubscribe();
+  }
+
+    /**
    * Close connection.
    */
   public void close() throws SQLException {

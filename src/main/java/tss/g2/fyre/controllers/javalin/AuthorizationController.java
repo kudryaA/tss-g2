@@ -12,6 +12,7 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
 import tss.g2.fyre.models.actions.auth.AddSubscribe;
+import tss.g2.fyre.models.actions.auth.CheckSubscribe;
 import tss.g2.fyre.models.actions.auth.DeleteSubscribe;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.CheckAuthorization;
@@ -112,6 +113,20 @@ public class AuthorizationController implements CreateController {
               tokenStorage
       );
       Answer answer = new ActionTime("/add/subscribe", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/check/subscribe", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      String subLogin = ctx.formParam("subLogin");
+      logger.info("Request to /check/subscribe with user {} for user {}",
+              new UserLogin(tokenStorage, token).get(), subLogin);
+      Action action = new AuthUser(
+              new CheckSubscribe(dataStorage, subLogin),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/check/subscribe", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
 
