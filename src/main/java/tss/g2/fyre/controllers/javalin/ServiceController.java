@@ -4,13 +4,15 @@ import com.google.gson.Gson;
 import com.sun.management.OperatingSystemMXBean;
 import io.javalin.Javalin;
 
+import java.io.File;
 import java.lang.management.ManagementFactory;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import oshi.SystemInfo;
+import oshi.hardware.HardwareAbstractionLayer;
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.controllers.utils.UserLogin;
 import tss.g2.fyre.models.Answer;
@@ -56,16 +58,27 @@ public class ServiceController implements CreateController {
       ctx.result(answer.toJson());
     });
 
-    app.post("/select/statistics", ctx -> {
+    app.get("/select/statistics", ctx -> {
       ctx.result(new Gson().toJson(dataStorage.selectStatistics()));
     });
 
-    app.post("/select/hardware", ctx -> {
+    app.get("/select/hardware", ctx -> {
+      SystemInfo si = new SystemInfo();
+      HardwareAbstractionLayer hal = si.getHardware();
       OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
       Map<String, Object> map = new HashMap<>();
-      map.put("divisionCP", osBean.getSystemLoadAverage() / osBean.getAvailableProcessors());
-      map.put("divisionMemory", osBean.getFreePhysicalMemorySize() / osBean.getTotalPhysicalMemorySize());
-      //map.put("divisionDiskSpace", File.getTotalSpace() / File.getUsableSpace());
+      List<Map<String, Object>> networks = new ArrayList<>();
+      Arrays.stream(hal.getNetworkIFs()).forEach(item -> {
+        Map<String, Object> network = new HashMap<>();
+        network.put("recv", item.getBytesRecv());
+        network.put("sent", item.getBytesSent());
+        networks.add(network);
+      });
+      map.put("networks", networks);
+      map.put("memory", (double)hal.getMemory().getAvailable() / hal.getMemory().getTotal());
+      File root = new File("/");
+      map.put("disk", (double)root.getFreeSpace() / root.getTotalSpace());
+      map.put("cpu", osBean.getSystemCpuLoad());
       ctx.result(new Gson().toJson(map));
     });
   }
