@@ -1,8 +1,11 @@
 package tss.g2.fyre.controllers.javalin;
 
 import com.google.gson.Gson;
+import com.sun.management.OperatingSystemMXBean;
 import io.javalin.Javalin;
 
+import java.lang.management.ManagementFactory;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -55,6 +58,15 @@ public class ServiceController implements CreateController {
 
     app.post("/select/statistics", ctx -> {
       ctx.result(new Gson().toJson(dataStorage.selectStatistics()));
+    });
+
+    app.post("/select/hardware", ctx -> {
+      OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(OperatingSystemMXBean.class);
+      Map<String, Object> map = new HashMap<>();
+      map.put("divisionCP", osBean.getSystemLoadAverage() / osBean.getAvailableProcessors());
+      map.put("divisionMemory", osBean.getFreePhysicalMemorySize() / osBean.getTotalPhysicalMemorySize());
+      //map.put("divisionDiskSpace", File.getTotalSpace() / File.getUsableSpace());
+      ctx.result(new Gson().toJson(map));
     });
   }
 }
