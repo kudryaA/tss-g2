@@ -1,0 +1,17 @@
+body {
+  background: #007bff;
+  font-family: Roboto;
+  background: linear-gradient(to right, #00818a, #283149);
+  height: 100%;
+}
+.card-signin {
+  border: 0;
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+}
+.card-signin .card-title {
+  font-weight: 300;
+}
+.card-body {
+  width: 100%;
+}
