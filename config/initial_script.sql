@@ -1,4 +1,5 @@
 drop table api_time;
+drop table mailConfirmation;
 drop table comment;
 drop table userSubscribe;
 drop table person;
@@ -48,6 +49,11 @@ create table comment (
 create table userSubscribe (
   user_login Text references person(login),
   sub_login Text references person(login)
+);
+
+create table mailConfirmation (
+  login Text references person(login),
+  confirmationKey Text unique
 );
 
 create table api_time(

@@ -48,14 +48,14 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public Person getAuthorization(String login) {
+  public Map<String, Object> getAuthorization(String login) {
     return new GetAuthorization(connection, login).getAuthorization();
   }
 
   @Override
   public boolean createUser(String login, String password, String name,
-                                 String surname, String email) {
-    return new Registration(connection, login, password, name, surname, email)
+                                 String surname, String email, String key) {
+    return new Registration(connection, login, password, name, surname, email, key)
             .createUser();
   }
 
@@ -172,7 +172,17 @@ public class PostgresDataStorage implements DataStorage {
     return new CheckSubscribe(connection, user_login, sub_login).checkSubscribe();
   }
 
-    /**
+  @Override
+  public boolean changePassword(String password, String login) {
+    return new ChangePassword(connection, password, login).changePassword();
+  }
+
+  @Override
+  public void confirmMail(String key) {
+    new ConfirmMail(connection, key).confirmMail();
+  }
+
+  /**
    * Close connection.
    */
   public void close() throws SQLException {

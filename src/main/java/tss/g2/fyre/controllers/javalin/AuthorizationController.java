@@ -12,6 +12,7 @@ import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
 import tss.g2.fyre.models.actions.auth.AddSubscribe;
+import tss.g2.fyre.models.actions.auth.ChangePassword;
 import tss.g2.fyre.models.actions.auth.CheckSubscribe;
 import tss.g2.fyre.models.actions.auth.DeleteSubscribe;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
@@ -142,6 +143,27 @@ public class AuthorizationController implements CreateController {
       );
       Answer answer = new ActionTime("/delete/subscribe", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
+    });
+
+    app.post("/change/password", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      String password = ctx.formParam("password");
+      logger.info("Request to /change/password with password {} for user {}",
+              password, new UserLogin(tokenStorage, token).get());
+      Action action = new AuthUser(
+              new ChangePassword(dataStorage, password),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/change/password", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.get("/confirm/mail", ctx -> {
+      logger.info("Request to /confirm/mail");
+      String key = ctx.queryParam("key");
+      dataStorage.confirmMail(key);
+      ctx.render("pages/mainPage.html");
     });
   }
 }

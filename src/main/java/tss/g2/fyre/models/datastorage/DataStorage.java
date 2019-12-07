@@ -23,7 +23,7 @@ public interface DataStorage {
    * @param login login
    * @return authorization info
    */
-  Person getAuthorization(String login);
+  Map<String, Object> getAuthorization(String login);
 
   /**
    * Method for adding new person.
@@ -33,9 +33,10 @@ public interface DataStorage {
    * @param name user name
    * @param surname user surname
    * @param email user email
+   * @param key confirmation key
    * @return result of adding user
    */
-  boolean createUser(String login, String password, String name, String surname, String email);
+  boolean createUser(String login, String password, String name, String surname, String email, String key);
 
   /**
    * Method for adding new recipe.
@@ -209,6 +210,20 @@ public interface DataStorage {
    * @return result of check
    */
   boolean checkSubscribe(String user_login, String sub_login);
+
+  /**
+   * Method for change password.
+   * @param password new password
+   * @param login user login
+   * @return result of change
+   */
+  boolean changePassword(String password, String login);
+
+  /**
+   * Method for confirm account.
+   * @param key confirmation key
+   */
+  void confirmMail(String key);
 
   /**
    * Store time api.

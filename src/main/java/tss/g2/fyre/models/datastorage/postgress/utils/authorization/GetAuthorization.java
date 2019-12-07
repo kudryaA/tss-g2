@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,10 +38,13 @@ public class GetAuthorization {
    *
    * @return authorization
    */
-  public Person getAuthorization() {
+  public Map<String, Object> getAuthorization() {
     Person result = null;
+    int count = 0;
     try (PreparedStatement statement =
-                 connection.prepareStatement("SELECT * FROM person WHERE login = ?")) {
+                 connection.prepareStatement("SELECT password, name, surname, email, role, bannedstatus, "
+                    + "(select count(login) from mailconfirmation where login = person.login) as count"
+                    + " FROM person WHERE login = ?")) {
       statement.setString(1, login);
       logger.info(statement.toString());
       try (ResultSet resultSet = statement.executeQuery()) {
@@ -50,12 +55,16 @@ public class GetAuthorization {
           boolean bannedStatus = resultSet.getBoolean("bannedStatus");
           String email = resultSet.getString("email");
           String role = resultSet.getString("role");
+          count = resultSet.getInt("count");
           result = new Person(login, password, name, surname, bannedStatus, email, role);
         }
       }
     } catch (SQLException e) {
       logger.error(e.getMessage());
     }
-    return result;
+    Map<String, Object> map = new HashMap<>();
+    map.put("authorization", result);
+    map.put("count", count);
+    return map;
   }
 }
