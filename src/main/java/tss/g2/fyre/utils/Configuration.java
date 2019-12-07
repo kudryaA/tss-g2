@@ -48,6 +48,8 @@ public class Configuration {
     properties.setProperty("database_user", "postgres");
     properties.setProperty("database_password", "postgress");
     properties.setProperty("port", "7000");
+    properties.setProperty("email", "test@gmail.com");
+    properties.setProperty("email_password", "password");
     try {
       FileInputStream inputStream = new FileInputStream(new File(path));
       Map<String, Object> obj = yaml.load(inputStream);
@@ -55,6 +57,8 @@ public class Configuration {
       setProperty("database_port", obj.get("database_port"));
       setProperty("database_database", obj.get("database_database"));
       setProperty("database_user", obj.get("database_user"));
+      setProperty("email", obj.get("email"));
+      setProperty("email_password", obj.get("email_password"));
       String passwordPath = obj.get("database_password").toString();
       String password = Files.readLines(new File(passwordPath), StandardCharsets.UTF_8).get(0);
       setProperty("database_password", password);

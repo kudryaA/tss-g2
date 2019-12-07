@@ -4,3 +4,6 @@ database_database: postgres
 database_user: postgres
 database_password: config/password
 port: 7000
+email: test@gmail.com
+email_password: password
+external_url: http://g2.sumdu-tss.site

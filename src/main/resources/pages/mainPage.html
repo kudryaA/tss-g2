@@ -11,8 +11,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Empty page</title>
     <link rel="icon" type="image/png" href="images/f.png">
+
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/mainPage.css" rel="stylesheet">
+    <link href="css/moderatorPage.css" rel="stylesheet">
+    <link href="css/addRecipe.css" rel="stylesheet">
+    <link href="css/recipe.css" rel="stylesheet">
+    <link href="css/moderatorPage.css" rel="stylesheet">
 
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -24,6 +29,7 @@
         var pages;
         var isSearch = false;
         var isCategory = false;
+        var isSubscriptions = false;
         var ingredientName;
         var category;
         $(function() {
@@ -59,6 +65,7 @@
             var categoryFromUrl = url.searchParams.get("findByCategory");
             if (categoryFromUrl != null) {
                 isSearch = false;
+                isSubscriptions = false;
                 isCategory = true;
                 category = categoryFromUrl;
                 $(document).attr("title", category);
@@ -88,11 +95,11 @@
                 sortType = window.localStorage.getItem("sortType");
             }
             var title = sortType;
-            if (sortType == "publicationDate") {
+            if (title == "publicationDate") {
                 title = "publication date";
             }
             $(document).attr("title", "Recipes ordered by " + title);
-            $("#content-container").append("<h1 class='my-4'>Recipes sorted by " + sortType + "</h1><hr>");
+            $("#content-container").append("<h1 class='my-4'>Recipes sorted by " + title + "</h1><hr>");
             $("#content-container").append("<div hidden id='scroll'>1</div>");
             loadRecipes(sortType);
             $("#load-recipes").show();
@@ -111,6 +118,7 @@
         function changeSortOfRecipes(sortType) {
             isSearch = false;
             isCategory = false;
+            isSubscriptions = false;
             window.localStorage.setItem("sortType", sortType);
             window.location.href = location.pathname.replace(/(.*)\/[^/]*/, '$1/mainPage.html');
         }
@@ -129,6 +137,10 @@
             }
         }
         function loadRecipes(sortType, category = "") {
+            var url = "/select/recipes";
+            if (sortType == "subscriptions") {
+                url = "/select/subscribedRecipes";
+            }
             var data = {
                 pageNumber: count,
                 recipeType: category,
@@ -136,7 +148,7 @@
                 sortType: sortType
              };
             $.ajax({
-                url:"/select/recipes",
+                url:url,
                 type:"post",
                 data,
                 complete: [
@@ -172,6 +184,7 @@
             }
             ingredientName = $("#search-input").val();
             isSearch = true;
+            isSubscriptions = false;
             isCategory = false;
             $("#content-container").empty();
             window.history.replaceState(null, null, window.location.pathname);
@@ -230,7 +243,49 @@
                 ]
             });
         }
-
+        function subscriptions() {
+            $("#content-container").empty();
+            $("#content-container").append("<h1 class='my-4'>Your subscriptions</h1><hr>");
+            count = 1;
+            subscriptionsByPageNumber("1");
+        }
+        function subscriptionsByPageNumber(pageNumber) {
+            var data = {
+                pageNumber: pageNumber,
+                pageSize: 3
+            };
+            $.ajax({
+                url:"/select/subscribedRecipes",
+                type:"post",
+                data,
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        console.log(answer);
+                        if (answer.status == true) {
+                            isSubscriptions = true;
+                            isSearch = false;
+                            isCategory = false;
+                            $.each(answer.obj.recipes, function(key, value) {
+                                $("#content-container").append("<div class='row recipe'>"
+                                    + "<div class='col-md-7'>"
+                                    + "<a>"
+                                    + "<img class='img-fluid rounded mb-3 mb-md-0 preview' src='/image?id=" + value.image + "' alt=''>"
+                                    + "</a>"
+                                    + "</div>"
+                                    + "<div class='col-md-5'>"
+                                    + "<h3>" + value.name + "</h3>"
+                                    + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
+                                    + "<a class='btn btn-primary text-center' href='/mainPage.html?recipeId="
+                                    + value.id + "'>View recipe</a>"
+                                    + "</div></div><hr>");
+                            });
+                            pages = answer.obj.pages;
+                        }
+                    }
+                ]
+            });
+        }
     </script>
 </head>
 <body>
@@ -242,7 +297,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <div class="input-group">
+            <div class="input-group" style="min-width: 350px;">
                 <input type="text" class="form-control shadow-none" placeholder="Search for..." aria-label="Search"
                        aria-describedby="basic-addon2" id="search-input">
                 <div class="input-group-append">
@@ -250,11 +305,13 @@
                 </div>
             </div>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-nowrap" href="#" onclick="changeSortOfRecipes('publicationDate')">Show recipes by publication date</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-nowrap" href="#" onclick="changeSortOfRecipes('rating')">Show recipes by rating</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Recipe filter</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" onclick="changeSortOfRecipes('publicationDate')">Show recipes by publication date</a>
+                        <a class="dropdown-item" href="#" onclick="changeSortOfRecipes('rating')">Show recipes by rating</a>
+                        <a class="dropdown-item" href="#" onclick="changeSortOfRecipes('subscriptions')">Subscriptions</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-nowrap" href="#" id="moderator-page" onclick="moderatorPage()">Moderator page</a>

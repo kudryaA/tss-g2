@@ -41,7 +41,7 @@ public class GetAuthorizationTestPostgres {
   @Test
   public void testGetAuthorization() throws SQLException {
     PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
-    Person result = dataStorage.getAuthorization("john_test_1");
+    Person result = (Person) dataStorage.getAuthorization("john_test_1").get("authorization");
     Assert.assertEquals(testPerson, result);
     dataStorage.close();
   }
