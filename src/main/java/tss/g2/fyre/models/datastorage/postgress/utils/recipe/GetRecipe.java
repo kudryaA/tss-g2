@@ -26,8 +26,10 @@ public class GetRecipe {
 
   private static final String SQL = "SELECT r.name as recipeName, recipecomposition, cookingsteps, "
           + "publicationdate, r.image as recipeImage, creator, rating, "
-          + "type_name, description, t.image as typeImage FROM recipe r "
-          + "JOIN recipeType rt ON(r.recipe_id = rt.recipe_id) \n"
+          + "type_name, description, t.image as typeImage, "
+          + "(select count(user_login) from likes l where l.recipe_id = r.recipe_id) as likes "
+          + "FROM recipe r "
+          + "JOIN recipeType rt ON(r.recipe_id = rt.recipe_id) "
           + "JOIN type t ON(t.name = rt.type_name) WHERE r.recipe_id = ?;";
 
   /**
@@ -72,7 +74,8 @@ public class GetRecipe {
                 resultSet.getTimestamp("publicationdate"),
                 resultSet.getString("recipeImage"),
                 resultSet.getString("creator"),
-                resultSet.getLong("rating")
+                resultSet.getLong("rating"),
+                resultSet.getLong("likes")
             );
           }
           types.add(new Type(

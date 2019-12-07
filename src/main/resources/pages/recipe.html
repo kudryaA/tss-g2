@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Blog Post - Start Bootstrap Template</title>
-
+  
     <meta property="og:title" data-th-attr="content=${title}">
     <meta property="og:description" data-th-attr="content=${description}">
     <meta property="og:image" data-th-attr="content=${image}">
@@ -187,9 +187,9 @@
                                     $("#ingredients").html(answer.obj.composition.split("\n").join("<br>"));
                                     $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
                                     $("#image").attr("src", "/image?id=" + answer.obj.image);
+                                    $("#likes").html(answer.obj.likes + " like(s)");
                                     $("#id").html(answer.obj.id);
                                     $("#qrcode").attr("src", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + window.location.href);
-
                                     var shareUrl = url.origin + "/recipe?recipeId=" + answer.obj.id;
                                     //var shareUrl = "http://g2.sumdu-tss.site/recipe?recipeId=" + answer.obj.id;
                                     $("#twt-share").attr("data-url", shareUrl);
@@ -253,6 +253,7 @@
                 ]
             });
         }
+
         function checkLike() {
             var data = {
                 recipeId: $("#id").html()
@@ -322,6 +323,7 @@
 
             document.body.removeChild(downloadLink);
         }
+
         function like(){
             var data = {
                 recipeId: $("#id").html()

@@ -28,7 +28,8 @@ public class RecipeWithType extends Recipe {
         recipe.getPublicationDate(),
         recipe.getImage(),
         recipe.getCreator(),
-        recipe.getRating()
+        recipe.getRating(),
+        recipe.getLikes()
     );
     this.types = types.stream().map(Type::getTypeName).collect(Collectors.toList());
   }
@@ -53,6 +54,7 @@ public class RecipeWithType extends Recipe {
         + ", creator='" + creator + '\''
         + ", id=" + id
         + ", rating=" + rating
+        + ", likes=" + likes
         + '}';
   }
 
