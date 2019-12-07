@@ -2,6 +2,7 @@ package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.utils.ToHash;
 
 public class ChangePassword implements ActionAuth {
   private DataStorage dataStorage;
@@ -14,7 +15,7 @@ public class ChangePassword implements ActionAuth {
    */
   public ChangePassword(DataStorage dataStorage, String password) {
     this.dataStorage = dataStorage;
-    this.password = password;
+    this.password = new ToHash(password).getHash();
   }
 
   @Override
