@@ -48,7 +48,7 @@
                         } else {
                             $("#login-page").text("Login");
                             $("#login-page").attr("onclick", "");
-                            $("#moderator-page").remove();
+                            $("#user-pages").remove();
                             $("#add-recipe").remove();
                         }
                     }
@@ -114,6 +114,11 @@
             window.history.replaceState(null, null, window.location.pathname);
             $("#content-container").empty();
             $("#content-container").load("moderatorPage.html");
+        }
+        function profile() {
+            window.history.replaceState(null, null, window.location.pathname);
+            $("#content-container").empty();
+            $("#content-container").load("profile.html");
         }
         function changeSortOfRecipes(sortType) {
             isSearch = false;
@@ -313,8 +318,13 @@
                         <a class="dropdown-item" href="#" onclick="changeSortOfRecipes('subscriptions')">Subscriptions</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-nowrap" href="#" id="moderator-page" onclick="moderatorPage()">Moderator page</a>
+                <li class="nav-item dropdown" id="user-pages">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">User pages</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" id="moderator-page" onclick="moderatorPage()">Moderator page</a>
+                        <a class="dropdown-item" href="#" id="profile" onclick="profile()">Profile</a>
+                        <a class="dropdown-item" href="#" id="rating-of-users" onclick="rating()">Rating of users</a>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-nowrap" href="#" id="add-recipe" onclick="addRecipe()">Add recipe</a>

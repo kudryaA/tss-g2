@@ -225,7 +225,7 @@ public interface DataStorage {
    */
   void confirmMail(String key);
 
-   * Method for add like to recipe.
+  /** Method for add like to recipe.
    * @param login user login
    * @param recipeId recipe id
    * @return result of add

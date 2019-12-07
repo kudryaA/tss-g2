@@ -179,7 +179,7 @@ public class PostgresDataStorage implements DataStorage {
 
   @Override
   public void confirmMail(String key) {
-    return new ConfirmMail(connection, key).confirmMail();
+    new ConfirmMail(connection, key).confirmMail();
   }
   
   @Override

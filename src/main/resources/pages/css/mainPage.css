@@ -62,3 +62,7 @@ a {
 #cat-img {
     max-width: 100%;
 }
+
+.dropdown-item:active {
+    background: #00818a;
+}
