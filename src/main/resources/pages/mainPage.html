@@ -48,6 +48,9 @@
                             if (answer.obj.role != "moderator" && answer.obj.role != "admin") {
                                 $("#moderator-page").remove();
                             }
+                            if (answer.obj.role != "admin") {
+                                $("#dashboard").remove();
+                            }
                         } else {
                             $("#login-page").text("Login");
                             $("#login-page").attr("onclick", "");
@@ -117,6 +120,11 @@
             window.history.replaceState(null, null, window.location.pathname);
             $("#content-container").empty();
             $("#content-container").load("moderatorPage.html");
+        }
+        function dashboard() {
+            window.history.replaceState(null, null, window.location.pathname);
+            $("#content-container").empty();
+            $("#content-container").load("dashboard.html");
         }
         function profile() {
             window.history.replaceState(null, null, window.location.pathname);
@@ -327,6 +335,7 @@
                         <a class="dropdown-item" href="#" id="moderator-page" onclick="moderatorPage()">Moderator page</a>
                         <a class="dropdown-item" href="#" id="profile" onclick="profile()">Profile</a>
                         <a class="dropdown-item" href="#" id="rating-of-users" onclick="rating()">Rating of users</a>
+                        <a class="dropdown-item" href="#" id="dashboard" onclick="dashboard()">Dashboard</a>
                     </div>
                 </li>
                 <li class="nav-item">

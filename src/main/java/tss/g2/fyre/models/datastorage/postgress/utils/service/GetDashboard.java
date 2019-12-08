@@ -42,14 +42,14 @@ public class GetDashboard {
                 + "(select count(*) from likes) as countLikes")) {
       try (ResultSet resultSet = selectStatement.executeQuery()) {
         if (resultSet.next()) {
-          map.put("Count users", resultSet.getInt("countUsers"));
-          map.put("Count experienced users", resultSet.getInt("countExperiencedUsers"));
-          map.put("Count moderators", resultSet.getInt("countModerators"));
-          map.put("Count admins", resultSet.getInt("countAdmins"));
-          map.put("Count comments", resultSet.getInt("countComments"));
-          map.put("Count likes", resultSet.getInt("countLikes"));
-          map.put("Count recipes", resultSet.getInt("countRecipes"));
-          map.put("The number of recipes that were added in the last 7 days", resultSet
+          map.put("Users", resultSet.getInt("countUsers"));
+          map.put("Experienced users", resultSet.getInt("countExperiencedUsers"));
+          map.put("Moderators", resultSet.getInt("countModerators"));
+          map.put("Admins", resultSet.getInt("countAdmins"));
+          map.put("Comments", resultSet.getInt("countComments"));
+          map.put("Likes", resultSet.getInt("countLikes"));
+          map.put("All recipes", resultSet.getInt("countRecipes"));
+          map.put("Recipes that were added in the last 7 days", resultSet
               .getInt("countSDRecipes"));
         }
       }
