@@ -39,19 +39,18 @@ public class GetDashboard {
                 + "(select count(*) from recipe "
                 + "where publicationdate > current_timestamp - interval '7 day') as countSDRecipes,"
                 + "(select count(*) from comment) as countComments,"
-                + "(select count(*) from likes) as countLikes,"
-                + "(select count(*) from type) as countTypes")) {
+                + "(select count(*) from likes) as countLikes")) {
       try (ResultSet resultSet = selectStatement.executeQuery()) {
         if (resultSet.next()) {
-          map.put("countUsers", resultSet.getInt("countUsers"));
-          map.put("countExperiencedUsers", resultSet.getInt("countExperiencedUsers"));
-          map.put("countModerators", resultSet.getInt("countModerators"));
-          map.put("countAdmins", resultSet.getInt("countAdmins"));
-          map.put("countRecipes", resultSet.getInt("countRecipes"));
-          map.put("countSDRecipes", resultSet.getInt("countSDRecipes"));
-          map.put("countComments", resultSet.getInt("countComments"));
-          map.put("countLikes", resultSet.getInt("countLikes"));
-          map.put("countTypes", resultSet.getInt("countTypes"));
+          map.put("Count users", resultSet.getInt("countUsers"));
+          map.put("Count experienced users", resultSet.getInt("countExperiencedUsers"));
+          map.put("Count moderators", resultSet.getInt("countModerators"));
+          map.put("Count admins", resultSet.getInt("countAdmins"));
+          map.put("Count comments", resultSet.getInt("countComments"));
+          map.put("Count likes", resultSet.getInt("countLikes"));
+          map.put("Count recipes", resultSet.getInt("countRecipes"));
+          map.put("The number of recipes that were added in the last 7 days", resultSet
+              .getInt("countSDRecipes"));
         }
       }
 
