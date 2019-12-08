@@ -59,7 +59,7 @@ public class RegisterUser implements Action {
 
     String key = new RandomString(20).generate() + new Date().getTime();
     boolean result = dataStorage.createUser(login, password, name, surname, email, key);
-    System.out.println(properties.getProperty("external_url"));
+
     if (result) {
       new Thread(() -> {
         String text = "Hello " + name + "\nFor confirm mail go to link: "
