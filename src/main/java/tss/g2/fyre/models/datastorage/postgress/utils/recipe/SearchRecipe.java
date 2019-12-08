@@ -22,7 +22,7 @@ public class SearchRecipe {
   private static Logger logger = LoggerFactory.getLogger(SearchRecipe.class);
 
   private Connection connection;
-  private String ingredient;
+  private String searchQuery;
   private int pageNumber;
   private int pageSize;
 
@@ -30,13 +30,13 @@ public class SearchRecipe {
    * Constructor.
    *
    * @param connection connection to database
-   * @param ingredient ingredient for search
+   * @param searchQuery ingredient for search
    * @param pageNumber page number
    * @param pageSize page size
    */
-  public SearchRecipe(Connection connection, String ingredient, int pageNumber, int pageSize) {
+  public SearchRecipe(Connection connection, String searchQuery, int pageNumber, int pageSize) {
     this.connection = connection;
-    this.ingredient = ingredient;
+    this.searchQuery = searchQuery;
     this.pageNumber = pageNumber;
     this.pageSize = pageSize;
   }
@@ -50,12 +50,18 @@ public class SearchRecipe {
     List<Recipe> recipeList = new ArrayList<>();
 
     try (PreparedStatement searchStatement = connection
-            .prepareStatement("select * from recipe "
-                    + "where recipecomposition like '%' || ? || '%' "
+            .prepareStatement("SELECT recipe.*, ts_rank_cd(to_tsvector(recipe.name), query) r_name, "
+                    + "ts_rank_cd(to_tsvector(recipe.recipecomposition), query) r_composition, "
+                    + "ts_rank_cd(to_tsvector(recipe.cookingsteps), query) r_steps "
+                    + "FROM recipe, plainto_tsquery('english', '%' || ? || '%') query "
+                    + "WHERE (query @@ to_tsvector(recipe.name) or "
+                    + "query @@ to_tsvector(recipe.cookingsteps) or "
+                    + "query @@ to_tsvector(recipe.recipecomposition)) "
                     + "AND publicationdate <= (now() AT TIME ZONE 'UTC') "
                     + "and isconfirmed = true "
+                    + "ORDER BY r_name DESC, r_composition DESC, r_steps DESC "
                     + "offset ? fetch first ? row only ")) {
-      searchStatement.setString(1, ingredient);
+      searchStatement.setString(1, searchQuery);
       searchStatement.setInt(2, (pageNumber - 1) * pageSize);
       searchStatement.setInt(3, pageSize);
 
@@ -69,11 +75,14 @@ public class SearchRecipe {
     searchResult.put("recipes", recipeList);
 
     try (PreparedStatement selectCountPagesStatement = connection
-            .prepareStatement("select count(recipe_id) as count from recipe "
-            + "where recipecomposition like '%' || ? || '%' "
+            .prepareStatement("select count(recipe_id) as count "
+            + "FROM recipe, plainto_tsquery('english', ?) query "
+            + "WHERE (query @@ to_tsvector(recipe.name) or "
+            + "query @@ to_tsvector(recipe.cookingsteps) or "
+            + "query @@ to_tsvector(recipe.recipecomposition)) "
             + "AND publicationdate <= (now() AT TIME ZONE 'UTC') "
             + "and isconfirmed = true")) {
-      selectCountPagesStatement.setString(1, ingredient);
+      selectCountPagesStatement.setString(1, searchQuery);
 
       logger.info(selectCountPagesStatement.toString());
       try (ResultSet resultSet = selectCountPagesStatement.executeQuery()) {

@@ -37,7 +37,17 @@ public class RecipeConfirmation {
       confirmationStatement.setString(1, recipeId);
       logger.info(confirmationStatement.toString());
 
+
       result = confirmationStatement.executeUpdate() == 1;
+      try (PreparedStatement updateStatement = connection
+              .prepareStatement("UPDATE users_rating SET rating = rating + 10 WHERE user_login  =  " +
+                      "(select creator from recipe where recipe_id = ?)")) {
+        updateStatement.setString(1, recipeId);
+
+        logger.info(updateStatement.toString());
+        updateStatement.executeUpdate();
+      }
+
     } catch (SQLException e) {
       logger.error(e.getMessage());
     }

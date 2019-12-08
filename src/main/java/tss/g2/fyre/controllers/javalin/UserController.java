@@ -13,6 +13,7 @@ import tss.g2.fyre.models.actions.ActionTime;
 import tss.g2.fyre.models.actions.auth.ChangeBannedStatus;
 import tss.g2.fyre.models.actions.auth.GetUsers;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
+import tss.g2.fyre.models.actions.simple.SelectUsersRating;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
 
@@ -64,6 +65,14 @@ public class UserController implements CreateController {
           token,
           tokenStorage
       );
+      Answer answer = new ActionTime("/select/users", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+    app.post("/select/usersRating", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      logger.info("Request to /select/rating with user {}",
+              new UserLogin(tokenStorage, token).get());
+      Action action = new SelectUsersRating(dataStorage);
       Answer answer = new ActionTime("/select/users", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });

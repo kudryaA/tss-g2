@@ -7,6 +7,7 @@ import java.util.Map;
 import tss.g2.fyre.models.entity.Comment;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.models.entity.Type;
+import tss.g2.fyre.models.entity.UserRating;
 import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 
@@ -70,6 +71,13 @@ public interface DataStorage {
    * @return list with persons info
    */
   List<Person> getPersonsInformation();
+
+  /**
+   * Method for select users rating information.
+   *
+   * @return list with users info
+   */
+  List<UserRating> selectUsersRating();
 
   /**
    * Method for select types information.
