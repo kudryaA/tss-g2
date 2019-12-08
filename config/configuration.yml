@@ -6,4 +6,4 @@ database_password: config/password
 port: 7000
 email: test@gmail.com
 email_password: password
-external_url: http://g2.sumdu-tss.site
+external_url: https://g2.sumdu-tss.site
