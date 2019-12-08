@@ -12,6 +12,8 @@ import tss.g2.fyre.controllers.utils.UserLogin;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
+import tss.g2.fyre.models.actions.auth.GetDashboard;
+import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.service.StoreTime;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
@@ -49,6 +51,19 @@ public class ServiceController implements CreateController {
           new UserLogin(tokenStorage, token).get());
       Action action = new StoreTime(dataStorage, page, time);
       Answer answer = new ActionTime("/store/time/interactive", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.get("/get/dashboard", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      logger.info("Request to /get/dashboard with user {}",
+              new UserLogin(tokenStorage, token).get());
+      Action action = new AuthUser(
+              new GetDashboard(dataStorage),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/get/dashboard", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
   }

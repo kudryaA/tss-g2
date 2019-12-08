@@ -36,7 +36,8 @@ public interface DataStorage {
    * @param key confirmation key
    * @return result of adding user
    */
-  boolean createUser(String login, String password, String name, String surname, String email, String key);
+  boolean createUser(String login, String password, String name,
+                     String surname, String email, String key);
 
   /**
    * Method for adding new recipe.
@@ -240,6 +241,12 @@ public interface DataStorage {
    */
   boolean checkLike(String login, String recipeId);
 
+  /**
+   * Method for get main site info.
+   * @param login user login
+   * @return main site info
+   */
+  Map<String, Integer> getDashboard(String login);
 
   /**
    * Store time api.
