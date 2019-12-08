@@ -50,6 +50,7 @@ public class Configuration {
     properties.setProperty("port", "7000");
     properties.setProperty("email", "test@gmail.com");
     properties.setProperty("email_password", "password");
+    properties.setProperty("external_url", "https://g2.sumdu-tss.site");
     try {
       FileInputStream inputStream = new FileInputStream(new File(path));
       Map<String, Object> obj = yaml.load(inputStream);
@@ -63,6 +64,7 @@ public class Configuration {
       String password = Files.readLines(new File(passwordPath), StandardCharsets.UTF_8).get(0);
       setProperty("database_password", password);
       setProperty("port", obj.get("port"));
+      setProperty("external_url", obj.get("external_url"));
     } catch (IOException e) {
       e.printStackTrace();
     }
