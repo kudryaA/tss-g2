@@ -61,12 +61,18 @@ public class DeleteRecipe {
               deleteRelationStatement.setString(1, recipeId);
               deleteRelationStatement.executeUpdate();
 
-              try (PreparedStatement deleteRecipeStatement =
-                           connection.prepareStatement("delete from recipe where recipe_id = ?")) {
-                deleteRecipeStatement.setString(1, recipeId);
+              try (PreparedStatement deleteCommentsStatement = connection
+                      .prepareStatement("delete from comment where recipe_id = ?")) {
+                deleteCommentsStatement.setString(1, recipeId);
+                deleteCommentsStatement.executeUpdate();
 
-                logger.info(deleteRecipeStatement.toString());
-                result = deleteRecipeStatement.executeUpdate() == 1;
+                try (PreparedStatement deleteRecipeStatement =
+                           connection.prepareStatement("delete from recipe where recipe_id = ?")) {
+                  deleteRecipeStatement.setString(1, recipeId);
+
+                  logger.info(deleteRecipeStatement.toString());
+                  result = deleteRecipeStatement.executeUpdate() == 1;
+                }
               }
             }
           }
