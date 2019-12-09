@@ -9,19 +9,18 @@
         $(function() {
             $("#load-recipes").hide();
             $.ajax({
-                type: "get",
-                url: "/get/dashboard",
+                type: "post",
+                url: "/select/usersRating",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
-                        $("#dashboard-table tbody tr").remove();
+                        $("#rating-table tbody tr").remove();
                         $.each(answer.obj, function(key, value) {
                             var row = "<tr><td class='text-left'>" + key + "</td><td class='text-left'>" + value + "</td><td></tr>"
                             $("#dashboard-table tbody").append(row);
                         });
-
                     }
                 ]
             });
@@ -29,21 +28,24 @@
     </script>
 </head>
 <body>
-    <div id="table">
-        <!-- Page Content -->
-        <div class="container" id="content-container">
-            <table class="table" id="dashboard-table">
-                <thead>
-                <tr>
-                    <th class="text-left" scope="col">Title</th>
-                    <th class="text-left" scope="col">Value</th>
-                </tr>
-                </thead>
-                <tbody>
+<div id="table">
+    <!-- Page Content -->
+    <div class="container" id="content-container">
+        <h3>Approved recipe - 10 points</h3>
+        <h3>Like/comment - 2 points per recipe</h3>
+        <h3>Like/comment under your recipe - 2 point</h3>
+        <table class="table" id="rating-table">
+            <thead>
+            <tr>
+                <th class="text-left" scope="col">User</th>
+                <th class="text-left" scope="col">Rating</th>
+            </tr>
+            </thead>
+            <tbody>
 
-                </tbody>
-            </table>
-        </div>
+            </tbody>
+        </table>
     </div>
+</div>
 </body>
 </html>

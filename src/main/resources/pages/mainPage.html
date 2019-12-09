@@ -54,7 +54,9 @@
                         } else {
                             $("#login-page").text("Login");
                             $("#login-page").attr("onclick", "");
-                            $("#user-pages").remove();
+                            $("#moderator-page").remove();
+                            $("#profile").remove();
+                            $("#dashboard").remove();
                             $("#add-recipe").remove();
                         }
                     }
@@ -125,6 +127,11 @@
             window.history.replaceState(null, null, window.location.pathname);
             $("#content-container").empty();
             $("#content-container").load("dashboard.html");
+        }
+        function userRating() {
+            window.history.replaceState(null, null, window.location.pathname);
+            $("#content-container").empty();
+            $("#content-container").load("userRating.html");
         }
         function profile() {
             window.history.replaceState(null, null, window.location.pathname);
@@ -334,7 +341,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#" id="moderator-page" onclick="moderatorPage()">Moderator page</a>
                         <a class="dropdown-item" href="#" id="profile" onclick="profile()">Profile</a>
-                        <a class="dropdown-item" href="#" id="rating-of-users" onclick="rating()">Rating of users</a>
+                        <a class="dropdown-item" href="#" id="rating-of-users" onclick="userRating()">Rating of users</a>
                         <a class="dropdown-item" href="#" id="dashboard" onclick="dashboard()">Dashboard</a>
                     </div>
                 </li>
