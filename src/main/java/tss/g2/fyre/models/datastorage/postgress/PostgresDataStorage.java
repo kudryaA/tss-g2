@@ -205,6 +205,16 @@ public class PostgresDataStorage implements DataStorage {
     return new GetDashboard(connection, login).getDashboard();
   }
 
+  @Override
+  public String getKey(String login) {
+    return new GetKey(connection, login).getKey();
+  }
+
+  @Override
+  public Recipe getRecipeFromApi(String recipeId, String key) {
+    return new GetRecipeFromApi(connection, recipeId, key).getRecipeFromApi();
+  }
+
   /**
    * Close connection.
    */

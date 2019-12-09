@@ -19,11 +19,7 @@ import tss.g2.fyre.models.actions.ActionTime;
 import tss.g2.fyre.models.actions.auth.*;
 
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
-import tss.g2.fyre.models.actions.simple.GetRecipe;
-import tss.g2.fyre.models.actions.simple.GetTypes;
-import tss.g2.fyre.models.actions.simple.SearchRecipe;
-import tss.g2.fyre.models.actions.simple.SelectComments;
-import tss.g2.fyre.models.actions.simple.SelectRecipes;
+import tss.g2.fyre.models.actions.simple.*;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Authorization;
 import tss.g2.fyre.utils.DateConverter;
@@ -103,6 +99,7 @@ public class RecipeController implements CreateController {
     });
 
     app.post("/recipe", ctx -> {
+      System.out.println(ctx.cookieMap());
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /recipe with user {} for recipe {}",
@@ -263,6 +260,16 @@ public class RecipeController implements CreateController {
               tokenStorage
       );
       Answer answer = new ActionTime("/check/like", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+
+    app.post("/getRecipeFromApi", ctx -> {
+      String recipeId = ctx.formParam("recipeId");
+      String key = ctx.formParam("key");
+      logger.info("Request to /getRecipeFromApi for recipe {} with key",
+              recipeId, key);
+      Action action = new GetRecipeFromApi(dataStorage, recipeId, key);
+      Answer answer = new ActionTime("/getRecipeFromApi", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
   }

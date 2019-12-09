@@ -42,7 +42,7 @@ public class RegisterUser implements Action {
     this.password = new ToHash(password).getHash();
     this.name = name;
     this.surname = surname;
-    this.email = email;
+    this.email = email.replace("<", "&lt");
   }
 
   @Override

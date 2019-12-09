@@ -1,5 +1,6 @@
 drop table api_time;
 drop table mailConfirmation;
+drop table keys;
 drop table comment;
 drop table userSubscribe;
 drop table likes;
@@ -63,6 +64,12 @@ create table mailConfirmation (
 create table likes (
   user_login Text references person(login),
   recipe_id Text references recipe(recipe_id)
+);
+
+create table keys (
+  login Text references person(login),
+  key Text unique,
+  numberOfDownload int default 0
 );
 
 create table api_time(

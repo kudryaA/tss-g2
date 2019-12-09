@@ -257,6 +257,21 @@ public interface DataStorage {
   Map<String, Integer> getDashboard(String login);
 
   /**
+   * Method for get key for download recipe.
+   * @param login user login
+   * @return key
+   */
+  String getKey(String login);
+
+  /**
+   * Method for get recipe object.
+   * @param recipeId recipe id
+   * @param key user key
+   * @return recipe object
+   */
+  Recipe getRecipeFromApi(String recipeId, String key);
+
+  /**
    * Store time api.
    * @param api api
    * @param time time in milliseconds
