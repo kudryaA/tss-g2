@@ -263,9 +263,9 @@ public class RecipeController implements CreateController {
       ctx.result(answer.toJson());
     });
 
-    app.post("/getRecipeFromApi", ctx -> {
-      String recipeId = ctx.formParam("recipeId");
-      String key = ctx.formParam("key");
+    app.get("/getRecipeFromApi", ctx -> {
+      String recipeId = ctx.queryParam("recipeId");
+      String key = ctx.queryParam("key");
       logger.info("Request to /getRecipeFromApi for recipe {} with key",
               recipeId, key);
       Action action = new GetRecipeFromApi(dataStorage, recipeId, key);
