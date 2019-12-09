@@ -70,10 +70,10 @@ public class UserController implements CreateController {
     });
     app.post("/select/usersRating", ctx -> {
       String token = ctx.sessionAttribute("token");
-      logger.info("Request to /select/rating with user {}",
+      logger.info("Request to /select/usersRating with user {}",
               new UserLogin(tokenStorage, token).get());
       Action action = new SelectUsersRating(dataStorage);
-      Answer answer = new ActionTime("/select/users", action, dataStorage).getAnswer();
+      Answer answer = new ActionTime("/select/usersRating", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
   }
