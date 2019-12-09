@@ -110,7 +110,6 @@ public class DeleteRecipe {
                 try (PreparedStatement deleteRecipeStatement =
                              connection.prepareStatement("delete from recipe where recipe_id = ?")) {
                   deleteRecipeStatement.setString(1, recipeId);
-
                   logger.info(deleteRecipeStatement.toString());
                   result = deleteRecipeStatement.executeUpdate() == 1;
                 }

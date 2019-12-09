@@ -10,15 +10,12 @@ import java.util.Map;
 import java.util.Properties;
 
 import tss.g2.fyre.models.datastorage.DataStorage;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.AdminAction;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetAuthorization;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetUserInformation;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.GetUserRole;
-import tss.g2.fyre.models.datastorage.postgress.utils.authorization.Registration;
+import tss.g2.fyre.models.datastorage.postgress.utils.authorization.*;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.AddComment;
 import tss.g2.fyre.models.datastorage.postgress.utils.comment.SelectComments;
 import tss.g2.fyre.models.datastorage.postgress.utils.recipe.*;
 import tss.g2.fyre.models.datastorage.postgress.utils.service.AddTimeApiExecution;
+import tss.g2.fyre.models.datastorage.postgress.utils.service.GetDashboard;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.AddType;
 import tss.g2.fyre.models.datastorage.postgress.utils.type.GetTypeInformation;
 import tss.g2.fyre.models.datastorage.postgress.utils.user.SelectUsersRating;
@@ -54,14 +51,14 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public Person getAuthorization(String login) {
+  public Map<String, Object> getAuthorization(String login) {
     return new GetAuthorization(connection, login).getAuthorization();
   }
 
   @Override
   public boolean createUser(String login, String password, String name,
-                                 String surname, String email) {
-    return new Registration(connection, login, password, name, surname, email)
+                                 String surname, String email, String key) {
+    return new Registration(connection, login, password, name, surname, email, key)
             .createUser();
   }
 
@@ -158,6 +155,42 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
+  public boolean addSubscribe(String user_login, String sub_login) {
+    return new AddSubscribe(connection, user_login, sub_login).addSubscribe();
+  }
+
+  @Override
+  public boolean deleteSubscribe(String user_login, String sub_login) {
+    return new DeleteSubscribe(connection, user_login, sub_login).deleteSubscribe();
+  }
+
+  @Override
+  public List<String> selectSubscribers(String login) {
+    return new SelectSubscribers(connection, login).selectSubscribers();
+  }
+
+  @Override
+  public Map<String, Object> selectSubscribedRecipes(String login, int pageNumber, int pageSize) {
+    return new SelectSubscribedRecipes(connection, pageNumber, pageSize, login)
+            .selectSubscribedRecipes();
+  }
+
+  @Override
+  public boolean checkSubscribe(String user_login, String sub_login) {
+    return new CheckSubscribe(connection, user_login, sub_login).checkSubscribe();
+  }
+
+  @Override
+  public boolean changePassword(String password, String login) {
+    return new ChangePassword(connection, password, login).changePassword();
+  }
+
+  @Override
+  public void confirmMail(String key) {
+    new ConfirmMail(connection, key).confirmMail();
+  }
+  
+  @Override
   public boolean addLike(String login, String recipeId) {
     return new AddLike(connection, login, recipeId).addLike();
   }
@@ -165,6 +198,11 @@ public class PostgresDataStorage implements DataStorage {
   @Override
   public boolean checkLike(String login, String recipeId) {
     return new CheckLike(connection, login, recipeId).checkLike();
+  }
+
+  @Override
+  public Map<String, Integer> getDashboard(String login) {
+    return new GetDashboard(connection, login).getDashboard();
   }
 
   /**

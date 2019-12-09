@@ -5,18 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Blog Post - Start Bootstrap Template</title>
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/recipe.css" rel="stylesheet">
-    <link href="vendor/google-icons/google-icons.css" rel="stylesheet">
-
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+  
     <meta property="og:title" data-th-attr="content=${title}">
     <meta property="og:description" data-th-attr="content=${description}">
     <meta property="og:image" data-th-attr="content=${image}">
     <meta property="og:url" data-th-attr="content=${url}">
     <meta name="twitter:card" content="summary">
+
     <script>
         function editRecipe() {
             $("#recipe-container").load("addRecipe.html");
@@ -135,7 +130,7 @@
         $(function() {
             var urlString = window.location.href;
                 var url = new URL(urlString);
-            if(url.pathname == "/recipe") {
+            if (url.pathname == "/recipe") {
                 window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"mainPage.html?recipeId=" + url.searchParams.get("recipeId"));
             }
             $("#load-recipes").hide();
@@ -158,18 +153,19 @@
                             complete: [
                                 function (response) {
                                     var answer = $.parseJSON(response.responseText);
-                                    console.log(response.responseText);
                                     var urlString = window.location.href;
                                     var url = new URL(urlString);
                                     var isApprove = url.searchParams.get("isApprove");
-                                    console.log(user);
-                                    if (typeof user.obj !== "undefined") {
+                                    if (typeof user.obj != "undefined") {
                                         if (user.obj.login != answer.obj.creator && user.obj.role != "admin") {
                                             $("#edit-recipe").remove();
                                             $("#delete-recipe").remove();
                                         }
                                         if ((user.obj.role != "moderator" && user.obj.role != "admin") || isApprove == null) {
                                             $("#approve-recipe").remove();
+                                        }
+                                        if (user.obj.login == answer.obj.creator) {
+                                            $("#subscribe-recipe").remove();
                                         }
                                     } else if (user.status == false) {
                                         $("#recipe-btn .btn").remove();
@@ -190,17 +186,18 @@
                                     });
                                     $("#ingredients").html(answer.obj.composition.split("\n").join("<br>"));
                                     $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
-                                    $("#image").attr("src", "/image?id=" + answer.obj.image);
+                                    $("#image").attr("src", url.origin + "/image?id=" + answer.obj.image);
                                     $("#likes").html(answer.obj.likes + " like(s)");
                                     $("#id").html(answer.obj.id);
-                                    $("#qrcode").attr("src", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + window.location.href);
-
+                                    $("#qr-code").attr("src", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + window.location.href);
+                                    $("#url").text(window.location.href);
                                     var shareUrl = url.origin + "/recipe?recipeId=" + answer.obj.id;
                                     //var shareUrl = "http://g2.sumdu-tss.site/recipe?recipeId=" + answer.obj.id;
                                     $("#twt-share").attr("data-url", shareUrl);
                                     $("#fb-share").attr("data-href", shareUrl);
 
                                     checkLike();
+                                    checkSubscribe();
                                     loadComments();
                                 }
                             ]
@@ -307,7 +304,7 @@
                 + "<head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
             var postHtml = "</body></html>";
             var html = preHtml + $("#recipe-info").html() + postHtml;
-            alert(html);
+            console.log(html);
             var blob = new Blob(["\ufeff", html], {
                 type: "application/msword"
             });
@@ -317,7 +314,7 @@
 
             document.body.appendChild(downloadLink);
 
-            if(navigator.msSaveOrOpenBlob ) {
+            if (navigator.msSaveOrOpenBlob ) {
                 navigator.msSaveOrOpenBlob(blob, filename);
             } else {
                 downloadLink.href = url;
@@ -346,6 +343,80 @@
                 ]
             });
         }
+        function subscribeOnRecipeAuthor() {
+            var data = {
+                subLogin: $("#author").html()
+            }
+            $.ajax({
+                type: "post",
+                url: "/add/subscribe",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.obj == true) {
+                            alert("Successfully subscribed");
+                            checkSubscribe();
+                        } else {
+                            alert("Something went wrong");
+                        }
+                    }
+                ]
+            });
+        }
+
+        function unsubscribeFromRecipeAuthor() {
+            var data = {
+                subLogin: $("#author").html()
+            }
+            $.ajax({
+                type: "post",
+                url: "/delete/subscribe",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        if (answer.obj == true) {
+                            alert("Successfully unsubscribed");
+                            checkSubscribe();
+                        } else {
+                            alert("Something went wrong");
+                        }
+                    }
+                ]
+            });
+        }
+        function checkSubscribe() {
+            var data = {
+                subLogin: $("#author").html()
+            }
+            $.ajax({
+                type: "post",
+                url: "/check/subscribe",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        console.log(answer);
+                        if (answer.status != false) {
+                            if (answer.obj == false) {
+                                $("#subscribe-recipe").html("Subscribe to recipe author");
+                                $("#subscribe-recipe").attr("onclick", "subscribeOnRecipeAuthor()");
+                            } else {
+                                $("#subscribe-recipe").html("Unsubscribe from recipe author");
+                                $("#subscribe-recipe").attr("onclick", "unsubscribeFromRecipeAuthor()");
+                            }
+                        }
+                    }
+                ]
+            });
+        }
     </script>
 </head>
 
@@ -359,6 +430,7 @@
             <div hidden id="id"></div>
             <div id="recipe-info">
                 <img id="qr-code" src="" hidden/>
+                <p id="url" hidden></p>
                 <!-- Title -->
                 <h1 class="mt-4" id="name"></h1>
                 <!-- Author -->
@@ -370,7 +442,7 @@
                 <div>Categories: </div><a id="categories"></a>
                 <hr>
                 <!-- Preview Image -->
-                <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="" id="image">
+                <img class="img-fluid rounded" src="" alt="" id="image">
                 <hr>
                 <!-- Post Content -->
                 <div><h3>Ingredients:</h3></div>
@@ -380,6 +452,7 @@
             </div>
             <hr>
             <div id="recipe-btn">
+                <button class="btn btn-primary" id="subscribe-recipe" onclick="subscribeOnRecipeAuthor()">Subscribe to recipe author</button>
                 <button class="btn btn-primary" id="edit-recipe" onclick="editRecipe()">Edit recipe</button>
                 <button class="btn btn-primary" id="delete-recipe" onclick="deleteRecipe()">Delete recipe</button>
                 <button class="btn btn-primary" id="approve-recipe" onclick="approveRecipe()">Approve recipe</button>

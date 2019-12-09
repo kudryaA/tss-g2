@@ -24,7 +24,7 @@ public interface DataStorage {
    * @param login login
    * @return authorization info
    */
-  Person getAuthorization(String login);
+  Map<String, Object> getAuthorization(String login);
 
   /**
    * Method for adding new person.
@@ -34,9 +34,11 @@ public interface DataStorage {
    * @param name user name
    * @param surname user surname
    * @param email user email
+   * @param key confirmation key
    * @return result of adding user
    */
-  boolean createUser(String login, String password, String name, String surname, String email);
+  boolean createUser(String login, String password, String name,
+                     String surname, String email, String key);
 
   /**
    * Method for adding new recipe.
@@ -178,7 +180,61 @@ public interface DataStorage {
   List<Comment> selectComments(String recipeId);
 
   /**
-   * Method for add like to recipe.
+   * Method for add subscribe.
+   * @param user_login user login
+   * @param sub_login user login on which want to subscribe
+   * @return result of add
+   */
+  boolean addSubscribe(String user_login, String sub_login);
+
+  /**
+   * Method for delete subscribe.
+   * @param user_login user login
+   * @param sub_login user login on which want to unsubscribed
+   * @return result of delete
+   */
+  boolean deleteSubscribe(String user_login, String sub_login);
+
+  /**
+   * Method for select subscribers email address.
+   * @param login user login
+   * @return subscribers email address
+   */
+  List<String> selectSubscribers(String login);
+
+  /**
+   * Method for select subscribed recipes by user login.
+   *
+   * @param login user login
+   * @param pageNumber page number
+   * @param pageSize page size
+   * @return the recipe found
+   */
+  Map<String, Object> selectSubscribedRecipes(String login, int pageNumber, int pageSize);
+
+  /**
+   * Method for check subscribe.
+   * @param user_login user login
+   * @param sub_login user login to which this user is subscribed
+   * @return result of check
+   */
+  boolean checkSubscribe(String user_login, String sub_login);
+
+  /**
+   * Method for change password.
+   * @param password new password
+   * @param login user login
+   * @return result of change
+   */
+  boolean changePassword(String password, String login);
+
+  /**
+   * Method for confirm account.
+   * @param key confirmation key
+   */
+  void confirmMail(String key);
+
+  /** Method for add like to recipe.
    * @param login user login
    * @param recipeId recipe id
    * @return result of add
@@ -192,6 +248,13 @@ public interface DataStorage {
    * @return result of check
    */
   boolean checkLike(String login, String recipeId);
+
+  /**
+   * Method for get main site info.
+   * @param login user login
+   * @return main site info
+   */
+  Map<String, Integer> getDashboard(String login);
 
   /**
    * Store time api.
