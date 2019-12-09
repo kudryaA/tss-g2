@@ -1,9 +1,0 @@
-database_host: 127.0.0.1
-database_port: 5432
-database_database: postgres
-database_user: postgres
-database_password: config/password
-port: 7000
-email: test@gmail.com
-email_password: password
-external_url: https://g2.sumdu-tss.site
