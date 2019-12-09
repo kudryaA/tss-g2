@@ -48,6 +48,18 @@ public class ActionRecipeConfirmationTest {
                 statement.execute();
             } catch (Exception e) {
             }
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO type values ('some_type_name', 'some_type_description', 'images')")) {
+                statement.execute();
+            } catch (Exception e) {
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO recipetype values ('some_recipe_id', 'some_type_name')")) {
+                statement.execute();
+            } catch (Exception e) {
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -68,7 +80,6 @@ public class ActionRecipeConfirmationTest {
 
         Assert.assertEquals(new Answer<>(true, true),
                 recipeConfirmation.getAnswer("john_test_adm", Roles.admin.toString()));
-        dataStorage.close();
     }
 
     @After
@@ -76,6 +87,16 @@ public class ActionRecipeConfirmationTest {
         try (Connection connection =
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM recipetype where recipe_id = 'some_recipe_id'")) {
+                statement.executeUpdate();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM type where name = 'some_type_name'")) {
+                statement.executeUpdate();
+            }
+
             try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM recipe WHERE recipe_id = 'some_recipe_id'")) {
                 statement.executeUpdate();

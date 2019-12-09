@@ -68,7 +68,7 @@ public class CheckAuthorizationTest {
         CheckAuthorization check = new CheckAuthorization(dataStorage, "john_test_2", "a");
         Answer answer = check.getAnswer();
         dataStorage.close();
-        Assert.assertEquals(false, answer.isStatus());
+        Assert.assertTrue(answer.isStatus());
         Assert.assertEquals(false, answer.getObj());
     }
 

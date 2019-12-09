@@ -65,7 +65,7 @@ public class GetRecipeTest {
         System.out.println(recipe.getAnswer().toJson());
         Type type = new Type("testname", "testdescription", "testimage");
         RecipeWithType testRecipe = new RecipeWithType(new Recipe("1", "testname", "testcomposition",
-                "cookingsteps", null, "testimage", "testcreator", 2),
+                "cookingsteps", null, "testimage", "testcreator", 1),
                 Collections.singletonList(type));
         ArrayList<RecipeWithType> list = new ArrayList<>();
         list.add(testRecipe);

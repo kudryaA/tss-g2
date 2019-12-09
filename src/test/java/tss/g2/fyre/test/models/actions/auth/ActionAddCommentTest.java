@@ -59,7 +59,7 @@ public class ActionAddCommentTest {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM comment WHERE user_login = 'john_test_1' and recipe_id = 'test_recipe_id'")) {
+                    "DELETE FROM comment WHERE recipe_id = 'test_recipe_id'")) {
                 statement.executeUpdate();
             }
 

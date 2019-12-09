@@ -62,6 +62,16 @@ public class RegisterUserTest {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM mailconfirmation WHERE login = 'bdfshbfdbsfbsjfbjsbdfjsbdjsbfd'")) {
+                statement.execute();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM users_rating WHERE user_login = 'bdfshbfdbsfbsjfbjsbdfjsbdjsbfd'")) {
+                statement.execute();
+            }
+
+            try (PreparedStatement statement = connection.prepareStatement(
                     "DELETE FROM person WHERE login = 'bdfshbfdbsfbsjfbjsbdfjsbdjsbfd'")) {
                 statement.execute();
             }
