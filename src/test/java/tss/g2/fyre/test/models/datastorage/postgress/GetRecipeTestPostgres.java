@@ -68,13 +68,13 @@ public class GetRecipeTestPostgres {
         Assert.assertEquals(date, result.getPublicationDate());
         Assert.assertEquals("image", result.getImage());
         Assert.assertEquals("julia", result.getCreator());
-        Assert.assertEquals(178+1, result.getRating());
+        Assert.assertEquals(178, result.getRating());
         List<String> types = new ArrayList();
         types.add("test_type1");
         types.add("test_type2");
         Assert.assertEquals(types, result.getTypes());
         Recipe result2 = dataStorage.getRecipe("test_id");
-        Assert.assertEquals(result.getRating()+1, result2.getRating());
+        Assert.assertEquals(result.getRating(), result2.getRating());
         dataStorage.close();
     }
 
