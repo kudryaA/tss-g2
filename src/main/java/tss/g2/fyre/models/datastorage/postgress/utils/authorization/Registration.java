@@ -81,6 +81,13 @@ public class Registration {
                       && confirmStatement.executeUpdate() == 1;
             }
           }
+          try (PreparedStatement insertStatement = connection
+                  .prepareStatement("insert into users_rating values(?, 0)")) {
+            insertStatement.setString(1, login);
+
+            logger.info(insertStatement.toString());
+            insertStatement.executeUpdate();
+          }
         }
       }
     } catch (SQLException e) {

@@ -3,11 +3,12 @@ drop table mailConfirmation;
 drop table comment;
 drop table userSubscribe;
 drop table likes;
-
+drop table users_rating;
 drop table person;
 drop table recipeType;
 drop table type;
 drop table recipe;
+
 
 create table person (
   login TEXT PRIMARY KEY ,
@@ -67,4 +68,9 @@ create table likes (
 create table api_time(
     api TEXT,
     time_execution BIGINT
+);
+
+create table users_rating(
+     user_login Text references person(login),
+     rating BIGINT
 );

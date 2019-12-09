@@ -41,6 +41,7 @@ public class AddLike {
 
       try (ResultSet resultSet = checkStatement.executeQuery()) {
         if (!resultSet.next()) {
+
           try (PreparedStatement addLikeStatement = connection
                 .prepareStatement("insert into likes values (?, ?)")) {
             addLikeStatement.setString(1, login);
@@ -48,12 +49,44 @@ public class AddLike {
 
             result = addLikeStatement.executeUpdate() == 1;
           }
+          try (PreparedStatement updateStatement = connection
+                  .prepareStatement("UPDATE users_rating SET rating = rating + 2 WHERE user_login  = ?")) {
+            updateStatement.setString(1, login);
+
+            logger.info(updateStatement.toString());
+            updateStatement.executeUpdate();
+          }
+          try (PreparedStatement newcheckStatement = connection
+                  .prepareStatement("select 1 from likes join recipe on (user_login = ? and "
+                          + "likes.recipe_id = recipe.recipe_id and user_login != creator and "
+                          + "likes.recipe_id = ?)")) {
+            newcheckStatement.setString(1, login);
+            newcheckStatement.setString(2, recipeId);
+            try (ResultSet newResultSet = newcheckStatement.executeQuery()) {
+              if (newResultSet.next()) {
+                try (PreparedStatement updateStatement = connection
+                        .prepareStatement("UPDATE recipe SET rating = rating + 1 WHERE recipe_id = ?")) {
+                  updateStatement.setString(1, recipeId);
+
+                  logger.info(updateStatement.toString());
+                  updateStatement.executeUpdate();
+                }
+                try (PreparedStatement updateStatement = connection
+                        .prepareStatement("UPDATE users_rating SET rating = rating + 1 WHERE user_login  = " +
+                                "(SELECT creator from recipe where recipe_id = ?)")) {
+                  updateStatement.setString(1, recipeId);
+
+                  logger.info(updateStatement.toString());
+                  updateStatement.executeUpdate();
+                }
+              }
+            }
+          }
         }
       }
     } catch (SQLException e) {
       logger.error("Executing statement for add like complete with errors - {}", e.getMessage());
     }
-
     return result;
   }
 }
