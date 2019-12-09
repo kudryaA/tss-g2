@@ -15,7 +15,9 @@ import tss.g2.fyre.controllers.utils.UserLogin;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
+
 import tss.g2.fyre.models.actions.auth.*;
+
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.GetRecipe;
 import tss.g2.fyre.models.actions.simple.GetTypes;
@@ -220,6 +222,22 @@ public class RecipeController implements CreateController {
       ctx.result(answer.toJson());
     });
 
+
+    app.post("/select/subscribedRecipes", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      int pageNumber = Integer.parseInt(ctx.formParam("pageNumber"));
+      int pageSize = Integer.parseInt(ctx.formParam("pageSize"));
+      logger.info("Request to /select/subscribedRecipes for user {}",
+              new UserLogin(tokenStorage, token).get());
+      Action action = new AuthUser(
+              new SelectSubscribedRecipes(dataStorage, pageNumber, pageSize),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/add/subscribedRecipes", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
+    
     app.post("/add/like", ctx -> {
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");

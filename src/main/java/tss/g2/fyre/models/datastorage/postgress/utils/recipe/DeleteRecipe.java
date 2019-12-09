@@ -51,6 +51,40 @@ public class DeleteRecipe {
       logger.info(checkStatement.toString());
       try (ResultSet resultSet = checkStatement.executeQuery()) {
         if (resultSet.next()) {
+          /*
+          try (PreparedStatement updateStatement = connection
+                  .prepareStatement("update users_rating set rating = rating - " +
+                          "(select count(*) from likes where recipe_id = ? and user_login <> " +
+                          "(select creator from recipe where recipe.recipe_id = ?))" +
+                          "where user_login = (select creator from recipe where recipe.recipe_id = ?)")) {
+            updateStatement.setString(1, recipeId);
+            updateStatement.setString(2, recipeId);
+            updateStatement.setString(3, recipeId);
+            updateStatement.executeUpdate();
+            logger.info(updateStatement.toString());
+            updateStatement.executeUpdate();
+          }
+
+ */
+          /*
+          try (PreparedStatement updateStatement = connection
+                  .prepareStatement("update users_rating set rating = rating - " +
+                          "(select count(distinct user_login) from comment where recipe_id = ? and user_login <> " +
+                          "(select creator from recipe where recipe.recipe_id = ?))" +
+                          "where user_login = (select creator from recipe where recipe.recipe_id = ?)")) {
+            updateStatement.setString(1, recipeId);
+            updateStatement.setString(2, recipeId);
+            updateStatement.setString(3, recipeId);
+            updateStatement.executeUpdate();
+            logger.info(updateStatement.toString());
+            updateStatement.executeUpdate();
+          }
+
+           */
+
+
+
+
           try (PreparedStatement deleteLikesStatement = connection
                   .prepareStatement("delete from likes where recipe_id = ?")) {
             deleteLikesStatement.setString(1, recipeId);
@@ -60,13 +94,25 @@ public class DeleteRecipe {
                        connection.prepareStatement("delete from recipetype where recipe_id = ?")) {
               deleteRelationStatement.setString(1, recipeId);
               deleteRelationStatement.executeUpdate();
-
-              try (PreparedStatement deleteRecipeStatement =
-                           connection.prepareStatement("delete from recipe where recipe_id = ?")) {
-                deleteRecipeStatement.setString(1, recipeId);
-
-                logger.info(deleteRecipeStatement.toString());
-                result = deleteRecipeStatement.executeUpdate() == 1;
+              try (PreparedStatement deleteCommentsStatement = connection
+                      .prepareStatement("delete from comment where recipe_id = ?")) {
+                deleteCommentsStatement.setString(1, recipeId);
+                deleteCommentsStatement.executeUpdate();
+                try (PreparedStatement updateStatement = connection
+                        .prepareStatement("update users_rating set rating = rating - 10 -" +
+                                "(select rating from recipe where recipe_id = ? )"+
+                                "where user_login = (select creator from recipe where recipe_id = ? and isconfirmed = true) ")) {
+                  updateStatement.setString(1, recipeId);
+                  updateStatement.setString(2, recipeId);
+                  logger.info(updateStatement.toString());
+                  updateStatement.executeUpdate();
+                }
+                try (PreparedStatement deleteRecipeStatement =
+                             connection.prepareStatement("delete from recipe where recipe_id = ?")) {
+                  deleteRecipeStatement.setString(1, recipeId);
+                  logger.info(deleteRecipeStatement.toString());
+                  result = deleteRecipeStatement.executeUpdate() == 1;
+                }
               }
             }
           }

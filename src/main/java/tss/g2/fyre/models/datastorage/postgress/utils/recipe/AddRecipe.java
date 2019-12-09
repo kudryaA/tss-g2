@@ -97,7 +97,7 @@ public class AddRecipe {
 
     try (PreparedStatement statement = connection
             .prepareStatement("insert into recipe values "
-                    + "(?, ?, ?, ?, ?, ?, ?, " + -9223372036854775808L + ", ?)")) {
+                    + "(?, ?, ?, ?, ?, ?, ?, " + 0 + ", ?)")) {
       statement.setString(1, key);
       statement.setString(2, name);
       statement.setString(3, recipeComposition);
@@ -137,6 +137,15 @@ public class AddRecipe {
         if (i == list.size()) {
           logger.info("Execute adding recipe recipe id = {} complete successfully.", key);
           result += key;
+          if(isConfirmed == true) {
+            try (PreparedStatement updateStatement = connection
+                    .prepareStatement("UPDATE users_rating SET rating = rating + 10 WHERE user_login  = ?")) {
+              updateStatement.setString(1, user);
+
+              logger.info(updateStatement.toString());
+              updateStatement.executeUpdate();
+            }
+          }
         } else {
           logger.error("Execute adding recipe recipe id = {} complete with some error.", key);
         }

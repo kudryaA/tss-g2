@@ -48,6 +48,7 @@ public class GetRecipe {
    */
   public Recipe get() {
     RecipeWithType recipe = null;
+    /*
     try (PreparedStatement updateStatement =
             connection.prepareStatement("UPDATE recipe SET rating=rating+1 WHERE recipe_id = ?")) {
       updateStatement.setString(1, recipeId);
@@ -57,7 +58,7 @@ public class GetRecipe {
     } catch (SQLException e) {
       logger.error(e.getMessage());
     }
-
+    */
     try (PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
       logger.info(preparedStatement.toString());
       preparedStatement.setString(1, recipeId);

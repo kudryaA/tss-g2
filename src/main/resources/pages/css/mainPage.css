@@ -12,9 +12,6 @@ body {
 	background: #007bff;
 	background: linear-gradient(to right, #00818a, #283149);
 }
-a {
-	color: white;
-}
 .navbar-brand {
     max-width: 80px;
 }
@@ -61,4 +58,8 @@ a {
 }
 #cat-img {
     max-width: 100%;
+}
+
+.dropdown-item:active {
+    background: #00818a;
 }

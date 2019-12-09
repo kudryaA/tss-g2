@@ -7,6 +7,8 @@ import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Person;
 import tss.g2.fyre.utils.ToHash;
 
+import java.util.Map;
+
 /**
  * Action class for check authorization.
  */
@@ -35,7 +37,9 @@ public class CheckAuthorization implements Action {
 
   @Override
   public Answer getAnswer() {
-    Person authorization = dataStorage.getAuthorization(login);
+    Map<String, Object> map = dataStorage.getAuthorization(login);
+    Person authorization = (Person) map.get("authorization");
+    int count = (int) map.get("count");
 
     if (authorization == null) {
       return new Answer<>(false, false);
@@ -47,6 +51,10 @@ public class CheckAuthorization implements Action {
 
     if (authorization.getBannedStatus()) {
       return new AnswerWithComment(true, false, "You are banned");
+    }
+
+    if (count > 0) {
+      return new AnswerWithComment(true, false, "Please confirm mail.");
     }
 
     if (authorization.getLogin().equals(login) && authorization.getPassword().equals(password)) {

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Empty page</title>
+
+    <script>
+        $(function() {
+            $("#load-recipes").hide();
+            $.ajax({
+                type: "post",
+                url: "/select/usersRating",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        $("#rating-table tbody tr").remove();
+                        $.each(answer.obj, function(key, value) {
+                            var row = "<tr><td class='text-left'>" + value.login + "</td><td class='text-center'>" + value.rating + "</td><td></tr>"
+                            $("#rating-table tbody").append(row);
+                        });
+                    }
+                ]
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="table">
+    <!-- Page Content -->
+    <div class="container" id="content-container">
+        <h3>Approved recipe - 10 points</h3>
+        <h3>Like/comment - 2 points per recipe</h3>
+        <h3>Like/comment under your recipe - 2 point</h3>
+        <table class="table" id="rating-table">
+            <thead>
+            <tr>
+                <th class="text-left" scope="col">User</th>
+                <th class="text-center" scope="col">Rating</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -39,7 +39,7 @@ public class CreateUserTestPostgres {
     @Test
     public void testCreateUser() throws SQLException {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
-        boolean result = dataStorage.createUser("john_test_2", "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "john", "doe", "john@doe.com");
+        boolean result = dataStorage.createUser("john_test_2", "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "john", "doe", "john@doe.com", "some_key");
         try(Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM person WHERE login = 'john_test_2'")){
@@ -74,7 +74,7 @@ public class CreateUserTestPostgres {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
         boolean result = dataStorage.createUser("john_test_1",
                 "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb", "john",
-                "doe", "john@doe.com");
+                "doe", "john@doe.com", "some_key");
         Assert.assertEquals(false, result);
         dataStorage.close();
     }
