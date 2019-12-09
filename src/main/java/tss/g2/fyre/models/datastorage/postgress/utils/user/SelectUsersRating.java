@@ -37,7 +37,9 @@ public class SelectUsersRating {
         List<UserRating> usersInfo = new ArrayList<>();
         try (Statement selectStatement = connection.createStatement()) {
             try (ResultSet resultSet = selectStatement
-                    .executeQuery("select user_login, rating from users_rating order by rating DESC")) {
+                    .executeQuery("select user_login, rating from users_rating " +
+                            "join person on(user_login = login and bannedstatus = false) " +
+                            "order by rating DESC")) {
                 logger.info(selectStatement.toString());
                 while (resultSet.next()) {
                     String login = resultSet.getString(1);
