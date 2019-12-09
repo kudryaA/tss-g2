@@ -18,7 +18,7 @@
                         var answer = $.parseJSON(response.responseText);
                         $("#rating-table tbody tr").remove();
                         $.each(answer.obj, function(key, value) {
-                            var row = "<tr><td class='text-left'>" + key + "</td><td class='text-left'>" + value + "</td><td></tr>"
+                            var row = "<tr><td class='text-left'>" + value.login + "</td><td class='text-center'>" + value.rating + "</td><td></tr>"
                             $("#rating-table tbody").append(row);
                         });
                     }
@@ -38,7 +38,7 @@
             <thead>
             <tr>
                 <th class="text-left" scope="col">User</th>
-                <th class="text-left" scope="col">Rating</th>
+                <th class="text-center" scope="col">Rating</th>
             </tr>
             </thead>
             <tbody>
