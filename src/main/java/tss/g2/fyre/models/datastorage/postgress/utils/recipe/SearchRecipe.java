@@ -53,17 +53,16 @@ public class SearchRecipe {
             .prepareStatement("SELECT recipe.*, ts_rank_cd(to_tsvector(recipe.name), query) r_name, "
                     + "ts_rank_cd(to_tsvector(recipe.recipecomposition), query) r_composition, "
                     + "ts_rank_cd(to_tsvector(recipe.cookingsteps), query) r_steps "
-                    + "FROM recipe, plainto_tsquery('english', '%'|| ? ||'%') query "
+                    + "FROM recipe, plainto_tsquery('english',  ? ) query "
                     + "WHERE (query @@ to_tsvector(recipe.name) or "
                     + "query @@ to_tsvector(recipe.cookingsteps) or "
                     + "query @@ to_tsvector(recipe.recipecomposition)) "
                     + "AND publicationdate <= (now() AT TIME ZONE 'UTC') "
                     + "and isconfirmed = true "
-                    + "ORDER BY r_name DESC, r_composition DESC, r_steps DESC "
-                    + "offset ? fetch first ? row only ")) {
+                    + "ORDER BY r_name DESC, r_composition DESC, r_steps DESC")) {
       searchStatement.setString(1, searchQuery);
-      searchStatement.setInt(2, (pageNumber - 1) * pageSize);
-      searchStatement.setInt(3, pageSize);
+      //searchStatement.setInt(2, (pageNumber - 1) * pageSize);
+      //searchStatement.setInt(3, pageSize);
 
       logger.info(searchStatement.toString());
       try (ResultSet resultSet = searchStatement.executeQuery()) {
