@@ -7,13 +7,11 @@ import org.junit.Test;
 import tss.g2.fyre.models.datastorage.postgress.PostgresDataStorage;
 import tss.g2.fyre.utils.Configuration;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.ParseException;
 import java.util.Properties;
 
-public class GetRoleTestPostgres {
+public class ConfirmMailTestPostgres {
     private static Properties properties = new Configuration("config/configuration.yml").getProperties();
     private static String host = properties.getProperty("database_host");
     private static String port = properties.getProperty("database_port");
@@ -22,30 +20,49 @@ public class GetRoleTestPostgres {
     private static String password = properties.getProperty("database_password");
 
     @Before
-    public void init() {
+    public void init() throws ParseException {
         try (Connection connection =
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) " +
-                            "VALUES ('john_test_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
-                            "'doe', false, 'john@doe.com', 'admin'), ('john_test_2'," +
-                            "'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
+                            "VALUES ('test_user1', 'a', 'john', " +
                             "'doe', false, 'john@doe.com', 'user')")) {
-                statement.execute();
+                statement.executeUpdate();
             }
+
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO mailConfirmation (login, confirmationKey) values ('test_user1', 'key1')")) {
+                statement.executeUpdate();
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testGetRole() throws SQLException {
+    public void testConfirmMail() throws SQLException {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
-        String result1 = dataStorage.getRole("john_test_1");
-        Assert.assertEquals("admin", result1);
-        String result2 = dataStorage.getRole("john_test_2");
-        Assert.assertEquals("user", result2);
+        dataStorage.confirmMail("key1");
+        try(Connection connection = DriverManager.getConnection(
+                "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT count(*) n FROM mailConfirmation " +
+                    "WHERE login = 'test_user1' and confirmationKey = 'key1'")){
+                try (ResultSet resultSet = statement.executeQuery()){
+                    if (resultSet.next()) {
+                        Integer n = resultSet.getInt("n");
+                        boolean res = false;
+                        if(n == 0){
+                            res = true;
+                        }
+                        Assert.assertEquals(true, res);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         dataStorage.close();
     }
 
@@ -54,17 +71,9 @@ public class GetRoleTestPostgres {
         try (Connection connection =
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM mailconfirmation WHERE login in ('john_test_2', 'john_test_1')")) {
-                statement.execute();
-            }
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM users_rating WHERE user_login in ('john_test_2', 'john_test_1')")) {
-                statement.execute();
-            }
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM person WHERE login in ('john_test_2', 'john_test_1')")) {
-                statement.execute();
+            try (PreparedStatement statement1 = connection.prepareStatement(
+                    "DELETE FROM person where login in ('test_user1', 'test_user2', 'test_user3')")) {
+                statement1.execute();
             }
         } catch (SQLException e) {
             e.printStackTrace();

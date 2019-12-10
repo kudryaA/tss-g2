@@ -1,28 +1,27 @@
-package tss.g2.fyre.test.models.actions.auth.check;
+package tss.g2.fyre.test.models.actions.auth;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tss.g2.fyre.models.Answer;
-import tss.g2.fyre.models.actions.auth.AddType;
-import tss.g2.fyre.models.actions.auth.DeleteRecipe;
-import tss.g2.fyre.models.actions.auth.GetUsers;
-import tss.g2.fyre.models.actions.auth.check.AuthUser;
+import tss.g2.fyre.models.AnswerWithComment;
+import tss.g2.fyre.models.actions.auth.GetDashboard;
+import tss.g2.fyre.models.actions.auth.SelectSubscribedRecipes;
 import tss.g2.fyre.models.datastorage.postgress.PostgresDataStorage;
-import tss.g2.fyre.models.entity.Authorization;
 import tss.g2.fyre.models.entity.Roles;
+import tss.g2.fyre.models.entity.recipe.Recipe;
 import tss.g2.fyre.utils.Configuration;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-public class AuthUserTest {
+public class GetDashboardTest {
     private final static Properties properties = new Configuration("config/configuration.yml").getProperties();
     private final static String host = properties.getProperty("database_host");
     private final static String port = properties.getProperty("database_port");
@@ -36,14 +35,10 @@ public class AuthUserTest {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "insert into recipe values ('test_recipe_id', 'test_recipe', 'some recipe composition', " +
-                            "'some cooking steps', current_timestamp, 'unnamed', 'john_test_1', 1, true )")) {
-                statement.executeUpdate();
-            }
-
-            try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) " +
-                            "VALUES ('john_test_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
+                            "VALUES ('john_test_user', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
+                            "'doe', false, 'john@doe.com', 'user'), " +
+                            "('john_test_admin', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
                             "'doe', false, 'john@doe.com', 'admin')")) {
                 statement.executeUpdate();
             }
@@ -53,15 +48,16 @@ public class AuthUserTest {
     }
 
     @Test
-    public void authUserTest() throws SQLException {
+    public void actionGetDashboardTest() throws SQLException {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
-        Map<String, Authorization> tokenStorage = new HashMap<>();
-        tokenStorage.put("some_token", new Authorization("john_test_1", Roles.admin.toString()));
-        Answer answer = new AuthUser(new DeleteRecipe(dataStorage, "test_recipe_id"), "some_token", tokenStorage).getAnswer();
 
-        Assert.assertEquals(new Answer<>(true, true), answer);
-        answer = new AuthUser(new DeleteRecipe(dataStorage, "test_recipe_id"), "some_wrong_token", tokenStorage).getAnswer();
-        Assert.assertEquals(new Answer<>(false), answer);
+        Answer answer = new GetDashboard(dataStorage).getAnswer("john_test_admin", Roles.admin.toString());
+        Assert.assertNotEquals(null, answer.getObj());
+        Assert.assertTrue(answer.isStatus());
+
+        Answer answer1 = new GetDashboard(dataStorage).getAnswer("john_test_user", Roles.user.toString());
+        Assert.assertEquals(new AnswerWithComment(true, false, "You do not have permission to perform this operation."), answer1);
+        dataStorage.close();
     }
 
     @After
@@ -70,18 +66,11 @@ public class AuthUserTest {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM mailconfirmation WHERE login in ('john_test_2', 'john_test_1')")) {
-                statement.execute();
-            }
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM users_rating WHERE user_login in ('john_test_2', 'john_test_1')")) {
-                statement.execute();
-            }
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM person WHERE login in ('john_test_2', 'john_test_1')")) {
-                statement.execute();
+                    "DELETE FROM person WHERE login in ('john_test_admin', 'john_test_user')")) {
+                statement.executeUpdate();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }

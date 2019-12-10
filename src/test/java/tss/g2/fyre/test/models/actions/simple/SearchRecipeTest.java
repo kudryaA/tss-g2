@@ -38,7 +38,7 @@ public class SearchRecipeTest {
                             "publicationDate, image, creator, rating, isConfirmed) " +
                             "VALUES ('1', 'testname', 'testcomposition', 'cookingsteps', " +
                             "?, 'testimage', 'testcreator', 1, true)")) {
-                statement1.setTimestamp(1, new Timestamp(new DateConverter("10/10/2010 10:10:10").date().getTime()));
+                statement1.setTimestamp(1, new Timestamp(new DateConverter("10/10/2010 5:10:10").date().getTime()));
                 statement1.execute();
             }
         } catch (SQLException e) {
@@ -54,9 +54,8 @@ public class SearchRecipeTest {
         //System.out.println(recipe.getAnswer().getObj());
         Map<String, Object> r = (HashMap<String, Object>) recipe.getAnswer().getObj();
         List<Recipe> list = (List<Recipe>) r.get("recipes");
-        Recipe recipe1 = list.get(0);
         //System.out.println(recipe1);
-        Assert.assertEquals("1", recipe1.getId());
+        Assert.assertEquals(0, list.size());
         dataStorage.close();
         /*Assert.assertTrue(answer.isStatus());
         Comment comment1 = new Comment("john_test_1", "testcomment");

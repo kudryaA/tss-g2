@@ -5,18 +5,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import tss.g2.fyre.models.datastorage.postgress.PostgresDataStorage;
-import tss.g2.fyre.models.entity.recipe.Recipe;
-import tss.g2.fyre.models.entity.recipe.RecipeWithType;
 import tss.g2.fyre.utils.Configuration;
 import tss.g2.fyre.utils.DateConverter;
 
 import java.sql.*;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 
-public class GetRecipeTestPostgres {
+public class DeleteSubscribeTestPostgres {
     private static Timestamp date;
     private static Properties properties = new Configuration("config/configuration.yml").getProperties();
     private static String host = properties.getProperty("database_host");
@@ -32,51 +28,63 @@ public class GetRecipeTestPostgres {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) " +
+                            "VALUES ('test_user1', 'a', 'john', " +
+                            "'doe', false, 'john@doe.com', 'user'), " +
+                            "('test_user2', 'b', 'john'," +
+                            "'doe', false, 'john@doe.com', 'user')")) {
+                statement.executeUpdate();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO type (name, description, image) " +
-                            "VALUES ('test_type1', 'test_type1', 'test_type1')," +
-                            "('test_type2', 'test_type2', 'test_type2')"))  {
+                            "VALUES ('type', 'type', 'type')")) {
                 statement.execute();
             }
             try (PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO recipe (recipe_id, name, recipeComposition, cookingSteps, publicationDate, image, creator, rating, isConfirmed) " +
                             "VALUES ('test_id', 'test_recipe', 'composition', 'steps', ?, 'image'," +
-                            "'julia', 178, true)")) {
+                            "'test_user1', 178, true)," +
+                            "('test_id2', 'test_recipe', 'composition', 'steps', ?, 'image'," +
+                            "'test_user1', 178, true)")) {
                 statement.setTimestamp(1, date);
+                statement.setTimestamp(2, date);
                 statement.execute();
             }
             try (PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO recipeType (recipe_id, type_name) " +
-                            "VALUES ('test_id', 'test_type1')," +
-                            "('test_id', 'test_type2')"))  {
+                    "INSERT INTO userSubscribe (user_login,  sub_login) " +
+                            "VALUES ('test_user2', 'test_user1')")) {
                 statement.execute();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
     @Test
-    public void testGetRecipe() throws SQLException {
+    public void testDeleteSubscribe() throws SQLException {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
-        Recipe res = dataStorage.getRecipe("test_id");
-        RecipeWithType result = (RecipeWithType) res;
-        Assert.assertEquals(res, result);
-        Assert.assertEquals("test_id", result.getId());
-        Assert.assertEquals("test_recipe", result.getName());
-        Assert.assertEquals("composition", result.getComposition());
-        Assert.assertEquals("steps", result.getCookingSteps());
-        Assert.assertEquals(date, result.getPublicationDate());
-        Assert.assertEquals("image", result.getImage());
-        Assert.assertEquals("julia", result.getCreator());
-        Assert.assertEquals(178, result.getRating());
-        List<String> types = new ArrayList();
-        types.add("test_type1");
-        types.add("test_type2");
-        Assert.assertEquals(types, result.getTypes());
-        Recipe result2 = dataStorage.getRecipe("test_id");
-        Assert.assertEquals(result.getRating(), result2.getRating());
+        boolean result = dataStorage.deleteSubscribe("test_user2", "test_user1");
+        Assert.assertEquals(true, result);
+        try(Connection connection = DriverManager.getConnection(
+                "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
+            try (PreparedStatement statement = connection.prepareStatement("SELECT count(*) n FROM userSubscribe WHERE user_login = 'test_user2' and sub_login = 'test_user1'")){
+                try (ResultSet resultSet = statement.executeQuery()){
+                    if (resultSet.next()) {
+                        Integer n = resultSet.getInt("n");
+                        boolean res = false;
+                        if(n == 0){
+                            res = true;
+                        }
+                        Assert.assertEquals(true, res);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         dataStorage.close();
     }
+
 
     @After
     public void finish() {
@@ -84,15 +92,15 @@ public class GetRecipeTestPostgres {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM recipeType WHERE recipe_id = 'test_id'")) {
+                    "DELETE FROM recipe WHERE recipe_id in ('test_id', 'test_id2')")) {
                 statement.execute();
             }
-            try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM recipe WHERE recipe_id = 'test_id'")) {
-                statement.execute();
+            try (PreparedStatement statement1 = connection.prepareStatement(
+                    "DELETE FROM person where login in ('test_user1', 'test_user2')")) {
+                statement1.execute();
             }
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM type WHERE name in ('test_type1', 'test_type2')")) {
+                    "DELETE FROM type WHERE name = 'type'")) {
                 statement.execute();
             }
         } catch (SQLException e) {

@@ -63,7 +63,15 @@ public class GetPersonsInformationTestPostgres {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM person WHERE login in ('john_test_1', 'john_test_2')")) {
+                    "DELETE FROM mailconfirmation WHERE login in ('john_test_2', 'john_test_1')")) {
+                statement.execute();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM users_rating WHERE user_login in ('john_test_2', 'john_test_1')")) {
+                statement.execute();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM person WHERE login in ('john_test_2', 'john_test_1')")) {
                 statement.execute();
             }
         } catch (SQLException e) {
