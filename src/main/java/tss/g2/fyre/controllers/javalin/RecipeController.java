@@ -59,10 +59,10 @@ public class RecipeController implements CreateController {
       String selectedTypes = ctx.formParam("selectedTypes");
       UploadedFile image = ctx.uploadedFile("image");
       Action action = new AuthUser(
-          new AddRecipe(dataStorage, recipeName,
-              recipeComposition, cookingSteps, publicationDate, selectedTypes, image),
-          token,
-          tokenStorage
+              new AddRecipe(dataStorage, recipeName,
+                      recipeComposition, cookingSteps, publicationDate, selectedTypes, image),
+              token,
+              tokenStorage
       );
       Answer answer = new ActionTime("/add/recipe", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
@@ -74,11 +74,11 @@ public class RecipeController implements CreateController {
       String description = ctx.formParam("description");
       UploadedFile image = ctx.uploadedFile("image");
       logger.info("Request to /add/type with user {} for type {}",
-          new UserLogin(tokenStorage, token).get(), typeName);
+              new UserLogin(tokenStorage, token).get(), typeName);
       Action action = new AuthUser(
-          new AddType(dataStorage, typeName, description, image),
-          token,
-          tokenStorage
+              new AddType(dataStorage, typeName, description, image),
+              token,
+              tokenStorage
       );
       Answer answer = new ActionTime("/add/type", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
@@ -88,11 +88,11 @@ public class RecipeController implements CreateController {
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /delete/recipe with user {} for recipe {}",
-          new UserLogin(tokenStorage, token).get(), recipeId);
+              new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new AuthUser(
-          new DeleteRecipe(dataStorage, recipeId),
-          token,
-          tokenStorage
+              new DeleteRecipe(dataStorage, recipeId),
+              token,
+              tokenStorage
       );
       Answer answer = new ActionTime("/delete/recipe", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
@@ -103,7 +103,7 @@ public class RecipeController implements CreateController {
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /recipe with user {} for recipe {}",
-          new UserLogin(tokenStorage, token).get(), recipeId);
+              new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new GetRecipe(dataStorage, recipeId);
       Answer answer = new ActionTime("/recipe", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
@@ -112,7 +112,7 @@ public class RecipeController implements CreateController {
     app.post("/select/types", ctx -> {
       String token = ctx.sessionAttribute("token");
       logger.info("Request to /select/types with user {}",
-          new UserLogin(tokenStorage, token).get());
+              new UserLogin(tokenStorage, token).get());
       Action action = new GetTypes(dataStorage);
       Answer answer = new ActionTime("/select/types", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
@@ -121,7 +121,7 @@ public class RecipeController implements CreateController {
     app.post("/select/recipes", ctx -> {
       String token = ctx.sessionAttribute("token");
       logger.info("Request to /select/recipes with user {}",
-          new UserLogin(tokenStorage, token).get());
+              new UserLogin(tokenStorage, token).get());
       int pageNumber = Integer.parseInt(ctx.formParam("pageNumber"));
       int pageSize = Integer.parseInt(ctx.formParam("pageSize"));
       String recipeType = ctx.formParam("recipeType");
@@ -145,7 +145,7 @@ public class RecipeController implements CreateController {
       String composition = ctx.formParam("composition");
       String cookingSteps = ctx.formParam("cookingSteps");
       logger.info("Request to /update/recipe with user {} for recipe {}",
-          new UserLogin(tokenStorage, token).get(), recipeId);
+              new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new AuthUser(
               new UpdateRecipe(dataStorage, recipeId, recipeName, composition, cookingSteps),
               token,
@@ -161,7 +161,7 @@ public class RecipeController implements CreateController {
       int pageNumber = Integer.parseInt(ctx.formParam("pageNumber"));
       int pageSize = Integer.parseInt(ctx.formParam("pageSize"));
       logger.info("Request to /search/recipe with user {} with ingredient {}",
-          new UserLogin(tokenStorage, token).get(), ingredientName);
+              new UserLogin(tokenStorage, token).get(), ingredientName);
       Action action = new SearchRecipe(dataStorage, ingredientName, pageNumber, pageSize);
       Answer answer = new ActionTime("/search/recipe", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
@@ -170,11 +170,11 @@ public class RecipeController implements CreateController {
     app.post("/select/unconfirmedRecipes", ctx -> {
       String token = ctx.sessionAttribute("token");
       logger.info("Request to /select/unconfirmedRecipes with user {}",
-          new UserLogin(tokenStorage, token).get());
+              new UserLogin(tokenStorage, token).get());
       Action action = new AuthUser(
-            new SelectUnconfirmedRecipes(dataStorage),
-            token,
-            tokenStorage
+              new SelectUnconfirmedRecipes(dataStorage),
+              token,
+              tokenStorage
       );
       Answer answer = new ActionTime("/select/unconfirmedRecipes", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
@@ -184,7 +184,7 @@ public class RecipeController implements CreateController {
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /recipeConfirmation with user {} for recipe {}",
-          new UserLogin(tokenStorage, token).get(), recipeId);
+              new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new AuthUser(
               new RecipeConfirmation(dataStorage, recipeId),
               token,
@@ -198,7 +198,7 @@ public class RecipeController implements CreateController {
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /add/comment with user {} for recipe {}",
-          new UserLogin(tokenStorage, token).get(), recipeId);
+              new UserLogin(tokenStorage, token).get(), recipeId);
       String commentText = ctx.formParam("commentText");
       Action action = new AuthUser(
               new AddComment(dataStorage, recipeId, commentText),
@@ -213,7 +213,7 @@ public class RecipeController implements CreateController {
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /select/comments with user {} for recipe {}",
-          new UserLogin(tokenStorage, token).get(), recipeId);
+              new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new SelectComments(dataStorage, recipeId);
       Answer answer = new ActionTime("/select/comments", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
@@ -234,7 +234,7 @@ public class RecipeController implements CreateController {
       Answer answer = new ActionTime("/add/subscribedRecipes", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
-    
+
     app.post("/add/like", ctx -> {
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");
