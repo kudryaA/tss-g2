@@ -54,10 +54,8 @@ public class SelectUsersRatingTestPostgres {
         List<UserRating> rating = dataStorage.selectUsersRating();
         UserRating user1 = new UserRating("test_user1", (long)3);
         UserRating user2 = new UserRating("test_user2", (long)2);
-        ArrayList<UserRating> list = new ArrayList<>();
-        list.add(user1);
-        list.add(user2);
-        Assert.assertEquals(list, rating);
+        boolean result = rating.contains(user1) && rating.contains(user2);
+        Assert.assertTrue(result);
         dataStorage.close();
     }
 

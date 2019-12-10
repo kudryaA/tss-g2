@@ -33,9 +33,10 @@ public class CheckAuthorizationTest {
                     "INSERT INTO person (login, password, name, surname, bannedstatus, email, role) " +
                             "VALUES ('john_test_1', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', " +
                             "'doe', false, 'john@doe.com', 'admin')")) {
-                statement.executeQuery();
+                statement.executeUpdate();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -68,7 +69,7 @@ public class CheckAuthorizationTest {
         CheckAuthorization check = new CheckAuthorization(dataStorage, "john_test_2", "a");
         Answer answer = check.getAnswer();
         dataStorage.close();
-        Assert.assertTrue(answer.isStatus());
+        Assert.assertFalse(answer.isStatus());
         Assert.assertEquals(false, answer.getObj());
     }
 
@@ -78,9 +79,16 @@ public class CheckAuthorizationTest {
                      DriverManager.getConnection(
                              "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement(
-                    "DELETE FROM person WHERE login = 'john_test_1' " +
-                            "or login = 'john_test_2'")) {
-                statement.executeQuery();
+                    "DELETE FROM mailconfirmation WHERE login in ('john_test_2', 'john_test_1')")) {
+                statement.execute();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM users_rating WHERE user_login in ('john_test_2', 'john_test_1')")) {
+                statement.execute();
+            }
+            try (PreparedStatement statement = connection.prepareStatement(
+                    "DELETE FROM person WHERE login in ('john_test_2', 'john_test_1')")) {
+                statement.execute();
             }
         } catch (SQLException e) {
         }

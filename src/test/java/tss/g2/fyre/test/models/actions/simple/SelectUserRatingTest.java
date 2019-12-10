@@ -14,10 +14,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Properties;
+import java.util.*;
 
 public class SelectUserRatingTest {
     private static Properties properties = new Configuration("config/configuration.yml").getProperties();
@@ -66,8 +63,9 @@ public class SelectUserRatingTest {
         list.add(user2);
         Answer answer1 = new Answer<>(true, list);
         Assert.assertEquals(answer1.isStatus(), answer.isStatus());
-        Assert.assertEquals(answer1.getObj(), answer.getObj());
-        Assert.assertEquals(answer1, answer);
+        List<UserRating> list1 = (List<UserRating>) answer.getObj();
+        boolean result = list1.contains(user1) && list1.contains(user2);
+        Assert.assertTrue(result);
         dataStorage.close();
     }
 
