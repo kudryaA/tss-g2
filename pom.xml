@@ -62,6 +62,40 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.samaxes.maven</groupId>
+                <artifactId>minify-maven-plugin</artifactId>
+                <version>1.7.4</version>
+                <executions>
+                    <execution>
+                        <id>default-minify</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>minify</goal>
+                        </goals>
+                        <configuration>
+
+                            <webappSourceDir>${basedir}/src</webappSourceDir>
+
+                            <cssSourceDir>main/resources/pages/css</cssSourceDir>
+                            <cssSourceFiles>
+                                <cssSourceFile>error.css</cssSourceFile>
+                                <cssSourceFile>recipe.css</cssSourceFile>
+                                <cssSourceFile>mainPage.css</cssSourceFile>
+                                <cssSourceFile>moderatorPage.css</cssSourceFile>
+                                <cssSourceFile>addRecipe.css</cssSourceFile>
+                                <cssSourceFile>authentication.css</cssSourceFile>
+                            </cssSourceFiles>
+                            <cssEngine>YUI</cssEngine>
+
+                            <jsEngine>CLOSURE</jsEngine>
+                            <closureCompilationLevel>SIMPLE_OPTIMIZATIONS</closureCompilationLevel>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

@@ -4,9 +4,7 @@
   --input-padding-y: .75rem;
 }
 body {
-  background: #007bff;
   font-family: Roboto;
-  background: linear-gradient(to right, #00818a, #283149);
 }
 .btn:focus, .btn:active, .input:focus, .input:active, .form-control:focus, .form-control:active {
     outline: none !important;

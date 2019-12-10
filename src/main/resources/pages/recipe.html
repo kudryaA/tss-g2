@@ -156,6 +156,10 @@
                                     var urlString = window.location.href;
                                     var url = new URL(urlString);
                                     var isApprove = url.searchParams.get("isApprove");
+                                    if (answer.status == false) {
+                                        window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"500.html");
+                                        return;
+                                    }
                                     if (typeof user.obj != "undefined") {
                                         if (user.obj.login != answer.obj.creator && user.obj.role != "admin") {
                                             $("#edit-recipe").remove();

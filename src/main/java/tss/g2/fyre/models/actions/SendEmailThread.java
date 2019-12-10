@@ -35,7 +35,7 @@ public class SendEmailThread implements Runnable {
     List<String> emailList = dataStorage.selectSubscribers(user);
     StringBuilder emails = new StringBuilder();
     emailList.forEach(email -> emails.append(email).append(","));
-    if ("".equals(emailList.toString())) {
+    if (!"".equals(emailList.toString())) {
       String emailsList = emails.toString().substring(0, emails.toString().length() - 1);
       String text = "Author " + user + " add new recipe.\nRecipe name is "
               + recipeName + ".\nLink: " + properties.getProperty("external_url")
