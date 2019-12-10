@@ -28,14 +28,10 @@ public class UpdateRecipe implements ActionAuth {
     this.recipeId = recipeId;
     this.recipeName = recipeName.replace("<", "&lt");
     this.composition = composition.replace("<", "&lt");
-    this.cookingSteps = cookingSteps.replace("<img", "&ltimg")
-            .replace("<script", "&ltscript")
-            .replace("<meta", "&ltmeta")
-            .replace("<style", "&ltstyle")
-            .replace("<IMG", "&ltIMG")
-            .replace("<SCRIPT", "&ltSCRIPT")
-            .replace("<META", "&ltMETA")
-            .replace("<STYLE", "&ltSTYLE");;
+    this.cookingSteps = cookingSteps.replaceAll("<(?i)img", "&ltimg")
+            .replace("<(?i)script", "&ltscript")
+            .replace("<(?i)meta", "&ltmeta")
+            .replace("<(?i)style", "&ltstyle");;
   }
 
   @Override
