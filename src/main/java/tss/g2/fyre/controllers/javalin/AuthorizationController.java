@@ -11,10 +11,7 @@ import tss.g2.fyre.controllers.utils.UserLogin;
 import tss.g2.fyre.models.Answer;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
-import tss.g2.fyre.models.actions.auth.AddSubscribe;
-import tss.g2.fyre.models.actions.auth.ChangePassword;
-import tss.g2.fyre.models.actions.auth.CheckSubscribe;
-import tss.g2.fyre.models.actions.auth.DeleteSubscribe;
+import tss.g2.fyre.models.actions.auth.*;
 import tss.g2.fyre.models.actions.auth.check.AuthUser;
 import tss.g2.fyre.models.actions.simple.CheckAuthorization;
 import tss.g2.fyre.models.actions.simple.RegisterUser;
@@ -163,7 +160,20 @@ public class AuthorizationController implements CreateController {
       logger.info("Request to /confirm/mail");
       String key = ctx.queryParam("key");
       dataStorage.confirmMail(key);
-      ctx.render("pages/mainPage.html");
+      ctx.redirect("/");
+    });
+
+    app.get("/get/key", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      logger.info("Request to /get/key for user {}",
+              new UserLogin(tokenStorage, token).get());
+      Action action = new AuthUser(
+              new GetKey(dataStorage),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/get/key", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
     });
   }
 }

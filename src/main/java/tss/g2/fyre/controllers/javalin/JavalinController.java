@@ -42,6 +42,12 @@ public class JavalinController implements CreateController {
   public void create() {
     app.get("/test", ctx -> ctx.result(new Answer<>(true).toJson()));
     app.get("/", ctx -> ctx.render("pages/mainPage.html"));
+    app.error(404, ctx -> {
+      ctx.render("pages/404.html");
+    });
+    app.error(500, ctx -> {
+      ctx.render("pages/500.html");
+    });
     app.get("/recipe", ctx -> {
       String recipeId = ctx.formParam("recipeId");
       if (recipeId == null) {
