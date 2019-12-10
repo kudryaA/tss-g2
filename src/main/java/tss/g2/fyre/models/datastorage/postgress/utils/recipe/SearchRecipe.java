@@ -53,7 +53,7 @@ public class SearchRecipe {
             .prepareStatement("SELECT recipe.*, ts_rank_cd(to_tsvector(recipe.name), query) r_name, "
                     + "ts_rank_cd(to_tsvector(recipe.recipecomposition), query) r_composition, "
                     + "ts_rank_cd(to_tsvector(recipe.cookingsteps), query) r_steps "
-                    + "FROM recipe, plainto_tsquery('english', '%' || ? || '%') query "
+                    + "FROM recipe, plainto_tsquery('english', '%'|| ? ||'%') query "
                     + "WHERE (query @@ to_tsvector(recipe.name) or "
                     + "query @@ to_tsvector(recipe.cookingsteps) or "
                     + "query @@ to_tsvector(recipe.recipecomposition)) "
