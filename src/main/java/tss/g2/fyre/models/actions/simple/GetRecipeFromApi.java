@@ -1,8 +1,10 @@
 package tss.g2.fyre.models.actions.simple;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.datastorage.DataStorage;
+import tss.g2.fyre.models.entity.recipe.Recipe;
 
 public class GetRecipeFromApi implements Action {
   private DataStorage dataStorage;
@@ -23,6 +25,11 @@ public class GetRecipeFromApi implements Action {
 
   @Override
   public Answer getAnswer() {
-    return new Answer<>(true, dataStorage.getRecipeFromApi(recipeId, key));
+    Recipe recipe = dataStorage.getRecipeFromApi(recipeId, key);
+    if (recipe != null) {
+      return new Answer<>(true, recipe);
+    } else {
+      return new AnswerWithComment(true, false, "Invalid key. Try again.");
+    }
   }
 }
