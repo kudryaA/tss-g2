@@ -26,6 +26,9 @@
                     }
                 ]
             });
+            var now = new Date();
+            var minDate = now.toISOString().substring(0,16);
+            $("#publicationDate").attr("min", minDate);
         });
         function createRecipe() {
             var check = true;
@@ -71,8 +74,19 @@
                 $("#publicationDate").css("border-color","red");
                 check = false;
             } else {
-                $("#publicationDate").next("span").remove();
-                $("#publicationDate").css("border-color","");
+                var currDate = new Date();
+                if (currDate.getHours() > parseInt(date.substring(11, 13), 10)) {
+                    $("#publicationDate").after("<span>Date can't be less than current</span>");
+                    $("#publicationDate").css("border-color","red");
+                    check = false;
+                } else if (currDate.getHours() == parseInt(date.substring(11, 13), 10) && currDate.getMinutes() > parseInt(date.substring(14, 16), 10)) {
+                    $("#publicationDate").after("<span>Date can't be less than current</span>");
+                    $("#publicationDate").css("border-color","red");
+                    check = false
+                } else {
+                    $("#publicationDate").next("span").remove();
+                    $("#publicationDate").css("border-color","");
+                }
             }
             var data = new FormData();
             $.each($("#file")[0].files, function(i, file) {
