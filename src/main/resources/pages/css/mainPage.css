@@ -8,9 +8,13 @@ body {
 .input-group button {
 	border-radius: 2rem;
 }
-.navbar {
-	background: #007bff;
+.navbar, footer {
 	background: linear-gradient(to right, #00818a, #283149);
+}
+footer {
+    color: rgba(255,255,255,.5);
+    padding-bottom: 20px;
+    margin-top: 20px;
 }
 .navbar-brand {
     max-width: 80px;
