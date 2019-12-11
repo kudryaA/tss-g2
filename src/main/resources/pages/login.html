@@ -42,8 +42,10 @@
                     var answer = $.parseJSON(response.responseText);
                     if (answer.obj == true) {
                         window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"mainPage.html");
-                    } else {
+                    } else if (answer.comment !== undefined) {
                         alert(answer.comment);
+                    } else {
+                        alert("Something went wrong!");
                     }
                 }
             ]

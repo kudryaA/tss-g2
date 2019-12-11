@@ -29,7 +29,7 @@ public class ActionTime implements Action {
     Answer answer = action.getAnswer();
     long end = System.currentTimeMillis();
     long time = end - start;
-    dataStorage.addTimeApi(api, time);
+    //dataStorage.addTimeApi(api, time);
     return answer;
   }
 }
