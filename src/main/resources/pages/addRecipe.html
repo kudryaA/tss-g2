@@ -75,11 +75,32 @@
                 check = false;
             } else {
                 var currDate = new Date();
-                if (currDate.getHours() > parseInt(date.substring(11, 13), 10)) {
-                    $("#publicationDate").after("<span>Date can't be less than current</span>");
-                    $("#publicationDate").css("border-color","red");
-                    check = false;
-                } else if (currDate.getHours() == parseInt(date.substring(11, 13), 10) && currDate.getMinutes() > parseInt(date.substring(14, 16), 10)) {
+                /*console.log(currDate);
+                console.log(currDate.getUTCDate());
+                console.log(currDate.getUTCMonth() + 1);
+                console.log(currDate.getUTCFullYear());
+                console.log(date);
+                console.log(date.substring(0, 2));
+                console.log(date.substring(3, 5));
+                console.log(date.substring(6, 10));
+
+                console.log(currDate.getUTCFullYear() > parseInt(date.substring(6, 10), 10));*/
+                if (currDate.getUTCDate() == parseInt(date.substring(0, 2), 10) && currDate.getUTCMonth() + 1 == parseInt(date.substring(3, 5), 10)) {
+                    if (currDate.getHours() > parseInt(date.substring(11, 13), 10)) {
+                        $("#publicationDate").after("<span>Date can't be less than current</span>");
+                        $("#publicationDate").css("border-color","red");
+                        check = false;
+                    } else if (currDate.getHours() == parseInt(date.substring(11, 13), 10) && currDate.getMinutes() > parseInt(date.substring(14, 16), 10)) {
+                        $("#publicationDate").after("<span>Date can't be less than current</span>");
+                        $("#publicationDate").css("border-color","red");
+                        check = false
+                    } else {
+                        $("#publicationDate").next("span").remove();
+                        $("#publicationDate").css("border-color","");
+                    }
+                } else if (currDate.getUTCMonth() + 1 > parseInt(date.substring(3, 5), 10)
+                    || (currDate.getUTCMonth() + 1 == parseInt(date.substring(3, 5), 10) && currDate.getUTCDate() > parseInt(date.substring(0, 2), 10))
+                    || currDate.getUTCFullYear() > parseInt(date.substring(6, 10), 10)) {
                     $("#publicationDate").after("<span>Date can't be less than current</span>");
                     $("#publicationDate").css("border-color","red");
                     check = false
