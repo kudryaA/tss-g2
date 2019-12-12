@@ -272,6 +272,13 @@ public interface DataStorage {
   Recipe getRecipeFromApi(String recipeId, String key);
 
   /**
+   * Method for select user recipes.
+   * @param login user login
+   * @return recipe list
+   */
+  List<Recipe> selectUserRecipes(String login);
+
+  /**
    * Store time api.
    * @param api api
    * @param time time in milliseconds
