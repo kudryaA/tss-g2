@@ -129,7 +129,7 @@
         }
         $(function() {
             var urlString = window.location.href;
-                var url = new URL(urlString);
+            var url = new URL(urlString);
             if (url.pathname == "/recipe") {
                 window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"mainPage.html?recipeId=" + url.searchParams.get("recipeId"));
             }
@@ -302,31 +302,13 @@
             });
         }
         function printRecipe(){
-            var element = "#recipe-info";
-            var filename = $("#name").html() + ".doc";
-            var preHtml = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>"
-                + "<head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
-            var postHtml = "</body></html>";
-            var html = preHtml + $("#recipe-info").html() + postHtml;
+            var html = $("#recipe-info").html();
             console.log(html);
-            var blob = new Blob(["\ufeff", html], {
-                type: "application/msword"
-            });
-
-            var url = "data:application/vnd.ms-word;charset=utf-8," + encodeURIComponent(html);
-            var downloadLink = document.createElement("a");
-
-            document.body.appendChild(downloadLink);
-
-            if (navigator.msSaveOrOpenBlob ) {
-                navigator.msSaveOrOpenBlob(blob, filename);
-            } else {
-                downloadLink.href = url;
-                downloadLink.download = filename;
-                downloadLink.click();
-            }
-
-            document.body.removeChild(downloadLink);
+            var id = $("#id").html();
+            window.localStorage.setItem(id, html);
+            var win = window.open(location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"printableRecipe.html?id=" + id), '_blank');
+            win.focus();
+            //window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"printableRecipe.html?recipe=" + html);
         }
 
         function like(){
