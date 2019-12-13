@@ -1,11 +1,14 @@
 INSERT INTO person (login, password, name, surname, bannedstatus, email) VALUES ('john', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb', 'john', 'doe', false, 'john@doe.com');
 INSERT INTO moderator VALUES ('a', 'a', 'ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb');
 
-INSERT INTO type (name, description) VALUES ('dessert', 'dessert');
-INSERT INTO type (name, description) VALUES ('healthy food', 'healthy food');
-INSERT INTO type (name, description) VALUES ('fish', 'fish');
-INSERT INTO type (name, description) VALUES ('easy cooking', 'easy cooking');
-INSERT INTO type (name, description) VALUES ('vegans', 'vegans');
+INSERT INTO type (name, description, image) VALUES ('dessert', ' Sweet food eaten at the end of a meal', 'nzsfpcfiozjiaybemjzzkrzgkvidellykqiogcylsydvxzesjrlfbiyisqjgtxlhmogjwqxkzcqgttxbtqclikqechltdfkyroyb');
+INSERT INTO type (name, description, image) VALUES ('healthy food', 'Food that is believed to be good for you because it does not contain artificial chemicals or much sugar or fat', 'rcxskglrqkffibhriaifraoyitbjlgvwgyvrleipidnmkadxrgwtqmxrkrwnguxwbzjohpexptdtcmbkqfuexgbokfkselxwlftn');
+INSERT INTO type (name, description, image) VALUES ('fish', 'Food with fish', 'quphctclrohqauwbiaoofnekdlcfcockbnymjrbcdofnfviiyhjtkpkeljyqxtycylinnjifcvdyrbbmefeupdhgukayzlxlehpj');
+INSERT INTO type (name, description, image) VALUES ('easy cooking', 'Simple but delicious recipes', 'flekslddnrdoltbnljiqienmhfzeiknouobqvoepxykqavynwinybnygdvcbdylriwgsrqbvcrsjdvgrpylfubmjnitmjvomkxck');
+INSERT INTO type (name, description, image) VALUES ('vegans', 'Food that meets vegetarian standards by not including meat and animal tissue products', 'dkorsrgllbnvsopquztdbldnhmaeqbtysjjnjvyagpmagbeciqcyrdfwtpcehdzqcirdhffwqeidjjodvyzoppvjewyrbjinyawd ');
+INSERT INTO type (name, description, image) VALUES ('starter', 'A small dish served as the first part of a meal', 'ctbswfnbxtokcdhlccysjrxtqvfyrsmaioiowrqpbemelnkiauiauftndnfqnapxohbsrpassisaukpdvdzhibkwlzeimnqostgz');
+INSERT INTO type (name, description, image) VALUES ('main course', 'The largest or most important part of a meal in which there are different parts served separately', 'sjgsihsrnbrdlpoiydtolewcsimkyvofsfbmmkxdafpjnrglvnvklgrqxverejchfbcojwsczfbayjmipkueglqbmoiepvanvvia');
+INSERT INTO type (name, description, image) VALUES ('meat', 'Food with meat', 'zpmdpcoshfhzvmcczaeycpglatopmqpjthaomnxjmxhcfxnplfcdurxkxdbujydvhvfhhamiixefelfmteivzynhbvtrosggfllp');
 
 INSERT INTO recipe (recipe_id, name, recipecomposition, cookingsteps, publicationdate, image, creator, rating) VALUES (1, 'Almond, Pine Nut & Blackberry Cake', '11/2 cups self-raising flour
 1/3 cup plain flour
