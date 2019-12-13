@@ -151,6 +151,9 @@
                                 $(this).val([]);
                             });
                             tinymce.get("cookingSteps").setContent("");
+                            alert("Recipe successfully added");
+                        } else {
+                            alert("Something went wrong, recipe not added");
                         }
                     }
                 ]
