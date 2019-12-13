@@ -16,13 +16,13 @@ body {
 	background: linear-gradient(to right, #00818a, #283149);
 }
 footer {
-    width:100%;
+    bottom: 0;
     color: rgba(255,255,255,.5);
     padding-bottom: 20px;
     margin-top: 20px;
-    position: absolute;
-    left: 0;
-    bottom: 0;
+    left:0;
+    position: relative;
+    width: 100%;
 }
 .navbar-brand {
     max-width: 80px;
