@@ -139,9 +139,8 @@
             $("#content-container").load("profile.html");
         }
         function sendBugReport() {
-            window.history.replaceState(null, null, window.location.pathname);
-            $("#content-container").empty();
-            $("#content-container").load("bugReportForm.html");
+            var win = window.open(location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"bugReportForm.html"), "_blank");
+            win.focus();
         }
         function changeSortOfRecipes(sortType) {
             isSearch = false;

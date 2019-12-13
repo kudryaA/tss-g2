@@ -306,7 +306,7 @@
             console.log(html);
             var id = $("#id").html();
             window.localStorage.setItem(id, html);
-            var win = window.open(location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"printableRecipe.html?id=" + id), '_blank');
+            var win = window.open(location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"printableRecipe.html?id=" + id), "_blank");
             win.focus();
             //window.location.href = location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"printableRecipe.html?recipe=" + html);
         }
