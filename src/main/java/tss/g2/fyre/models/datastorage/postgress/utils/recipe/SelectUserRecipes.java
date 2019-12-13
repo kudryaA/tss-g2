@@ -28,7 +28,7 @@ public class SelectUserRecipes {
 
     try (PreparedStatement selectStatement = connection
             .prepareStatement("select recipe_id, name, recipecomposition, image from recipe "
-                    + "where creator = ? and (isconfirmed = false or publicationdate > current_timestamp) ")) {
+                    + "where creator = ? and (isconfirmed = false or publicationdate > (now() AT TIME ZONE 'UTC')) ")) {
       selectStatement.setString(1, login);
 
       try (ResultSet resultSet = selectStatement.executeQuery()) {

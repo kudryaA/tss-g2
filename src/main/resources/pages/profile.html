@@ -8,6 +8,30 @@
     <script>
         $(function() {
             $("#load-recipes").hide();
+            $.ajax({
+                url:"/select/userRecipes",
+                type:"post",
+                complete: [
+                    function (response) {
+                        var answer = $.parseJSON(response.responseText);
+                        alert(response.responseText);
+                        $.each(answer.obj, function(key, value) {
+                            $("#user-recipes").append("<div class='row recipe'>"
+                                + "<div class='col-md-7'>"
+                                + "<a>"
+                                + "<img class='img-fluid rounded mb-3 mb-md-0 preview' src='/image?id=" + value.image + "' alt=''>"
+                                + "</a>"
+                                + "</div>"
+                                + "<div class='col-md-5'>"
+                                + "<h3>" + value.name + "</h3>"
+                                + "<p class='text-left'>" + value.composition.split("\n").join("<br>") + "</p>"
+                                + "<a class='btn btn-primary text-center' href='/mainPage.html?recipeId="
+                                + value.id + "'>View recipe</a>"
+                                + "</div></div><hr>");
+                        });
+                    }
+                ]
+            });
         });
 
         function changePassword() {
@@ -72,6 +96,7 @@
                 ]
             });
         }
+
     </script>
 </head>
 <body>
@@ -94,6 +119,10 @@
                 <button class="btn btn-primary" id="category-submit" onclick="changePassword()">Change password</button>
                 <hr>
             </div>
+        </div>
+        <div id="user-recipes">
+            <h3>Your recipes that that have date greater than current or pending for approve</h3>
+            <hr>
         </div>
     </div>
 </div>
