@@ -272,5 +272,18 @@ public class RecipeController implements CreateController {
       Answer answer = new ActionTime("/getRecipeFromApi", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
+
+    app.post("/select/userRecipes", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      logger.info("Request to /select/userRecipes with user {}",
+              new UserLogin(tokenStorage, token).get());
+      Action action = new AuthUser(
+              new SelectUserRecipes(dataStorage),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/select/userRecipes", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
   }
 }

@@ -211,6 +211,11 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
+  public List<Recipe> selectUserRecipes(String login) {
+    return new SelectUserRecipes(connection, login).selectUserRecipes();
+  }
+
+  @Override
   public Recipe getRecipeFromApi(String recipeId, String key) {
     return new GetRecipeFromApi(connection, recipeId, key).getRecipeFromApi();
   }
