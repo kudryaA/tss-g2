@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+html {
+    position: relative;
+    min-height: 100%;
+}
 body {
 	font-family: Roboto;
 }
@@ -12,9 +16,13 @@ body {
 	background: linear-gradient(to right, #00818a, #283149);
 }
 footer {
+    width:100%;
     color: rgba(255,255,255,.5);
     padding-bottom: 20px;
     margin-top: 20px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 .navbar-brand {
     max-width: 80px;
