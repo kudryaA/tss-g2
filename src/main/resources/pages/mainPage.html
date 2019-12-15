@@ -43,7 +43,7 @@
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
                         if (answer.status == true) {
-                            $("#login-page").text("Logout");
+                            $("#login-page").text(answer.obj.login + " (Logout)");
                             $("#login-page").attr("onclick", "logout()");
                             if (answer.obj.role != "moderator" && answer.obj.role != "admin") {
                                 $("#moderator-page").remove();
