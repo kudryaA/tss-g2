@@ -180,7 +180,7 @@
                                     $(document).attr("title", answer.obj.name);
                                     $("#name").html(answer.obj.name);
                                     $("#author").html(answer.obj.creator);
-                                    $("#date").html(answer.obj.publicationDate);
+                                    $("#date").html(answer.obj.publicationDate + " (UTC Timezone)");
                                     $.each(answer.obj.types, function(key, value) {
                                         if (key === answer.obj.types.length - 1) {
                                             $("#categories").append("<a href='/mainPage.html?findByCategory=" + value + "'>" + value + "</a>");

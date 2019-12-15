@@ -32,7 +32,7 @@ public class DateConverter {
       logger.error("Error in parsing date {} with message {}", stringDate, e.getMessage());
       date = new Date();
     }
-    date.setTime(date.getTime() + date.getTimezoneOffset() * 60000);
+    //date.setTime(date.getTime() + date.getTimezoneOffset() * 60000);
     return date;
   }
 }
