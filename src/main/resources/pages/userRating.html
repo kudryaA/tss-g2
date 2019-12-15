@@ -9,17 +9,36 @@
         $(function() {
             $("#load-recipes").hide();
             $.ajax({
-                type: "post",
-                url: "/select/usersRating",
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
+                url:"/session",
+                type:"post",
                 complete: [
                     function (response) {
-                        var answer = $.parseJSON(response.responseText);
-                        $("#rating-table tbody tr").remove();
-                        $.each(answer.obj, function(key, value) {
-                            var row = "<tr><td class='text-left'>" + value.login + "</td><td class='text-center'>" + value.rating + "</td><td></tr>"
-                            $("#rating-table tbody").append(row);
+                        var answerUser = $.parseJSON(response.responseText);
+                        var userLogin = "";
+                        if (answerUser.status == true) {
+                            userLogin = answerUser.obj.login;
+                        }
+                        $.ajax({
+                            type: "post",
+                            url: "/select/usersRating",
+                            dataType: "json",
+                            contentType: "application/json; charset=utf-8",
+                            complete: [
+                                function (response) {
+                                    var answer = $.parseJSON(response.responseText);
+                                    $("#rating-table tbody tr").remove();
+                                    $.each(answer.obj, function(key, value) {
+                                        var login = value.login;
+                                        var rating = value.rating;
+                                        if (login != "" && login == userLogin) {
+                                            login = "<b>" + login + "</b>"
+                                            rating = "<b>" + rating + "</b>"
+                                        }
+                                        var row = "<tr><td class='text-left'>" + login + "</td><td class='text-center'>" + rating + "</td><td></tr>"
+                                        $("#rating-table tbody").append(row);
+                                    });
+                                }
+                            ]
                         });
                     }
                 ]
