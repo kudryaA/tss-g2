@@ -1,6 +1,7 @@
 package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 /**
@@ -36,6 +37,20 @@ public class UpdateRecipe implements ActionAuth {
 
   @Override
   public Answer getAnswer(String login, String role) {
+
+    if ("".equals(recipeName)) {
+      return new AnswerWithComment(true, false,
+              "The name of the recipe field must not be empty.");
+    }
+    if ("".equals(composition)) {
+      return new AnswerWithComment(true, false,
+              "The composition of the recipe field must not be empty.");
+    }
+    if ("".equals(cookingSteps)) {
+      return new AnswerWithComment(true, false,
+              "The cooking steps of the recipe field must not be empty.");
+    }
+
     return new Answer<>(true, dataStorage
         .updateRecipe(recipeId, recipeName, composition, cookingSteps, login));
   }
