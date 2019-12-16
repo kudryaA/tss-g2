@@ -1,6 +1,7 @@
 package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.utils.ToHash;
 
@@ -20,6 +21,11 @@ public class ChangePassword implements ActionAuth {
 
   @Override
   public Answer getAnswer(String login, String role) {
-    return new Answer<>(true, dataStorage.changePassword(password, login));
+    String message = dataStorage.changePassword(password, login);
+    if ("ok".equals(message)) {
+      return new Answer<>(true, true);
+    } else {
+      return new AnswerWithComment(true, false, message);
+    }
   }
 }

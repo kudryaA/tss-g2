@@ -2,6 +2,7 @@ package tss.g2.fyre.models.datastorage.postgress.utils.authorization;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChangePassword {
@@ -21,19 +22,27 @@ public class ChangePassword {
     this.login = login;
   }
 
-  public boolean changePassword() {
-    boolean result = false;
+  public String changePassword() {
+    String message = "";
 
-    try (PreparedStatement changePasswordStatement = connection
-            .prepareStatement("UPDATE person set password = ? where login = ?")) {
-      changePasswordStatement.setString(1, password);
-      changePasswordStatement.setString(2, login);
+    try (PreparedStatement checkStatement = connection.prepareStatement("select 1 from person where login = ? and password = ?")) {
+      try (ResultSet resultSet = checkStatement.executeQuery()) {
+        if (resultSet.next()) {
+          message = "New password shouldn't match the old one.";
+        } else {
+          try (PreparedStatement changePasswordStatement = connection
+                  .prepareStatement("UPDATE person set password = ? where login = ?")) {
+            changePasswordStatement.setString(1, password);
+            changePasswordStatement.setString(2, login);
 
-      result = changePasswordStatement.executeUpdate() == 1;
+            message = changePasswordStatement.executeUpdate() == 1 ? "ok" : "Some errors";
+          }
+        }
+      }
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
-    return result;
+    return message;
   }
 }
