@@ -26,6 +26,8 @@ public class ChangePassword {
     String message = "";
 
     try (PreparedStatement checkStatement = connection.prepareStatement("select 1 from person where login = ? and password = ?")) {
+      checkStatement.setString(1, login);
+      checkStatement.setString(2, password);
       try (ResultSet resultSet = checkStatement.executeQuery()) {
         if (resultSet.next()) {
           message = "New password shouldn't match the old one.";
