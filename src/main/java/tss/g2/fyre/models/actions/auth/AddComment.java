@@ -1,6 +1,7 @@
 package tss.g2.fyre.models.actions.auth;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.datastorage.DataStorage;
 
 /**
@@ -25,6 +26,11 @@ public class AddComment implements ActionAuth {
 
   @Override
   public Answer getAnswer(String login, String role) {
+    if ("".equals(commentText)) {
+      return new AnswerWithComment(true, false,
+              "The comment text field must not be empty.");
+    }
+
     return new Answer<>(true, dataStorage.addComment(login, recipeId, commentText));
   }
 

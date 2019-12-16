@@ -33,6 +33,15 @@ public class AddType implements ActionAuth {
   @Override
   public Answer getAnswer(String user, String role) {
     if (Roles.moderator.toString().equals(role) || Roles.admin.toString().equals(role)) {
+      if ("".equals(typeName)) {
+        return new AnswerWithComment(true, false,
+                "The type name field must not be empty.");
+      }
+      if ("".equals(description)) {
+        return new AnswerWithComment(true, false,
+                "The description field must not be empty.");
+      }
+
       return new Answer<>(true, dataStorage.addType(typeName, description, image));
     } else {
       return new AnswerWithComment(true, false,

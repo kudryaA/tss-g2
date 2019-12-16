@@ -5,6 +5,7 @@ import io.javalin.http.UploadedFile;
 import java.util.*;
 
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.actions.SendEmailThread;
 import tss.g2.fyre.models.datastorage.DataStorage;
 import tss.g2.fyre.models.entity.Roles;
@@ -51,6 +52,31 @@ public class AddRecipe implements ActionAuth {
   @Override
   public Answer getAnswer(String user, String role) {
     List<String> typesList = new ArrayList<>(Arrays.asList(selectedTypes.split("/")));
+
+    if ("".equals(recipeName)) {
+      return new AnswerWithComment(true, false,
+            "The name of the recipe field must not be empty.");
+    }
+    if ("".equals(recipeComposition)) {
+      return new AnswerWithComment(true, false,
+              "The composition of the recipe field must not be empty.");
+    }
+    if ("".equals(cookingSteps)) {
+      return new AnswerWithComment(true, false,
+              "The cooking steps of the recipe field must not be empty.");
+    }
+    if (publicationDate == null) {
+      return new AnswerWithComment(true, false,
+              "The publication date field must not be empty.");
+    }
+    if ("".equals(selectedTypes)) {
+      return new AnswerWithComment(true, false,
+              "You must select one or more types for the recipe.");
+    }
+    if (image == null) {
+      return new AnswerWithComment(true, false,
+              "You must add an image for the recipe.");
+    }
 
     String image = new StoreImage(this.image).store();
 
