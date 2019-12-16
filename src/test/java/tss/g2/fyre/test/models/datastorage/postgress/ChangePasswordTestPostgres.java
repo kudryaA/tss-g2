@@ -38,8 +38,8 @@ public class ChangePasswordTestPostgres {
     @Test
     public void testChangePassword() throws SQLException {
         PostgresDataStorage dataStorage = new PostgresDataStorage(properties);
-        boolean result = dataStorage.changePassword("b","test_user1");
-        Assert.assertEquals(true, result);
+        String result = dataStorage.changePassword("b","test_user1");
+        Assert.assertEquals("ok", result);
         try(Connection connection = DriverManager.getConnection(
                 "jdbc:postgresql://" + host + ":" + port + "/" + database, user, password)){
             try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM person WHERE login = 'test_user1'")){

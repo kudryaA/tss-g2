@@ -70,9 +70,12 @@
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
+                        console.log(response.responseText);
                         if (answer.status == true && answer.obj == true) {
                             alert("Password changed successfully");
                             logout();
+                        } else if (answer.status == true && answer.obj == false && answer.comment != "") {
+                            alert(answer.comment);
                         } else {
                             alert("Something went wrong");
                         }

@@ -181,7 +181,7 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
-  public boolean changePassword(String password, String login) {
+  public String changePassword(String password, String login) {
     return new ChangePassword(connection, password, login).changePassword();
   }
 

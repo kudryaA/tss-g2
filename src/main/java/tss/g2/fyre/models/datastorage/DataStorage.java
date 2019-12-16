@@ -226,7 +226,7 @@ public interface DataStorage {
    * @param login user login
    * @return result of change
    */
-  boolean changePassword(String password, String login);
+  String changePassword(String password, String login);
 
   /**
    * Method for confirm account.
