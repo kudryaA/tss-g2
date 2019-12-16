@@ -47,6 +47,26 @@ public class RegisterUser implements Action {
 
   @Override
   public Answer getAnswer() {
+    if ("".equals(login)) {
+      return new AnswerWithComment(true, false,
+              "Login field must not be empty.");
+    }
+    if ("".equals(password)) {
+      return new AnswerWithComment(true, false,
+              "Password field must not be empty.");
+    }
+    if ("".equals(name)) {
+      return new AnswerWithComment(true, false,
+              "Name field must not be empty.");
+    }
+    if ("".equals(surname)) {
+      return new AnswerWithComment(true, false,
+              "Surname field must not be empty.");
+    }
+    if ("".equals(email)) {
+      return new AnswerWithComment(true, false,
+              "Email field must not be empty.");
+    }
     if (!login.matches("\\w{" + login.length() + "}")) {
       return new AnswerWithComment(true, false, "Login must contain only [a-z0-9_-].");
     }
@@ -66,7 +86,10 @@ public class RegisterUser implements Action {
                 + properties.getProperty("external_url") + "/confirm/mail?key=" + key;
         new EmailNotification(properties, "Mail confirm", text, email).send();
       }).start();
+      return new Answer<>(true, true);
     }
-    return new Answer<>(true, result);
+
+    return new AnswerWithComment(true, false,
+            "This login is already taken by another user.");
   }
 }
