@@ -136,7 +136,7 @@
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
-                        if (answer.status != false) {
+                        if (answer.status == true && answer.obj != false) {
                             $("#recipeForm input").next("span").remove();
                             $("#recipeForm textarea").next("span").remove();
                             $("#recipeForm select").next("span").remove();
@@ -153,8 +153,10 @@
                             });
                             tinymce.get("cookingSteps").setContent("");
                             alert("Recipe successfully added");
+                        }  else if (answer.status == true && answer.obj == false && answer.comment != "") {
+                            alert(answer.comment);
                         } else {
-                            alert("Something went wrong, recipe not added");
+                            alert("Something went wrong!");
                         }
                     }
                 ]
