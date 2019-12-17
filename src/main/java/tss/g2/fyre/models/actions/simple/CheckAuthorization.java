@@ -42,7 +42,7 @@ public class CheckAuthorization implements Action {
     int count = (int) map.get("count");
 
     if (authorization == null) {
-      return new Answer<>(false, false);
+      return new AnswerWithComment(true, false, "You entered incorrect login/password");
     }
 
     if (!login.matches("\\w{" + login.length() + "}")) {
