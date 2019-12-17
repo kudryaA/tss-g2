@@ -74,7 +74,7 @@ public class RegisterUser implements Action {
       return new AnswerWithComment(true, false, "Name must contain only [a-z0-9_-].");
     }
     if (!surname.matches("\\w{" + surname.length() + "}")) {
-      return new AnswerWithComment(true, false, "Name must contain only [a-z0-9_-].");
+      return new AnswerWithComment(true, false, "Surname must contain only [a-z0-9_-].");
     }
 
     String key = new RandomString(20).generate() + new Date().getTime();
