@@ -41,9 +41,10 @@ public class AddRecipe implements ActionAuth {
     this.recipeName = recipeName.replace("<", "&lt");
     this.recipeComposition = recipeComposition.replace("<", "&lt");
     this.cookingSteps = cookingSteps.replaceAll("<(?i)img", "&ltimg")
-            .replace("<(?i)script", "&ltscript")
-            .replace("<(?i)meta", "&ltmeta")
-            .replace("<(?i)style", "&ltstyle");
+            .replaceAll("<(?i)script", "&ltscript")
+            .replaceAll("<(?i)meta", "&ltmeta")
+            .replaceAll("<(?i)style", "&ltstyle")
+            .replace("=", "&#61;");
     this.publicationDate = publicationDate;
     this.selectedTypes = selectedTypes;
     this.image = image;
