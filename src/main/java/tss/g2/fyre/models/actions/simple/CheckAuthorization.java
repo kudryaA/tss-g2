@@ -45,7 +45,7 @@ public class CheckAuthorization implements Action {
       return new AnswerWithComment(true, false, "You entered incorrect login/password");
     }
 
-    if (!login.matches("\\w{" + login.length() + "}")) {
+    if (!login.matches("[\\w-_]{" + login.length() + "}")) {
       return new AnswerWithComment(true, false, "Login must contain only [a-z0-9_-].");
     }
 
