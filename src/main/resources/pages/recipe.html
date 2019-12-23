@@ -18,7 +18,7 @@
             var id = $("#id").html();
             var name = $("#name").html();
             var categories = $("#categories").html().split(",");
-            var ingredients = $("#ingredients").html();
+            var ingredients = $("#ingredients").html().split("<br>").join("\n");
             var steps = $("#steps").html();
             var date = $("#date").html();
             $(document).attr("title", "Editing of " + name);
