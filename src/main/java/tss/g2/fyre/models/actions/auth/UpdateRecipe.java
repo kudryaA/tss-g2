@@ -32,7 +32,8 @@ public class UpdateRecipe implements ActionAuth {
     this.cookingSteps = cookingSteps.replaceAll("<(?i)img", "&ltimg")
             .replaceAll("<(?i)script", "&ltscript")
             .replaceAll("<(?i)meta", "&ltmeta")
-            .replaceAll("<(?i)style", "&ltstyle");;
+            .replaceAll("<(?i)style", "&ltstyle")
+            .replace("=", "&#61;");
   }
 
   @Override
