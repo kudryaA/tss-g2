@@ -10,7 +10,9 @@
             $("#load-recipes").hide();
             $("#selectedTypes").find("option").remove();
             tinymce.init({
-                selector:"#cookingSteps"
+                selector:"#cookingSteps",
+                menubar: false,
+                toolbar: "undo redo | bold italic | cut copy"
             });
             $.ajax({
                 url:"/select/types",
