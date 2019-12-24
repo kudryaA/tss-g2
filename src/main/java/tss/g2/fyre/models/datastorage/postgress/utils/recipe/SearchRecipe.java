@@ -56,11 +56,12 @@ public class SearchRecipe {
                     + "FROM recipe, plainto_tsquery('english',  ? ) query "
                     + "WHERE (query @@ to_tsvector(recipe.name) or "
                     + "query @@ to_tsvector(recipe.cookingsteps) or "
-                    + "query @@ to_tsvector(recipe.recipecomposition)) "
+                    + "query @@ to_tsvector(recipe.recipecomposition) or name % ?) "
                     + "AND publicationdate <= (now() AT TIME ZONE 'UTC') "
                     + "and isconfirmed = true "
                     + "ORDER BY r_name DESC, r_composition DESC, r_steps DESC")) {
       searchStatement.setString(1, searchQuery);
+      searchStatement.setString(2, searchQuery);
       //searchStatement.setInt(2, (pageNumber - 1) * pageSize);
       //searchStatement.setInt(3, pageSize);
 
