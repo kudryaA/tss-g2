@@ -70,12 +70,6 @@ public class AuthorizationController implements CreateController {
       String email = ctx.formParam("email");
       Action action = new RegisterUser(dataStorage, login, password, name, surname, email);
       Answer answer = new ActionTime("/registration", action, dataStorage).getAnswer();
-      boolean status = (boolean) answer.getObj();
-      if (status) {
-        String token = new RandomString(tokenSize).generate();
-        ctx.sessionAttribute("token", token);
-        tokenStorage.put(token, new Authorization(login, "user"));
-      }
       ctx.result(answer.toJson());
     });
 
@@ -157,8 +151,8 @@ public class AuthorizationController implements CreateController {
     });
 
     app.get("/confirm/mail", ctx -> {
-      logger.info("Request to /confirm/mail");
       String key = ctx.queryParam("key");
+      logger.info("Request to /confirm/mail?key=" + key);
       dataStorage.confirmMail(key);
       ctx.redirect("/");
     });
