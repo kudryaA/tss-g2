@@ -224,9 +224,13 @@
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
-                        if (answer.obj != false) {
+                        if (answer.status == true && answer.obj == true) {
                             alert("Comment added");
                             loadComments();
+                        } else if (answer.status == true && answer.obj == false && answer.comment != "") {
+                            alert(answer.comment);
+                        } else {
+                            alert("Something went wrong!");
                         }
                     }
                 ]
