@@ -70,10 +70,10 @@ public class RegisterUser implements Action {
     if (!login.matches("[\\w-_]{" + login.length() + "}")) {
       return new AnswerWithComment(true, false, "Login must contain only [a-z0-9_-].");
     }
-    if (!name.matches("[\\w-_]{" + name.length() + "}")) {
+    if (!name.matches("[\\w- _]{" + name.length() + "}")) {
       return new AnswerWithComment(true, false, "Name must contain only [a-z0-9_-].");
     }
-    if (!surname.matches("[\\w-_]{" + surname.length() + "}")) {
+    if (!surname.matches("[\\w- _]{" + surname.length() + "}")) {
       return new AnswerWithComment(true, false, "Surname must contain only [a-z0-9_-].");
     }
 
