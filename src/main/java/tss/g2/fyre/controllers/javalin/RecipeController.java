@@ -52,9 +52,9 @@ public class RecipeController implements CreateController {
     app.post("/add/recipe", ctx -> {
       String token = ctx.sessionAttribute("token");
       logger.info("Request to /add/recipe with user {}", new UserLogin(tokenStorage, token).get());
-      String recipeName = ctx.formParam("recipeName");
-      String recipeComposition = ctx.formParam("recipeComposition");
-      String cookingSteps = ctx.formParam("cookingSteps");
+      String recipeName = ctx.formParam("recipeName").trim();
+      String recipeComposition = ctx.formParam("recipeComposition").trim();
+      String cookingSteps = ctx.formParam("cookingSteps").trim();
       Date publicationDate = new DateConverter(ctx.formParam("publicationDate")).date();
       String selectedTypes = ctx.formParam("selectedTypes");
       UploadedFile image = ctx.uploadedFile("image");
@@ -70,8 +70,8 @@ public class RecipeController implements CreateController {
 
     app.post("/add/type", ctx -> {
       String token = ctx.sessionAttribute("token");
-      String typeName = ctx.formParam("typeName");
-      String description = ctx.formParam("description");
+      String typeName = ctx.formParam("typeName").trim();
+      String description = ctx.formParam("description").trim();
       UploadedFile image = ctx.uploadedFile("image");
       logger.info("Request to /add/type with user {} for type {}",
               new UserLogin(tokenStorage, token).get(), typeName);
@@ -141,9 +141,9 @@ public class RecipeController implements CreateController {
     app.post("/update/recipe", ctx -> {
       String token = ctx.sessionAttribute("token");
       String recipeId = ctx.formParam("recipeId");
-      String recipeName = ctx.formParam("recipeName");
-      String composition = ctx.formParam("composition");
-      String cookingSteps = ctx.formParam("cookingSteps");
+      String recipeName = ctx.formParam("recipeName").trim();
+      String composition = ctx.formParam("composition").trim();
+      String cookingSteps = ctx.formParam("cookingSteps").trim();
       logger.info("Request to /update/recipe with user {} for recipe {}",
               new UserLogin(tokenStorage, token).get(), recipeId);
       Action action = new AuthUser(
@@ -199,7 +199,7 @@ public class RecipeController implements CreateController {
       String recipeId = ctx.formParam("recipeId");
       logger.info("Request to /add/comment with user {} for recipe {}",
               new UserLogin(tokenStorage, token).get(), recipeId);
-      String commentText = ctx.formParam("commentText");
+      String commentText = ctx.formParam("commentText").trim();
       Action action = new AuthUser(
               new AddComment(dataStorage, recipeId, commentText),
               token,

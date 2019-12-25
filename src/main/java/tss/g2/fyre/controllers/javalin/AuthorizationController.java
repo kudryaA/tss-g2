@@ -62,12 +62,12 @@ public class AuthorizationController implements CreateController {
     });
 
     app.post("/registration", ctx -> {
-      String login = ctx.formParam("login");
+      String login = ctx.formParam("login").trim();
       logger.info("Request to /registration user {}", login);
-      String password = ctx.formParam("password");
-      String name = ctx.formParam("name");
-      String surname = ctx.formParam("surname");
-      String email = ctx.formParam("email");
+      String password = ctx.formParam("password").trim();
+      String name = ctx.formParam("name").trim();
+      String surname = ctx.formParam("surname").trim();
+      String email = ctx.formParam("email").trim();
       Action action = new RegisterUser(dataStorage, login, password, name, surname, email);
       Answer answer = new ActionTime("/registration", action, dataStorage).getAnswer();
       boolean status = (boolean) answer.getObj();
