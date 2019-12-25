@@ -79,6 +79,19 @@ public class AddRecipe implements ActionAuth {
               "You must add an image for the recipe.");
     }
 
+    if (recipeName.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The recipe name should contain only English words.");
+    }
+    if (recipeComposition.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The recipe composition should contain only English words.");
+    }
+    if (cookingSteps.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The cooking steps should contain only English words.");
+    }
+
     String image = new StoreImage(this.image).store();
 
     try {

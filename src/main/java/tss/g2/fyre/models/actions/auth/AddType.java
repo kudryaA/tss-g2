@@ -42,6 +42,15 @@ public class AddType implements ActionAuth {
                 "The description field must not be empty.");
       }
 
+      if (typeName.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+        return new AnswerWithComment(true, false,
+                "The type name should contain only English words.");
+      }
+      if (description.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+        return new AnswerWithComment(true, false,
+                "The description should contain only English words.");
+      }
+
       return new Answer<>(true, dataStorage.addType(typeName, description, image));
     } else {
       return new AnswerWithComment(true, false,

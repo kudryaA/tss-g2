@@ -77,6 +77,23 @@ public class RegisterUser implements Action {
       return new AnswerWithComment(true, false, "Surname must contain only [a-z0-9_-].");
     }
 
+    if (name.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The name should contain only English words.");
+    }
+    if (surname.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The surname should contain only English words.");
+    }
+    if (login.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The login should contain only English words.");
+    }
+    if (email.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The password should contain only English words.");
+    }
+
     String key = new RandomString(20).generate() + new Date().getTime();
     boolean result = dataStorage.createUser(login, password, name, surname, email, key);
 
