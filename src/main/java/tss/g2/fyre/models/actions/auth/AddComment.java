@@ -31,6 +31,11 @@ public class AddComment implements ActionAuth {
               "The comment text field must not be empty.");
     }
 
+    if (commentText.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The comment should contain only English words.");
+    }
+
     return new Answer<>(true, dataStorage.addComment(login, recipeId, commentText));
   }
 

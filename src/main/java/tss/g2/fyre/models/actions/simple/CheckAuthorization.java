@@ -49,6 +49,11 @@ public class CheckAuthorization implements Action {
       return new AnswerWithComment(true, false, "Login must contain only [a-z0-9_-].");
     }
 
+    if (login.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The login should contain only English words.");
+    }
+
     if (authorization.getBannedStatus()) {
       return new AnswerWithComment(true, false, "You are banned");
     }

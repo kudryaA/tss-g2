@@ -52,6 +52,19 @@ public class UpdateRecipe implements ActionAuth {
               "The cooking steps of the recipe field must not be empty.");
     }
 
+    if (recipeName.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The recipe name should contain only English words.");
+    }
+    if (composition.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The recipe composition should contain only English words.");
+    }
+    if (cookingSteps.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
+      return new AnswerWithComment(true, false,
+              "The cooking steps should contain only English words.");
+    }
+
     return new Answer<>(true, dataStorage
         .updateRecipe(recipeId, recipeName, composition, cookingSteps, login));
   }
