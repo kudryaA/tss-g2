@@ -62,7 +62,7 @@ public class AddRecipe implements ActionAuth {
       return new AnswerWithComment(true, false,
               "The composition of the recipe field must not be empty.");
     }
-    if ("".equals(cookingSteps)) {
+    if ("".equals(cookingSteps.replaceAll("<p>|</p>|&nbsp;", "").trim())) {
       return new AnswerWithComment(true, false,
               "The cooking steps of the recipe field must not be empty.");
     }

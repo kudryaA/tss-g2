@@ -43,7 +43,7 @@
             var check = true;
             $("#recipeForm input").each(function() {
                 $(this).next("span").hide();
-                if ($(this).val() == "") {
+                if ($(this).val().trim() == "") {
                     $(this).after("<span>This field is required</span>");
                     $(this).css("border-color","red");
                     check = false;
@@ -53,7 +53,7 @@
             });
             $("#recipeForm textarea").each(function() {
                 $(this).next("span").hide();
-                if ($(this).val() == "") {
+                if ($(this).val().trim() == "") {
                     $(this).after("<span>This field is required</span>");
                     $(this).css("border-color","red");
                     check = false;
@@ -211,6 +211,13 @@
             });
         });
         function sendComment() {
+            $("#comment").next("span").remove();
+            $("#comment").css("border-color","");
+            if ($("#comment").val().trim() == "") {
+                $("#comment").after("<span>Comment can't be empty</span>");
+                $("#comment").css("border-color","red");
+                return;
+            }
             var data = {
                 recipeId: $("#id").html(),
                 commentText: $("#comment").val()

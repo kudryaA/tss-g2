@@ -37,36 +37,34 @@
             var check = true;
             $("#recipeForm input").each(function() {
                 $(this).next("span").remove();
-                if ($(this).val() == "") {
+                $(this).css("border-color","");
+                if ($(this).val().trim() == "") {
                     $(this).after("<span>This field is required</span>");
                     $(this).css("border-color","red");
                     check = false;
-                } else {
-                    $(this).css("border-color","");
                 }
             });
             $("#recipeForm textarea").each(function() {
                 $(this).next("span").remove();
-                if ($(this).val() == "") {
+                $(this).css("border-color","");
+                if ($(this).val().trim() == "") {
                     $(this).after("<span>This field is required</span>");
                     $(this).css("border-color","red");
                     check = false;
-                } else {
-                    $(this).css("border-color","");
                 }
             });
             $("#recipeForm select").each(function() {
                 $(this).next("span").remove();
+                $(this).css("border-color","");
                 if ($(this).val() == "") {
                     $(this).after("<span>This field is required</span>");
                     $(this).css("border-color","red");
                     check = false;
-                } else {
-                    $(this).css("border-color","");
                 }
             });
             $(".tox-tinymce").next("span").remove();
-            if (tinymce.get("cookingSteps").getContent() == "") {
+            $(".tox-tinymce").css("border-color", "");
+            if (tinymce.get("cookingSteps").getContent().replace(/<p>|<\/p>|&nbsp;/g, "").trim() == "") {
                 $(".tox-tinymce").after("<span>This field is required</span>");
                 $(".tox-tinymce").css("border-color","red");
                 check = false;
@@ -159,7 +157,7 @@
                             });
                             tinymce.get("cookingSteps").setContent("");
                             alert("Recipe successfully added");
-                        }  else if (answer.status == true && answer.obj == false && answer.comment != "") {
+                        } else if (answer.status == true && answer.obj == false && answer.comment != "") {
                             alert(answer.comment);
                         } else {
                             alert("Something went wrong!");

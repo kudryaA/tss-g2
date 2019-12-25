@@ -17,7 +17,7 @@
 				var check = true;
   				$("input").each(function() {
   					$(this).next("span").hide();
-				    if ($(this).val() == "") {
+				    if ($(this).val().trim() == "") {
 				    	$(this).after("<span>This field is required</span>");
 				    	$(this).css("border-color","red");
 				        check = false;

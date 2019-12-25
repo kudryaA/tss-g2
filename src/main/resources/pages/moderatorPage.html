@@ -124,9 +124,9 @@
         }
         function createCategory() {
             var check = true;
-            $("#recipeForm input").each(function() {
+            $("#category-form input").each(function() {
                 $(this).next("span").remove();
-                if ($(this).val() == "") {
+                if ($(this).val().trim() == "") {
                     $(this).after("<span>This field is required</span>");
                     $(this).css("border-color","red");
                     check = false;
@@ -134,9 +134,9 @@
                     $(this).css("border-color","");
                 }
             });
-            $("#recipeForm textarea").each(function() {
+            $("#category-form textarea").each(function() {
                 $(this).next("span").remove();
-                if ($(this).val() == "") {
+                if ($(this).val().trim() == "") {
                     $(this).after("<span>This field is required</span>");
                     $(this).css("border-color","red");
                     check = false;
@@ -162,16 +162,20 @@
                 complete: [
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
-                        if (answer.status != false) {
+                        if (answer.status == true && answer.obj  == true) {
                             $("#category-form input").next("span").remove();
                             $("#category-form textarea").next("span").remove();
-
                             $("#category-form input").each(function() {
                                 $(this).val("");
                             });
                             $("#category-form textarea").each(function() {
                                 $(this).val("");
                             });
+                            alert("Category added");
+                        } else if (answer.status == true && answer.obj == false && answer.comment != "") {
+                            alert(answer.comment);
+                        } else {
+                            alert("Something went wrong!");
                         }
                     }
                 ]
