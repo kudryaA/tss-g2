@@ -38,7 +38,7 @@
             var check = true;
             $("#change-password-form input").each(function() {
                 $(this).next("span").remove();
-                if ($(this).val() == "") {
+                if ($(this).val().trim() == "") {
                     $(this).after("<span>This field is required</span>");
                     $(this).css("border-color","red");
                     check = false;
