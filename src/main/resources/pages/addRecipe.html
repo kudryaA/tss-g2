@@ -29,7 +29,8 @@
                 ]
             });
             var now = new Date();
-            var minDate = now.toISOString().substring(0,16);
+            now.setDate(new Date().getDate() + 1);
+            var minDate = now.toISOString().substring(0,10);
             $("#publicationDate").attr("min", minDate);
         });
         function createRecipe() {
@@ -69,49 +70,18 @@
                 $(".tox-tinymce").css("border-color","red");
                 check = false;
             }
-            var date = formatDate(new Date($("#publicationDate").val()));
+
             $("#publicationDate").next("span").remove();
             $("#publicationDate").css("border-color","");
-            if(date.indexOf("NaN") >= 0) {
-                $("#publicationDate").after("<span>Check date format</span>");
+            var recipeDate = new Date($("#publicationDate").val());
+            var tomorrow = new Date();
+            tomorrow.setDate(new Date().getDate() + 1);
+            tomorrow.setHours(0,0,0,0);
+            recipeDate.setHours(0,0,0,0);
+            if (recipeDate < tomorrow) {
+                $("#publicationDate").after("<span>Date can't be less than tomorrow</span>");
                 $("#publicationDate").css("border-color","red");
                 check = false;
-            } else {
-                var currDate = new Date();
-                /*console.log(currDate);
-                console.log(currDate.getUTCDate());
-                console.log(currDate.getUTCMonth() + 1);
-                console.log(currDate.getUTCFullYear());
-                console.log($("#publicationDate").val());
-                console.log(date);
-                console.log(date.substring(0, 2));
-                console.log(date.substring(3, 5));
-                console.log(date.substring(6, 10));*/
-
-                //console.log(currDate.getUTCFullYear() > parseInt(date.substring(6, 10), 10));
-                if (currDate.getUTCDate() == parseInt(date.substring(0, 2), 10) && currDate.getUTCMonth() + 1 == parseInt(date.substring(3, 5), 10)) {
-                    if (currDate.getUTCHours() > parseInt(date.substring(11, 13), 10)) {
-                        $("#publicationDate").after("<span>Date can't be less than current</span>");
-                        $("#publicationDate").css("border-color","red");
-                        check = false;
-                    } else if (currDate.getUTCHours() == parseInt(date.substring(11, 13), 10) && currDate.getUTCMinutes() > parseInt(date.substring(14, 16), 10)) {
-                        $("#publicationDate").after("<span>Date can't be less than current</span>");
-                        $("#publicationDate").css("border-color","red");
-                        check = false;
-                        console.log(2)
-                    } else {
-                        $("#publicationDate").next("span").remove();
-                        $("#publicationDate").css("border-color","");
-                    }
-                } else if (currDate.getUTCFullYear() == parseInt(date.substring(6, 10), 10) && currDate.getUTCMonth() + 1 > parseInt(date.substring(3, 5), 10)) {
-                    $("#publicationDate").after("<span>Date can't be less than current</span>");
-                    $("#publicationDate").css("border-color","red");
-                    check = false;
-                } else if (currDate.getUTCFullYear() > parseInt(date.substring(6, 10), 10)) {
-                    $("#publicationDate").after("<span>Date can't be less than current</span>");
-                    $("#publicationDate").css("border-color","red");
-                    check = false;
-                }
             }
             var data = new FormData();
             $.each($("#file")[0].files, function(i, file) {
@@ -121,6 +91,8 @@
                 $("#submitRecipe").prop("disabled", false);
                 return;
             }
+
+            var date = formatDate(recipeDate);
             data.append("recipeName", $("#recipeName").val());
             data.append("recipeComposition", $("#composition").val());
             data.append("cookingSteps", tinymce.get("cookingSteps").getContent());
@@ -205,8 +177,8 @@
                         <div class="form-control" id="cookingSteps"></div>
                     </div>
                     <div class="form-group">
-                        <label for="publicationDate">Publication date (if you using Firefox - input date manually in this format: yyyy-mm-ddThh24:mm (for example, 2010-12-22T00:12). <b>Attention: your date must be in UTC timezone</b></label>
-                        <input  class="form-control" type="datetime-local" id="publicationDate" placeholder="yyyy-mm-ddThh24:mm" max="2999-12-31T23:59"/>
+                        <label for="publicationDate">Publication date (time is set to 12:00 AM)</label>
+                        <input class="form-control" type="date" id="publicationDate" max="2999-12-31"/>
                     </div>
                     <div class="form-group" id="select-form-group">
                         <label for="selectedTypes">Categories</label>
