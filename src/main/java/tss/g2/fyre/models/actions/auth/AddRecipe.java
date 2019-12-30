@@ -78,6 +78,10 @@ public class AddRecipe implements ActionAuth {
       return new AnswerWithComment(true, false,
               "You must add an image for the recipe.");
     }
+    if (image.getContentLength() > 4194304) {
+      return new AnswerWithComment(true, false,
+              "Image must be less than 4 Mb");
+    }
 
     if (recipeName.matches("[а-яА-ЯЄєІіїЇҐґ]+")) {
       return new AnswerWithComment(true, false,
