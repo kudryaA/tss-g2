@@ -216,6 +216,11 @@ public class PostgresDataStorage implements DataStorage {
   }
 
   @Override
+  public boolean deleteLike(String login, String recipeId) {
+    return new DeleteLike(connection, login, recipeId).deleteLike();
+  }
+
+  @Override
   public Recipe getRecipeFromApi(String recipeId, String key) {
     return new GetRecipeFromApi(connection, recipeId, key).getRecipeFromApi();
   }

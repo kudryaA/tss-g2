@@ -285,5 +285,19 @@ public class RecipeController implements CreateController {
       Answer answer = new ActionTime("/select/userRecipes", action, dataStorage).getAnswer();
       ctx.result(answer.toJson());
     });
+
+    app.post("/delete/like", ctx -> {
+      String token = ctx.sessionAttribute("token");
+      String recipeId = ctx.formParam("recipeId");
+      logger.info("Request to /delete/like with user {} for recipe {}",
+              new UserLogin(tokenStorage, token).get(), recipeId);
+      Action action = new AuthUser(
+              new DeleteLike(dataStorage, recipeId),
+              token,
+              tokenStorage
+      );
+      Answer answer = new ActionTime("/delete/like", action, dataStorage).getAnswer();
+      ctx.result(answer.toJson());
+    });
   }
 }
