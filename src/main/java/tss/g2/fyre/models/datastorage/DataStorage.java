@@ -279,6 +279,14 @@ public interface DataStorage {
   List<Recipe> selectUserRecipes(String login);
 
   /**
+   * Method for delete like.
+   * @param login user login
+   * @param recipeId recipe id
+   * @return result of delete
+   */
+  boolean deleteLike(String login, String recipeId);
+
+  /**
    * Store time api.
    * @param api api
    * @param time time in milliseconds
