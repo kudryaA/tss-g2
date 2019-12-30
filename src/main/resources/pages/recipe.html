@@ -287,8 +287,10 @@
                         console.log(answer.obj == false);
                         if(answer.obj == false) {
                             $("#like").attr("style", "color: #00818a;");
+                            $("#like").attr("onclick", "like()");
                         } else {
                             $("#like").attr("style", "color: #283149;");
+                            $("#like").attr("onclick", "removeLike()");
                         }
                     }
                 ]
@@ -340,6 +342,26 @@
                 ]
             });
         }
+
+        function removeLike(){
+            var data = {
+                recipeId: $("#id").html()
+            }
+            $.ajax({
+                type: "post",
+                url: "/delete/like",
+                dataType: "json",
+                data,
+                contentType: "application/json; charset=utf-8",
+                complete: [
+                    function (response) {
+                        checkLike();
+                        loadLikes();
+                    }
+                ]
+            });
+        }
+
         function subscribeOnRecipeAuthor() {
             var data = {
                 subLogin: $("#author").html()
