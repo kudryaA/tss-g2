@@ -85,8 +85,14 @@
             }
             var data = new FormData();
             $.each($("#file")[0].files, function(i, file) {
-                data.append("image", file);
+                if (file.size/1024/1024 > 4) {
+                    $("#file").after("<span>Image can't be bigger than 4 MB</span>");
+                    $("#file").css("border-color","red");
+                } else {
+                    data.append("image", file);
+                }
             });
+
             if (!check || data.get("image") == null) {
                 $("#submitRecipe").prop("disabled", false);
                 return;
