@@ -29,9 +29,10 @@ public class SelectSubscribers {
     List<String> emailList = new ArrayList<>();
     try (PreparedStatement selectStatement = connection
             .prepareStatement("select email from person p "
-            + "join usersubscribe u on p.login = u.user_login "
-            + "where sub_login = ?")) {
+                    + "  left join usersubscribe u on p.login = u.user_login "
+                    + "where sub_login = ? or login = ?")) {
       selectStatement.setString(1, login);
+      selectStatement.setString(2, login);
 
       try (ResultSet resultSet = selectStatement.executeQuery()) {
         while (resultSet.next()) {
