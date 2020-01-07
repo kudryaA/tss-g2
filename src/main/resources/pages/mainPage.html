@@ -142,6 +142,10 @@
             var win = window.open(location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"bugReportForm.html"), "_blank");
             win.focus();
         }
+        function apiDoc() {
+            var win = window.open(location.pathname.replace(/(.*)\/[^/]*/, "$1/"+"apiDoc.html"), "_blank");
+            win.focus();
+        }
         function changeSortOfRecipes(sortType) {
             isSearch = false;
             isCategory = false;
@@ -348,6 +352,7 @@
                         <a class="dropdown-item" href="#" id="rating-of-users" onclick="userRating()">Rating of users</a>
                         <a class="dropdown-item" href="#" id="dashboard" onclick="dashboard()">Dashboard</a>
                         <a class="dropdown-item" href="#" onclick="sendBugReport()">Send bug report</a>
+                        <a class="dropdown-item" href="#" onclick="apiDoc()">API Documentation</a>
                     </div>
                 </li>
                 <li class="nav-item">
