@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import tss.g2.fyre.controllers.CreateController;
 import tss.g2.fyre.controllers.utils.UserLogin;
 import tss.g2.fyre.models.Answer;
+import tss.g2.fyre.models.AnswerWithComment;
 import tss.g2.fyre.models.actions.Action;
 import tss.g2.fyre.models.actions.ActionTime;
 
@@ -270,7 +271,13 @@ public class RecipeController implements CreateController {
               recipeId, key);
       Action action = new GetRecipeFromApi(dataStorage, recipeId, key);
       Answer answer = new ActionTime("/getRecipeFromApi", action, dataStorage).getAnswer();
-      ctx.result(answer.toJson());
+      if (answer instanceof AnswerWithComment) {
+        if ("Invalid key. Try again.".equals(((AnswerWithComment) answer).getComment())) {
+          ctx.result(answer.toJson()).status(403);
+        }
+      } else {
+        ctx.result(answer.toJson());
+      }
     });
 
     app.post("/select/userRecipes", ctx -> {
