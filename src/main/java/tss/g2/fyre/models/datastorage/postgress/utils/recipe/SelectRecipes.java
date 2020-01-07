@@ -73,7 +73,7 @@ public class SelectRecipes {
               + "where r2.type_name like '%' || ? || '%' "
                 + "and publicationdate <= (now() AT TIME ZONE 'UTC') \n"
                 + "and isConfirmed = true \n"
-              + "order by " + sortType + " desc\n"
+                + "order by " + sortType + " desc, r.recipe_id\n"
               + "offset ? fetch first ? row only ")) {
       selectStatement.setString(1, recipeType);
       selectStatement.setInt(2, (pageNumber - 1) * pageSize);
