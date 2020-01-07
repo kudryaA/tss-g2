@@ -190,7 +190,11 @@
                                     });
                                     $("#ingredients").html(answer.obj.composition.split("\n").join("<br>"));
                                     $("#steps").html(answer.obj.cookingSteps.split("\n").join("<br>"));
-                                    $("#image").attr("src", url.origin + "/image?id=" + answer.obj.image);
+                                    if (answer.obj.image.indexOf("cookies") !== -1) {
+                                        $("#image").attr("src", answer.obj.image);
+                                    } else {
+                                        $("#image").attr("src", url.origin + "/image?id=" + answer.obj.image);
+                                    }
                                     $("#likes").html(answer.obj.likes + " like(s)");
                                     $("#id").html(answer.obj.id);
                                     $("#qr-code").attr("src", "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + window.location.href);

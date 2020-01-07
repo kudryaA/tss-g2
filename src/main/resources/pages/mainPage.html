@@ -186,10 +186,16 @@
                     function (response) {
                         var answer = $.parseJSON(response.responseText);
                         $.each(answer.obj.recipes, function(key, value) {
+                            var imagePath;
+                            if (value.image.indexOf("cookies") !== -1) {
+                                imagePath = value.image;
+                            } else {
+                                imagePath = "/image?id=" + value.image;
+                            }
                             $("#content-container").append("<div class='row recipe'>"
                                 + "<div class='col-md-7'>"
                                 + "<a>"
-                                + "<img class='img-fluid rounded mb-3 mb-md-0 preview' src='/image?id=" + value.image + "' alt=''>"
+                                + "<img class='img-fluid rounded mb-3 mb-md-0 preview' src='" + imagePath + "' alt=''>"
                                 + "</a>"
                                 + "</div>"
                                 + "<div class='col-md-5'>"
