@@ -66,7 +66,7 @@ public class Configuration {
       setProperty("port", obj.get("port"));
       setProperty("external_url", obj.get("external_url"));
     } catch (IOException e) {
-      e.printStackTrace();
+      //e.printStackTrace();
     }
     return properties;
   }
