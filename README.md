@@ -44,6 +44,6 @@
 4. Выполнить в базе скрипт config/initial_script.sql
 5. Собрать и запустить jar файл
 ```
-mvn package
+mvn package -DskipTests
 java -jar target/fyre-1.0-SNAPSHOT.jar
 ```
